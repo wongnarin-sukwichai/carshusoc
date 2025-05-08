@@ -1,7 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import Welcome from "../components/Welcome.vue";
-import Home from "../components/Home.vue";
+import Login from "../components/Login.vue";
+import Register from "../components/Register.vue";
+
+// Auth
 import Dashboard from "../components/Dashboard.vue";
 
 import store from "../store";
@@ -13,25 +16,22 @@ const routes = [
         component: Welcome,
     },
     {
-        path: "/home",
-        name: "home",
-        component: Home,
-        redirect: {
-            name: "dashboard",
-        },
+        path: "/login",
+        name: "login",
+        component: Login,
+    },
+    {
+        path: "/register",
+        name: "register",
+        component: Register,
+    },
+    {
+        path: "/dashboard",
+        name: "dashboard",
+        component: Dashboard,
         meta: {
             guard: "auth",
         },
-        children: [
-            {
-                path: "/dashboard",
-                name: "dashboard",
-                component: Dashboard,
-                meta: {
-                    guard: "auth",
-                },
-            },        
-        ],
     },
 ];
 

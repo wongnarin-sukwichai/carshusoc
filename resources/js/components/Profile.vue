@@ -1,6 +1,6 @@
 <template>
 <div class="bg-white p-8">
-    Home
+    Profile
 </div>
 </template>
 

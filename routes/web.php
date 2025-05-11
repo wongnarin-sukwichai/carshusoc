@@ -7,6 +7,10 @@ Route::get('symlink', function () {
     echo 'OK';
 });
 
-Route::get('{any}', function () {
+Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('{any}', function () {
+    return view('home');
 })->where('any', '.*');

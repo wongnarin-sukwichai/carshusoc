@@ -1,5 +1,5 @@
 <template>
-<div class="bg-white p-8">
+<div class="bg-white p-8 rounded-2xl">
     Home
 </div>
 </template>

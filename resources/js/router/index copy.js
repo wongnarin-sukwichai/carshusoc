@@ -1,37 +1,37 @@
 import { createRouter, createWebHistory } from "vue-router";
 
+import Welcome from "../components/Welcome.vue";
 import Login from "../components/Login.vue";
+import Register from "../components/Register.vue";
 
-// Authen
-import Home from "../components/Home.vue";
-import Information from "../components/Information.vue";
+// Auth
+import Dashboard from "../components/Dashboard.vue";
 
 import store from "../store";
 
 const routes = [
     {
+        path: "/",
+        name: "welcome",
+        component: Welcome,
+    },
+    {
         path: "/login",
         name: "login",
         component: Login,
+    },
+    {
+        path: "/register",
+        name: "register",
+        component: Register,
+    },
+    {
+        path: "/dashboard",
+        name: "dashboard",
+        component: Dashboard,
         meta: {
-            layout: "auth",
+            guard: "auth",
         },
-    },
-    {
-        path: "/home",
-        name: "home",
-        component: Home,
-        // meta: {
-        //     guard: "auth",
-        // },
-    },
-    {
-        path: "/information",
-        name: "information",
-        component: Information,
-        // meta: {
-        //     guard: "auth",
-        // },
     },
 ];
 

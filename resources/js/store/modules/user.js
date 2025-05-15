@@ -46,16 +46,13 @@ export default {
                     .then((response) => {
                         return dispatch("getUser");
                     })
-                    .catch((err) => {
-                        throw err.response;
-                    });
             } catch (e) {
-                throw e;
+                throw e.response ?? e;
             }
         },     
 
         async logout({ commit }) {
-            //await axios.get("/sanctum/csrf-cookie");
+            await axios.get("/sanctum/csrf-cookie");
             await axios
                 .post("/api/logout")
                 .then((response) => {
@@ -88,11 +85,8 @@ export default {
                     .then((response) => {
                         return dispatch("getUser");
                     })
-                    .catch((err) => {
-                        throw err.response;
-                    });
             } catch (e) {
-                throw e;
+                throw e.response ?? e;
             }
         }
     },

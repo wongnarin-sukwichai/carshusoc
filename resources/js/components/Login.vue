@@ -4,8 +4,14 @@
     >
         <div class="max-w-md w-full">
             <div class="p-8 rounded-2xl bg-white shadow-2xl">
-                <img :src="logo" alt="logo" class="w-40 mx-auto" />
-                <div class="mt-4 space-y-6">
+                <a href="/" class="cursor-pointer">
+                    <img
+                        :src="logo"
+                        alt="logo"
+                        class="w-40 mx-auto hover:scale-105"
+                    />
+                </a>
+                <form class="mt-4 space-y-6" @submit.prevent="login()">
                     <div>
                         <label
                             class="text-slate-800 text-sm font-medium mb-2 block"
@@ -17,7 +23,8 @@
                                 type="text"
                                 required
                                 class="w-full text-slate-800 text-sm border border-slate-300 px-4 py-3 rounded-md outline-blue-600"
-                                placeholder="Enter user name"
+                                placeholder="Enter Email"
+                                v-model="auth.email"
                             />
                             <box-icon
                                 name="user"
@@ -40,12 +47,13 @@
                                 required
                                 class="w-full text-slate-800 text-sm border border-slate-300 px-4 py-3 rounded-md outline-blue-600"
                                 placeholder="Enter password"
+                                v-model="auth.password"
                             />
                             <box-icon
                                 name="low-vision"
                                 size="sd"
                                 color="#abb2b9"
-                                class="w-6 h-6 absolute right-4"
+                                class="w-6 h-6 absolute right-4 cursor-pointer hover:scale-110"
                             ></box-icon>
                         </div>
                     </div>
@@ -78,8 +86,7 @@
                     </div>
 
                     <div class="!mt-12">
-                        <button
-                            type="button"
+                        <button                      
                             class="w-full py-2 px-4 text-[15px] font-medium tracking-wide rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none cursor-pointer"
                         >
                             Sign in
@@ -87,25 +94,53 @@
                     </div>
                     <p class="text-slate-800 text-sm !mt-6 text-center">
                         Don't have an account?
-                        <a
-                            href="javascript:void(0);"
+                        <router-link
+                            to="/register"
                             class="text-blue-600 hover:underline ml-1 whitespace-nowrap font-semibold"
-                            >Register here</a
+                            >Register here</router-link
                         >
                     </p>
-                </div>
+                </form>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import Swal from "sweetalert2";
+
 export default {
     mounted() {},
     data() {
         return {
             logo: "/img/logo/logo.png",
+            auth: {
+                email: "",
+                password: "",
+            },
         };
+    },
+    methods: {
+        async login() {
+            try {
+                await this.$store.dispatch("login", this.auth); //dispatch ส่งค่าไปยัง store ของ vuex
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "เข้าสู่ระบบเรียบร้อย",
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
+                this.$router.push({ name: "home" }); //หากสำเร็จให้เปิด router ชื่อ home แบบ SPA
+            } catch (err) {
+                Swal.fire({
+                    icon: "error",
+                    title: "ผิดพลาด",
+                    text: "กรุณาตรวจสอบ Email, Password",
+                    timer: 1500,
+                });
+            }
+        },
     },
 };
 </script>

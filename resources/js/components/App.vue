@@ -1,9 +1,9 @@
 <template>
-  <component :is="layout">
-    <router-view v-slot="{ Component, route }">
-      <component :is="Component" :key="route.fullPath" />
-    </router-view>
-  </component>
+    <component :is="layout">
+        <router-view v-slot="{ Component, route }">
+            <component :is="Component" :key="route.fullPath" />
+        </router-view>
+    </component>
 </template>
 
 <script>
@@ -16,9 +16,11 @@ import LoginLayout from "../layouts/LoginLayout.vue";
 export default {
     setup() {
         const route = useRoute();
-        const layout = computed(() =>
-            route.meta.layout === 'auth' ? LoginLayout : HomeLayout
-        );
+        const layout = computed(() => {
+            if (route.meta.layout === "auth") return HomeLayout;
+            else if (route.meta.layout === "guest") return LoginLayout;
+            else return HomeLayout; // default
+        });
 
         return { layout };
     },

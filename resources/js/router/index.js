@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import Login from "../components/Login.vue";
+import Register from "../components/Register.vue";
 
 // Authen
 import Home from "../components/Home.vue";
@@ -14,24 +15,36 @@ const routes = [
         name: "login",
         component: Login,
         meta: {
-            layout: "auth",
+            layout: "guest",
+            guard: "guest", // เพิ่ม guard ด้วยก็ได้
+        },
+    },
+    {
+        path: "/register",
+        name: "register",
+        component: Register,
+        meta: {
+            layout: "guest",
+            guard: "guest", // เพิ่ม guard ด้วยก็ได้
         },
     },
     {
         path: "/home",
         name: "home",
         component: Home,
-        // meta: {
-        //     guard: "auth",
-        // },
+        meta: {
+            layout: "auth", // กำหนด layout สำหรับ user ที่ login แล้ว
+            guard: "auth",
+        },
     },
     {
         path: "/information",
         name: "information",
         component: Information,
-        // meta: {
-        //     guard: "auth",
-        // },
+        meta: {
+            layout: "auth",
+            guard: "auth",
+        },
     },
 ];
 

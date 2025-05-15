@@ -14,11 +14,13 @@
                     >
                         <img
                             :src="logo"
-                            class="w-32 h-32 lg:w-20 lg:h-20 border-r"
+                            class="w-32 h-32 lg:w-20 lg:h-20 lg:border-r lg:justify-center"
                         />
 
                         <div class="ml-4 hidden lg:block">
-                            <p class="font-medium text-slate-900 text-[15px]">
+                            <p
+                                class="font-medium bg-gradient-to-r from-amber-400 via-amber-600 to-purple-500 inline-block text-transparent bg-clip-text text-[15px]"
+                            >
                                 CARS-HUSOC
                             </p>
                             <p class="text-xs text-slate-500 mt-0.5">
@@ -51,7 +53,7 @@
                                         data-original="#000000"
                                     ></path>
                                 </svg>
-                                <span>Home</span>
+                                <router-link to="/home">Home</router-link>
                             </a>
                         </li>
 
@@ -76,7 +78,9 @@
                                             data-original="#000000"
                                         ></path>
                                     </svg>
-                                    <span>Information</span>
+                                    <router-link to="/information"
+                                        >Information</router-link
+                                    >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         class="arrow w-3 h-3 fill-current transition-all ml-auto rotate-90"
@@ -185,7 +189,7 @@
                                 </svg>
                                 <span>Insight</span>
                                 <span
-                                    class="bg-red-400 w-[18px] h-[18px] flex items-center justify-center text-white text-[11px] font-bold ml-auto rounded-full"
+                                    class="bg-red-400 w-[18px] h-[18px] flex items-center justify-center text-white text-[11px] font-bold ml-auto rounded-full animate-bounce"
                                     >2</span
                                 >
                             </a>
@@ -327,7 +331,7 @@
                                         data-original="#000000"
                                     />
                                 </svg>
-                                <span>Logout</span>
+                                <span @click="logout()">Logout</span>
                             </a>
                         </li>
                     </ul>
@@ -336,10 +340,11 @@
 
                     <div class="flex flex-wrap items-center cursor-pointer">
                         <div class="relative">
-                            <img
-                                src="https://readymadeui.com/profile_2.webp"
-                                class="w-12 h-12 rounded-full border-white"
-                            />
+                            <box-icon
+                                name="user"
+                                size="md"
+                                color="#6a7282"
+                            ></box-icon>
                             <span
                                 class="h-3 w-3 rounded-full bg-green-600 border-2 border-white block absolute bottom-0 right-0"
                             ></span>
@@ -416,9 +421,7 @@
 import "boxicons";
 
 export default {
-    mounted() {
-        console.log("Component mounted.");
-    },
+    mounted() {},
     data() {
         return {
             logo: "/img/logo/logo.png",
@@ -426,6 +429,10 @@ export default {
         };
     },
     methods: {
+        async logout() {
+            await this.$store.dispatch("logout");
+            this.$router.push({ name: "login" });
+        },
         toggleSidebar() {
             this.isSidebarOpen = !this.isSidebarOpen;
         },

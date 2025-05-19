@@ -3,10 +3,6 @@
 @tailwind utilities;
 @import "tailwindcss";
 
-body {
-    font-family: 'Anuphan';
-}
-
 video,
 canvas {
     -webkit-transform: scaleX(-1);

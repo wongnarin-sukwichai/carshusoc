@@ -36,5 +36,7 @@ class AppServiceProvider extends ServiceProvider
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
         });
+
+        app()->setLocale(session('locale', config('app.locale')));
     }
 }

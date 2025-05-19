@@ -53,7 +53,9 @@
                                         data-original="#000000"
                                     ></path>
                                 </svg>
-                                <router-link to="/home">Home</router-link>
+                                <router-link to="/home">{{
+                                    $t("home.home")
+                                }}</router-link>
                             </a>
                         </li>
 

@@ -15,7 +15,7 @@
                     <div>
                         <label
                             class="text-slate-800 text-sm font-medium mb-2 block"
-                            >Firstname :</label
+                            >{{ $t('regis.first') }} :</label
                         >
                         <div class="relative flex items-center">
                             <input
@@ -30,7 +30,7 @@
                     <div>
                         <label
                             class="text-slate-800 text-sm font-medium mb-2 block"
-                            >Lastname :</label
+                            >{{ $t('regis.last') }} :</label
                         >
                         <div class="relative flex items-center">
                             <input
@@ -43,7 +43,7 @@
                     <div>
                         <label
                             class="text-slate-800 text-sm font-medium mb-2 block"
-                            >Email :</label
+                            >{{ $t('login.email') }} :</label
                         >
                         <div class="relative flex items-center">
                             <input
@@ -58,7 +58,7 @@
                     <div>
                         <label
                             class="text-slate-800 text-sm font-medium mb-2 block"
-                            >Password :</label
+                            >{{ $t('login.pass') }} :</label
                         >
                         <div class="relative flex items-center">
                             <input
@@ -79,7 +79,7 @@
                     <div>
                         <label
                             class="text-slate-800 text-sm font-medium mb-2 block"
-                            >Confirm Password :</label
+                            >{{ $t('regis.conpass') }} :</label
                         >
                         <div class="relative flex items-center">
                             <input
@@ -115,14 +115,14 @@
                         type="button"
                         class="w-full py-2 px-4 text-[15px] font-medium tracking-wide rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none cursor-pointer"
                     >
-                        Sign up
+                        {{ $t('regis.signup') }}
                     </button>
                 </div>
                 <p class="text-slate-800 text-sm !mt-6 flex cursor-pointer justify-end">
                     <router-link
                         to="/login"
                         class="text-gray-300 ml-1 whitespace-nowrap font-semibold hover:scale-105"
-                        >Back to Login From</router-link
+                        >{{ $t('regis.back') }}</router-link
                     >
                 </p>
             </div>

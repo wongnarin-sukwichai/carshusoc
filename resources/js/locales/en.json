@@ -1,0 +1,22 @@
+
+{
+  "login": {
+    "email": "Email",
+    "password": "Password",
+    "remem": "Remember me",
+    "forget": "Forgot your password?",
+    "signin": "Sign in",
+    "noacc": "Don't have an account?",
+    "regis": "Register here"   
+  },
+  "regis": {
+    "first": "Firstname",
+    "last": "Lastname",
+    "conpass": "Confirm Password",
+    "signup": "Sign up",
+    "back": "Back to Login From"
+  },
+  "home": {
+    "home": "Home"
+  }
+}

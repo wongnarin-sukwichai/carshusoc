@@ -80,7 +80,10 @@
                     href="{{ url('/login') }}">Login</a>
                 <a class="px-10 py-3 mt-2 text-sm text-center bg-yellow-500 text-white rounded-full md:mt-8 md:ml-4 transform transition hover:scale-110"
                     href="{{ url('/register') }}">Sign Up</a>
-                <a href="{{ url('/lang/th') }}">TH</a> | <a href="{{ url('/lang/en') }}">EN</a>
+                <div class="mt-4">
+                <a class="px-2 py-2 mt-2 md:ml-4 text-sm md:border-r md:border-gray-400 hover:text-blue-500" href="{{ url('/lang/th') }}">TH</a>
+                <a class="px-2 py-2 mt-2 text-sm hover:text-blue-500" href="{{ url('/lang/en') }}">EN</a>
+                </div>
             </nav>
         </div>
     </div>

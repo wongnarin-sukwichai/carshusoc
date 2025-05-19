@@ -9,7 +9,8 @@
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=Anuphan" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@400;700&family=Poppins:wght@400;700&display=swap"
+        rel="stylesheet">
 
     <!-- Styles -->
     <style>
@@ -898,6 +899,14 @@
                 --tw-ring-opacity: 1;
                 --tw-ring-color: rgb(255 255 255 / var(--tw-ring-opacity))
             }
+
+            .font-thai {
+                font-family: 'Anuphan', sans-serif;
+            }
+
+            .font-en {
+                font-family: 'Poppins', sans-serif;
+            }
         }
     </style>
 
@@ -906,6 +915,13 @@
 </head>
 
 <body class="font-sans antialiased dark:bg-black dark:text-white/50">
+
+    <script>
+        window.Laravel = {
+            locale: "{{ app()->getLocale() }}"
+        };
+    </script>
+
     <div id="app"></div>
 </body>
 

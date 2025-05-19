@@ -15,7 +15,7 @@
                     <div>
                         <label
                             class="text-slate-800 text-sm font-medium mb-2 block"
-                            >Email :</label
+                            >{{ $t("login.email") }} :</label
                         >
                         <div class="relative flex items-center">
                             <input
@@ -38,7 +38,7 @@
                     <div>
                         <label
                             class="text-slate-800 text-sm font-medium mb-2 block"
-                            >Password</label
+                            >{{ $t("login.pass") }} :</label
                         >
                         <div class="relative flex items-center">
                             <input
@@ -72,7 +72,7 @@
                                 for="remember-me"
                                 class="ml-3 block text-sm text-slate-800"
                             >
-                                Remember me
+                                {{ $t("login.remem") }}
                             </label>
                         </div>
                         <div class="text-sm">
@@ -80,24 +80,24 @@
                                 href="jajvascript:void(0);"
                                 class="text-blue-600 hover:underline font-semibold"
                             >
-                                Forgot your password?
+                                {{ $t("login.forget") }}
                             </a>
                         </div>
                     </div>
 
                     <div class="!mt-12">
-                        <button                      
+                        <button
                             class="w-full py-2 px-4 text-[15px] font-medium tracking-wide rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none cursor-pointer"
                         >
-                            Sign in
+                            {{ $t("login.signin") }}
                         </button>
                     </div>
                     <p class="text-slate-800 text-sm !mt-6 text-center">
-                        Don't have an account?
+                        {{ $t("login.noacc") }}
                         <router-link
                             to="/register"
                             class="text-blue-600 hover:underline ml-1 whitespace-nowrap font-semibold"
-                            >Register here</router-link
+                            >{{ $t("login.regis") }}</router-link
                         >
                     </p>
                 </form>
@@ -127,7 +127,7 @@ export default {
                 Swal.fire({
                     position: "top-end",
                     icon: "success",
-                    title: "เข้าสู่ระบบเรียบร้อย",
+                    title: "Login Success",
                     showConfirmButton: false,
                     timer: 1500,
                 });
@@ -135,8 +135,8 @@ export default {
             } catch (err) {
                 Swal.fire({
                     icon: "error",
-                    title: "ผิดพลาด",
-                    text: "กรุณาตรวจสอบ Email, Password",
+                    title: "Fail",
+                    text: "Email or Password went wrong",
                     timer: 1500,
                 });
             }

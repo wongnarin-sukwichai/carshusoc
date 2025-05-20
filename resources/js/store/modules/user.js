@@ -14,13 +14,13 @@ export default {
             return state.user;
         },
         fullname(state) {
-            return state.user.name + " " + state.user.surname;
+            return state.user ? state.user.name + " " + state.user.surname : "";
         },
         level(state) {
-            return state.user.level
+            return state.user?.level ?? "";
         },
-        userLoc(state) {
-            return state.user.loc_id
+        email(state) {
+            return state.user?.email ?? "";
         }
     },
     mutations: {

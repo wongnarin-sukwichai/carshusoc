@@ -6,6 +6,7 @@ import Register from "../components/Register.vue";
 // Authen
 import Home from "../components/Home.vue";
 import Information from "../components/Information.vue";
+import Profile from "../components/Profile.vue";
 
 import store from "../store";
 
@@ -41,6 +42,15 @@ const routes = [
         path: "/information",
         name: "information",
         component: Information,
+        meta: {
+            layout: "auth",
+            guard: "auth",
+        },
+    },
+    {
+        path: "/profile",
+        name: "profile",
+        component: Profile,
         meta: {
             layout: "auth",
             guard: "auth",

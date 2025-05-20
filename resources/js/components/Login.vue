@@ -43,7 +43,7 @@
                         <div class="relative flex items-center">
                             <input
                                 name="password"
-                                type="password"
+                                :type="showPassword ? 'text' : 'password'"
                                 required
                                 class="w-full text-slate-800 text-sm border border-slate-300 px-4 py-3 rounded-md outline-blue-600"
                                 placeholder="Enter password"
@@ -54,6 +54,7 @@
                                 size="sd"
                                 color="#abb2b9"
                                 class="w-6 h-6 absolute right-4 cursor-pointer hover:scale-110"
+                                @click="togglePassword"
                             ></box-icon>
                         </div>
                     </div>
@@ -62,7 +63,7 @@
                         class="flex flex-wrap items-center justify-between gap-4"
                     >
                         <div class="flex items-center">
-                            <input
+                            <!-- <input
                                 id="remember-me"
                                 name="remember-me"
                                 type="checkbox"
@@ -73,7 +74,7 @@
                                 class="ml-3 block text-sm text-slate-800"
                             >
                                 {{ $t("login.remem") }}
-                            </label>
+                            </label> -->
                         </div>
                         <div class="text-sm">
                             <a
@@ -114,6 +115,7 @@ export default {
     data() {
         return {
             logo: "/img/logo/logo.png",
+            showPassword: false,
             auth: {
                 email: "",
                 password: "",
@@ -140,6 +142,9 @@ export default {
                     timer: 1500,
                 });
             }
+        },
+        togglePassword() {
+            this.showPassword = !this.showPassword;
         },
     },
 };

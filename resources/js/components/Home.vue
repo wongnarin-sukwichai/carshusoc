@@ -1,7 +1,7 @@
 <template>
     <div class="bg-white p-8 rounded-2xl md:ml-8">
         <div class="grid grid-cols-4 gap-4">
-            <div class="border-2 border-dashed rounded-xl">
+            <div class="border-2 border-dashed rounded-xl ">
                 <div
                     class="relative group overflow-hidden rounded-xl cursor-pointer"
                 >
@@ -17,15 +17,15 @@
                     >
                         <button
                             class="px-12 py-4 rounded-full text-blue-600 text-lg border-2 border-blue-400 hover:bg-blue-400 hover:text-white z-10 mb-4"
-                            @click="showModal(pic1)"
+                            @click="getDetail(1)"
                         >
                             {{ $t("home.detail") }}
                         </button>
                         <button
                             class="px-8 py-4 rounded-full text-lime-600 text-lg border-2 border-lime-500 hover:bg-lime-500 hover:text-white z-10"
-                            @click="showModal(pic1)"
+                            
                         >
-                            {{ $t("home.regis") }}
+                            {{ $t("home.reg") }}
                         </button>
                     </div>
                 </div>
@@ -49,15 +49,15 @@
                     >
                         <button
                             class="px-12 py-4 rounded-full text-blue-600 text-lg border-2 border-blue-400 hover:bg-blue-400 hover:text-white z-10 mb-4"
-                            @click="showModal(pic1)"
+                            @click="getDetail(1)"
                         >
                             {{ $t("home.detail") }}
                         </button>
                         <button
                             class="px-8 py-4 rounded-full text-lime-600 text-lg border-2 border-lime-500 hover:bg-lime-500 hover:text-white z-10"
-                            @click="showModal(pic1)"
+                            
                         >
-                            {{ $t("home.regis") }}
+                            {{ $t("home.reg") }}
                         </button>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
 <script>
 export default {
     mounted() {
-        console.log("Component mounted.");
+        
     },
     data() {
         return {
@@ -79,5 +79,11 @@ export default {
             pic2: "img/project/02.png",
         };
     },
+    methods: {
+        getDetail(id) {
+            console.log(id)
+            this.$router.push("/detail/" + id);
+        }
+    }
 };
 </script>

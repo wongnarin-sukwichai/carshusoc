@@ -21,12 +21,35 @@
         "term": "Terms & Conditions",
         "list": "Application List",
         "his": "History",
-        "score": "Score Report",
+        "cert": "Certificate",
         "pri": "Privacy Policy",
         "set": "Setting",
         "help": "Help Center",
         "logout": "Logout",
         "detail": "Detail",
-        "regis": "Register"
+        "regis": "Register",
+        "reg": "Register"
+    },
+    "profile": {
+        "profile": "Profile",
+        "name": "Fullname",
+        "email": "Email",
+        "update": "Update",
+        "fname": "Name",
+        "sname": "Surname",
+        "pass": "Change Password",
+        "conpass": "Confirm Password",
+        "add": "Address"
+    },
+    "detail": {
+        "detail": "Detail"
+    },
+    "list": {
+        "fname": "Name",
+        "sname": "Surname",
+        "list": "Application",
+        "start": "Start",
+        "end": "End",
+        "search": "Search"
     }
 }

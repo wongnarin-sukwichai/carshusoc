@@ -7,6 +7,8 @@ import Register from "../components/Register.vue";
 import Home from "../components/Home.vue";
 import Information from "../components/Information.vue";
 import Profile from "../components/Profile.vue";
+import Detail from "../components/Detail.vue";
+import List from "../components/List.vue";
 
 import store from "../store";
 
@@ -51,6 +53,24 @@ const routes = [
         path: "/profile",
         name: "profile",
         component: Profile,
+        meta: {
+            layout: "auth",
+            guard: "auth",
+        },
+    },
+    {
+        path: "/detail/:id",
+        name: "detail",
+        component: Detail,
+        meta: {
+            layout: "auth",
+            guard: "auth",
+        },
+    },
+    {
+        path: "/list",
+        name: "list",
+        component: List,
         meta: {
             layout: "auth",
             guard: "auth",

@@ -49,7 +49,7 @@
 
                         <li>
                             <router-link
-                                to="/information"
+                                to="/profile"
                                 class="text-[#3949ab] font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all"
                             >
                                 <box-icon
@@ -76,7 +76,7 @@
                         </li>
                         <li>
                             <router-link
-                                to="/home"
+                                to="/list"
                                 class="text-[#3949ab] font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all"
                             >
                                 <box-icon
@@ -114,7 +114,7 @@
                                     class="mr-2"
                                     color="#85c1e9"
                                 ></box-icon>
-                                <span>{{ $t("home.score") }}</span>
+                                <span>{{ $t("home.cert") }}</span>
                             </router-link>
                         </li>
                         <li>
@@ -132,7 +132,7 @@
                         </li>
                     </ul>
 
-                    <ul v-if="(level === 'admin')" class="space-y-6 pl-3 mt-8">
+                    <ul v-if="(user.level === 'admin')" class="space-y-6 pl-3 mt-8">
                         <li>
                             <router-link
                                 to="/home"
@@ -193,10 +193,10 @@
 
                         <div class="ml-4">
                             <p class="text-sm text-[#3949ab] font-semibold">
-                                {{ fullname }}
+                                {{ user.name }} {{ user.surname }}
                             </p>
                             <p class="text-xs text-gray-500 mt-0.5">
-                                {{ email }}
+                                {{ user.email }}
                             </p>
                         </div>
                     </router-link>
@@ -281,15 +281,6 @@ export default {
     computed: {
         user() {
             return this.$store.getters.user;
-        },
-        level() {
-            return this.$store.getters.level;
-        },
-        fullname() {
-            return this.$store.getters.fullname;
-        },
-        email() {
-            return this.$store.getters.email;
         },
     },
 };

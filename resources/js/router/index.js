@@ -9,6 +9,7 @@ import Information from "../components/Information.vue";
 import Profile from "../components/Profile.vue";
 import Detail from "../components/Detail.vue";
 import List from "../components/List.vue";
+import Condition from "../components/Condition.vue";
 
 import store from "../store";
 
@@ -71,6 +72,15 @@ const routes = [
         path: "/list",
         name: "list",
         component: List,
+        meta: {
+            layout: "auth",
+            guard: "auth",
+        },
+    },
+    {
+        path: "/condition",
+        name: "condition",
+        component: Condition,
         meta: {
             layout: "auth",
             guard: "auth",

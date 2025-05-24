@@ -51,5 +51,8 @@
         "start": "Start",
         "end": "End",
         "search": "Search"
+    },
+    "admin": {
+        "back": "Back"
     }
 }

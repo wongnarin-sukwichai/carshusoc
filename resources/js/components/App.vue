@@ -1,20 +1,23 @@
 <template>
     <div :class="fontClass">
-        <component :is="layout">
-            <router-view v-slot="{ Component, route }">
-                <component :is="Component" :key="route.fullPath" />
-            </router-view>
-        </component>
+        <transition name="fade" mode="out-in">
+            <component :is="layout">
+                <router-view v-slot="{ Component, route }">
+                    <component :is="Component" :key="route.fullPath" />
+                </router-view>
+            </component>
+        </transition>
     </div>
 </template>
 
 <script>
 import { computed } from "vue";
 import { useRoute } from "vue-router";
-import { useI18n } from 'vue-i18n'
+import { useI18n } from "vue-i18n";
 
 import HomeLayout from "../layouts/HomeLayout.vue";
 import LoginLayout from "../layouts/LoginLayout.vue";
+import AdminLayout from "../layouts/AdminLayout.vue";
 
 export default {
     setup() {
@@ -24,17 +27,18 @@ export default {
         const layout = computed(() => {
             if (route.meta.layout === "auth") return HomeLayout;
             else if (route.meta.layout === "guest") return LoginLayout;
+            else if (route.meta.layout === "admin") return AdminLayout;
             else return HomeLayout; // default
         });
-        
+
         const fontClass = computed(() => {
             return locale.value === "th" ? "font-thai" : "font-en";
         });
 
-        return { 
+        return {
             layout,
-            fontClass
-         };
+            fontClass,
+        };
     },
     mounted() {},
     data() {

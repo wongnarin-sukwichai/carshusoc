@@ -35,7 +35,7 @@
                     <ul class="space-y-6 pl-3 flex-1">
                         <li>
                             <router-link
-                                to="/home"
+                                to="/admin"
                                 class="text-[#3949ab] font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all"
                             >
                                 <box-icon
@@ -45,106 +45,21 @@
                                 ></box-icon>
                                 {{ $t("home.home") }}
                             </router-link>
-                        </li>
-
-                        <li>
-                            <router-link
-                                to="/profile"
-                                class="text-[#3949ab] font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all"
-                            >
-                                <box-icon
-                                    name="user"
-                                    class="mr-2"
-                                    color="#85c1e9"
-                                ></box-icon
-                                >{{ $t("home.profile") }}
-                            </router-link>
-                        </li>
-
-                        <li>
-                            <router-link
-                                to="/condition"
-                                class="text-[#3949ab] font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all"
-                            >
-                                <box-icon
-                                    name="lock"
-                                    class="mr-2"
-                                    color="#85c1e9"
-                                ></box-icon>
-                                <span>{{ $t("home.cond") }}</span>
-                            </router-link>
-                        </li>
-                        <li>
-                            <router-link
-                                to="/list"
-                                class="text-[#3949ab] font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all"
-                            >
-                                <box-icon
-                                    name="spreadsheet"
-                                    class="mr-2"
-                                    color="#85c1e9"
-                                ></box-icon>
-                                <span>{{ $t("home.list") }}</span>
-                                <span
-                                    class="bg-red-400 w-[18px] h-[18px] flex items-center justify-center text-white text-[11px] font-bold ml-auto rounded-full animate-bounce"
-                                    >2</span
-                                >
-                            </router-link>
-                        </li>
-                        <li>
-                            <router-link
-                                to="/home"
-                                class="text-[#3949ab] font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all"
-                            >
-                                <box-icon
-                                    name="history"
-                                    class="mr-2"
-                                    color="#85c1e9"
-                                ></box-icon>
-                                <span>{{ $t("home.his") }}</span>
-                            </router-link>
-                        </li>
-                        <li>
-                            <router-link
-                                to="/home"
-                                class="text-[#3949ab] font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all"
-                            >
-                                <box-icon
-                                    name="file"
-                                    class="mr-2"
-                                    color="#85c1e9"
-                                ></box-icon>
-                                <span>{{ $t("home.cert") }}</span>
-                            </router-link>
-                        </li>
-                        <li>
-                            <a
-                                href="https://pdpa.msu.ac.th/"
-                                class="text-[#3949ab] font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all"
-                                target="_blank"
-                            >
-                                <box-icon
-                                    name="shield"
-                                    class="mr-2"
-                                    color="#85c1e9"
-                                ></box-icon>
-                                <span>{{ $t("home.pri") }}</span>
-                        </a>
-                        </li>
+                        </li>                     
                     </ul>
 
                     <ul class="space-y-6 pl-3 mt-8">
-                        <li v-if="(user.level === 'admin')">
+                        <li>
                             <router-link
-                                to="/admin"
+                                to="/home"
                                 class="text-[#3949ab] font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all"
                             >
                                <box-icon
-                                    name="cog"
+                                    name="right-arrow-circle"
                                     class="mr-2"
                                     color="#85c1e9"
                                 ></box-icon>
-                                <span>{{ $t("home.set") }}</span>
+                                <span>{{ $t("admin.back") }}</span>
                             </router-link>
                         </li>
                         <li>

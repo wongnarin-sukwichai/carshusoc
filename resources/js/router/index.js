@@ -11,6 +11,9 @@ import Detail from "../components/Detail.vue";
 import List from "../components/List.vue";
 import Condition from "../components/Condition.vue";
 
+// Admin
+import Admin from "../components/Admin.vue";
+
 import store from "../store";
 
 const routes = [
@@ -86,6 +89,15 @@ const routes = [
             guard: "auth",
         },
     },
+    {
+        path: "/admin",
+        name: "admin",
+        component: Admin,
+        meta: {
+            layout: "admin",
+            guard: "admin",
+        },
+    },
 ];
 
 const router = createRouter({
@@ -94,15 +106,27 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    if (store.getters.user) {
-        if (to.matched.some((route) => route.meta.guard === "guest"))
-            next({ name: "home" });
-        else next();
-    } else {
-        if (to.matched.some((route) => route.meta.guard === "auth"))
-            next({ name: "login" });
-        else next();
+    const user = store.getters.user;
+    const guard = to.meta.guard;
+
+    if (guard === "guest" && user) {
+        return next({ name: "home" });
     }
+
+    if (guard === "auth" && !user) {
+        return next({ name: "login" });
+    }
+
+    if (guard === "admin") {
+        if (!user) return next({ name: "login" });
+
+        // ตรวจสอบ role หรือสิทธิ admin จาก user
+        if (user.level !== "admin") {
+            return next({ name: "home" }); // ไม่ใช่แอดมิน กลับไปหน้า home
+        }
+    }
+
+    next(); // ถ้าไม่มีปัญหาใด ๆ ให้ผ่านไป
 });
 
 export default router;

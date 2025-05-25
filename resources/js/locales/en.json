@@ -56,6 +56,7 @@
         "back": "Back",
         "member": "Member",
         "stat": "Statistics",
-        "cont": "Content"
+        "cont": "Content",
+        "email": "Email"
     }
 }

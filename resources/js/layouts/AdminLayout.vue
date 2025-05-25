@@ -3,11 +3,11 @@
         <!-- Sidebar -->
         <transition name="slide-fade">
             <aside
-                class="fixed lg:static top-0 left-0 z-50 w-[220px] h-full bg-white border-r shadow transition-transform"
+                class="fixed lg:static top-0 left-0 z-50 w-[220px] h-full bg-#85c1e9 border-r shadow transition-transform"
                 v-if="isSidebarOpen"
             >
                 <nav
-                    class="bg-white shadow-md border-r border-gray-200 h-screen fixed top-0 left-0 min-w-[220px] py-6 px-6 flex flex-col overflow-auto"
+                    class="bg-slate-700 shadow-md border-r border-gray-200 h-screen fixed top-0 left-0 min-w-[220px] py-6 px-6 flex flex-col overflow-auto"
                 >
                     <div
                         class="flex flex-wrap items-center cursor-pointer relative"
@@ -36,64 +36,78 @@
                         <li>
                             <router-link
                                 to="/admin"
-                                class="text-[#3949ab] font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all"
+                                class="text-gray-50 font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all"
                             >
                                 <box-icon
                                     name="shield-plus"
                                     class="mr-2"
-                                    color="#089b0d"
+                                    color="#85c1e9"
                                 ></box-icon>
                                 {{ $t("home.home") }}
                             </router-link>
-                        </li>  
+                        </li>
                         <li>
                             <router-link
                                 to="/admin"
-                                class="text-[#3949ab] font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all"
+                                class="text-gray-50 font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all"
                             >
                                 <box-icon
                                     name="user-plus"
                                     class="mr-2"
-                                    color="#089b0d"
+                                    color="#85c1e9"
                                 ></box-icon>
                                 {{ $t("admin.member") }}
                             </router-link>
-                        </li>  
+                        </li>
                         <li>
                             <router-link
                                 to="/admin"
-                                class="text-[#3949ab] font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all"
+                                class="text-gray-50 font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all"
                             >
                                 <box-icon
                                     name="layer-plus"
                                     class="mr-2"
-                                    color="#089b0d"
+                                    color="#85c1e9"
                                 ></box-icon>
                                 {{ $t("admin.cont") }}
                             </router-link>
-                        </li>  
+                        </li>
                         <li>
                             <router-link
                                 to="/admin"
-                                class="text-[#3949ab] font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all"
+                                class="text-gray-50 font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all"
+                            >
+                                <box-icon
+                                    type="logo"
+                                    name="gmail"
+                                    class="mr-2"
+                                    color="#85c1e9"
+                                ></box-icon>
+                                {{ $t("admin.email") }}
+                            </router-link>
+                        </li>
+                        <li>
+                            <router-link
+                                to="/admin"
+                                class="text-gray-50 font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all"
                             >
                                 <box-icon
                                     name="bar-chart-square"
                                     class="mr-2"
-                                    color="#089b0d"
+                                    color="#85c1e9"
                                 ></box-icon>
                                 {{ $t("admin.stat") }}
                             </router-link>
-                        </li>                          
+                        </li>
                     </ul>
 
                     <ul class="space-y-6 pl-3 mt-8">
                         <li>
                             <router-link
                                 to="/home"
-                                class="text-[#3949ab] font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all"
+                                class="text-gray-50 font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all"
                             >
-                               <box-icon
+                                <box-icon
                                     name="right-arrow-circle"
                                     class="mr-2"
                                     color="#85c1e9"
@@ -104,7 +118,7 @@
                         <li>
                             <a
                                 href="https://www.facebook.com/profile.php?id=100065010669710"
-                                class="text-[#3949ab] font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all"
+                                class="text-gray-50 font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all"
                                 target="_blank"
                             >
                                 <box-icon
@@ -117,7 +131,7 @@
                         </li>
                         <li>
                             <div
-                                class="text-[#3949ab] font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all hover:cursor-pointer"
+                                class="text-gray-50 font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all hover:cursor-pointer"
                             >
                                 <box-icon
                                     name="log-out-circle"
@@ -133,9 +147,10 @@
 
                     <hr class="my-6 border-gray-200" />
 
-                    <router-link 
-                    to="/profile"
-                    class="flex flex-wrap items-center cursor-pointer">
+                    <router-link
+                        to="/profile"
+                        class="flex flex-wrap items-center cursor-pointer"
+                    >
                         <div class="relative">
                             <box-icon
                                 name="user"
@@ -143,12 +158,12 @@
                                 color="#6a7282"
                             ></box-icon>
                             <span
-                                class="h-3 w-3 rounded-full bg-green-600 border-2 border-white block absolute bottom-0 right-0"
+                                class="h-3 w-3 rounded-full bg-green-600 border-2 border-#85c1e9 block absolute bottom-0 right-0"
                             ></span>
                         </div>
 
                         <div class="ml-4">
-                            <p class="text-sm text-[#3949ab] font-semibold">
+                            <p class="text-sm text-gray-50 font-semibold">
                                 {{ user.name }} {{ user.surname }}
                             </p>
                             <p class="text-xs text-gray-500 mt-0.5">
@@ -171,7 +186,7 @@
                 <box-icon
                     name="chevrons-left"
                     type="solid"
-                    color="white"
+                    color="#85c1e9"
                     class="w-4 h-4"
                 ></box-icon>
             </div>
@@ -186,7 +201,7 @@
             <box-icon
                 name="chevrons-right"
                 type="solid"
-                color="white"
+                color="#85c1e9"
                 class="w-4 h-4"
             ></box-icon>
         </div>
@@ -201,7 +216,7 @@
         </transition>
 
         <!-- Space -->
-        <main class="flex-1 p-6 bg-gray-50">
+        <main class="flex-1 p-6 bg-gray-100">
             <router-view v-slot="{ Component, route }">
                 <transition name="fade" mode="out-in">
                     <div :key="route.name">
@@ -221,7 +236,7 @@ export default {
     mounted() {},
     data() {
         return {
-            logo: "/img/logo/logo.png",
+            logo: "/img/logo/logo-rm.png",
             isSidebarOpen: true,
         };
     },

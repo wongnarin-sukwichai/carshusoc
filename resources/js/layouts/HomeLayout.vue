@@ -134,7 +134,7 @@
                     </ul>
 
                     <ul class="space-y-6 pl-3 mt-8">
-                        <li v-if="(user.level === 'admin')">
+                        <li v-if="(user && user.level === 'admin')">
                             <router-link
                                 to="/admin"
                                 class="text-[#3949ab] font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all"
@@ -193,7 +193,9 @@
                             ></span>
                         </div>
 
-                        <div class="ml-4">
+                        <div 
+                        v-if="user"
+                        class="ml-4">
                             <p class="text-sm text-[#3949ab] font-semibold">
                                 {{ user.name }} {{ user.surname }}
                             </p>
@@ -247,7 +249,7 @@
         </transition>
 
         <!-- Space -->
-        <main class="flex-1 p-6 bg-gray-50">
+        <main class="flex-1 p-6 bg-gray-100">
             <router-view v-slot="{ Component, route }">
                 <transition name="fade" mode="out-in">
                     <div :key="route.name">
@@ -267,7 +269,7 @@ export default {
     mounted() {},
     data() {
         return {
-            logo: "/img/logo/logo.png",
+            logo: "/img/logo/logo-rm.png",
             isSidebarOpen: true,
         };
     },

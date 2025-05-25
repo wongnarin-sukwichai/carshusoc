@@ -1,12 +1,10 @@
 <template>
     <div :class="fontClass">
-        <transition name="fade" mode="out-in">
-            <component :is="layout">
-                <router-view v-slot="{ Component, route }">
-                    <component :is="Component" :key="route.fullPath" />
-                </router-view>
-            </component>
-        </transition>
+        <component :is="layout">
+            <router-view v-slot="{ Component, route }">
+                <component :is="Component" :key="route.fullPath" />
+            </router-view>
+        </component>
     </div>
 </template>
 

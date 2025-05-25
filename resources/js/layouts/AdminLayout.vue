@@ -39,13 +39,52 @@
                                 class="text-[#3949ab] font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all"
                             >
                                 <box-icon
-                                    name="home"
+                                    name="shield-plus"
                                     class="mr-2"
-                                    color="#85c1e9"
+                                    color="#089b0d"
                                 ></box-icon>
                                 {{ $t("home.home") }}
                             </router-link>
-                        </li>                     
+                        </li>  
+                        <li>
+                            <router-link
+                                to="/admin"
+                                class="text-[#3949ab] font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all"
+                            >
+                                <box-icon
+                                    name="user-plus"
+                                    class="mr-2"
+                                    color="#089b0d"
+                                ></box-icon>
+                                {{ $t("admin.member") }}
+                            </router-link>
+                        </li>  
+                        <li>
+                            <router-link
+                                to="/admin"
+                                class="text-[#3949ab] font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all"
+                            >
+                                <box-icon
+                                    name="layer-plus"
+                                    class="mr-2"
+                                    color="#089b0d"
+                                ></box-icon>
+                                {{ $t("admin.cont") }}
+                            </router-link>
+                        </li>  
+                        <li>
+                            <router-link
+                                to="/admin"
+                                class="text-[#3949ab] font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all"
+                            >
+                                <box-icon
+                                    name="bar-chart-square"
+                                    class="mr-2"
+                                    color="#089b0d"
+                                ></box-icon>
+                                {{ $t("admin.stat") }}
+                            </router-link>
+                        </li>                          
                     </ul>
 
                     <ul class="space-y-6 pl-3 mt-8">

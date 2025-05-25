@@ -53,6 +53,9 @@
         "search": "Search"
     },
     "admin": {
-        "back": "Back"
+        "back": "Back",
+        "member": "Member",
+        "stat": "Statistics",
+        "cont": "Content"
     }
 }

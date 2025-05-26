@@ -13,6 +13,9 @@ import Condition from "../components/Condition.vue";
 
 // Admin
 import Admin from "../components/Admin.vue";
+import Stat from "../components/Stat.vue";
+import Content from "../components/Content.vue";
+import Member from "../components/Member.vue";
 
 import store from "../store";
 
@@ -93,6 +96,33 @@ const routes = [
         path: "/admin",
         name: "admin",
         component: Admin,
+        meta: {
+            layout: "admin",
+            guard: "admin",
+        },
+    },
+    {
+        path: "/stat",
+        name: "stat",
+        component: Stat,
+        meta: {
+            layout: "admin",
+            guard: "admin",
+        },
+    },
+    {
+        path: "/content",
+        name: "content",
+        component: Content,
+        meta: {
+            layout: "admin",
+            guard: "admin",
+        },
+    },
+        {
+        path: "/member",
+        name: "member",
+        component: Member,
         meta: {
             layout: "admin",
             guard: "admin",

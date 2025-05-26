@@ -125,11 +125,20 @@
                     </div>
                 </div>
             </div>
+            <div class="border-2 border-dashed rounded-xl hover:border-gray-300">
+                <div
+                    class="flex justify-center p-24 group overflow-hidden rounded-xl cursor-pointer"
+                >
+                    <box-icon name="plus" size="lg" class="opacity-10 hover:scale-115 w-24 h-24"></box-icon>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+import "boxicons";
+
 export default {
     mounted() {},
     data() {

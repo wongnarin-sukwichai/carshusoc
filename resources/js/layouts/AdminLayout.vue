@@ -48,7 +48,7 @@
                         </li>
                         <li>
                             <router-link
-                                to="/admin"
+                                to="/member"
                                 class="text-gray-50 font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all"
                             >
                                 <box-icon
@@ -61,7 +61,7 @@
                         </li>
                         <li>
                             <router-link
-                                to="/admin"
+                                to="/content"
                                 class="text-gray-50 font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all"
                             >
                                 <box-icon
@@ -88,7 +88,7 @@
                         </li>
                         <li>
                             <router-link
-                                to="/admin"
+                                to="/stat"
                                 class="text-gray-50 font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all"
                             >
                                 <box-icon

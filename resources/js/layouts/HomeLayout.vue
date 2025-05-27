@@ -91,7 +91,7 @@
                                 >
                             </router-link>
                         </li>
-                        <li>
+                        <!-- <li>
                             <router-link
                                 to="/home"
                                 class="text-[#3949ab] font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all"
@@ -103,14 +103,14 @@
                                 ></box-icon>
                                 <span>{{ $t("home.his") }}</span>
                             </router-link>
-                        </li>
+                        </li> -->
                         <li>
                             <router-link
-                                to="/home"
+                                to="/cert"
                                 class="text-[#3949ab] font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all"
                             >
                                 <box-icon
-                                    name="file"
+                                    name="certification"
                                     class="mr-2"
                                     color="#85c1e9"
                                 ></box-icon>

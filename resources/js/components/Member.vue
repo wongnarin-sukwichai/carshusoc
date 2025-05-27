@@ -7,7 +7,7 @@
                 size="lg"
                 color="#85c1e9"
             ></box-icon>
-            <span class="text-[#85c1e9] text-2xl font-bold">จัดการสมาชิก</span>
+            <span class="text-[#85c1e9] text-2xl font-bold">{{ $t('admin.member') }}</span>
         </div>
 
         <div

@@ -74,7 +74,7 @@
                         </li>
                         <li>
                             <router-link
-                                to="/admin"
+                                to="/mail"
                                 class="text-gray-50 font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all"
                             >
                                 <box-icon

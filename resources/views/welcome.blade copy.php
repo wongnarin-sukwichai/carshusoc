@@ -186,6 +186,7 @@
 
         <!-- trusted by -->
         <div class="max-w-4xl mx-auto">
+            <h1 class="text-center mb-3 text-gray-400 font-medium">Communication</h1>
             <div class="grid grid-cols-3 lg:grid-cols-3 gap-4 justify-items-center">
                 <img class="h-16" src="{{ url('/img/info/logo-msu.png') }}">
                 <img class="h-12" src="{{ url('/img/info/logo-husoc.png') }}">
@@ -193,10 +194,8 @@
             </div>
         </div>
 
-        <hr class="mx-32 border border-dashed border-gray-200 my-16">
-
         <!-- All-In-One Cloud Software. -->
-        <div data-aos="flip-up" class="max-w-xl mx-auto text-center mt-8">
+        <div data-aos="flip-up" class="max-w-xl mx-auto text-center mt-24">
             <h1 class="font-bold text-darken my-3 text-3xl">
                 @lang('messages.serv')
                 <span class="text-yellow-500">
@@ -207,9 +206,8 @@
                 @lang('messages.join')
             </p>
         </div>
-
         <!-- card -->
-        <div class="grid md:grid-cols-3 gap-14 md:gap-5 mt-8">
+        <div class="grid md:grid-cols-3 gap-14 md:gap-5 mt-20">
             <!-- card item -->
             <div data-aos="fade-up" class="bg-white shadow-xl text-center rounded-xl relative group overflow-hidden">
                 <img src="{{ url('/img/project/01.png') }}" class="rounded-xl" />
@@ -256,10 +254,8 @@
             </div>
         </div>
 
-        <hr class="mx-32 border border-dashed border-gray-200 my-24">
-
         <!-- lorem -->
-        <div>
+        <div class="mt-28">
             <div data-aos="flip-down" class="text-center max-w-screen-md mx-auto">
                 <h1 class="text-3xl font-bold mb-4"> @lang('messages.what')<span class="text-yellow-500 pl-4">CARS-HUSOC
                         ?</span></h1>
@@ -270,7 +266,7 @@
             <div data-aos="fade-up"
                 class="flex flex-col md:flex-row justify-center space-y-5 md:space-y-0 md:space-x-6 lg:space-x-10 mt-7">
 
-                <div class="relative md:w-5/12 group shadow-xl rounded-xl">
+                <div class="relative md:w-5/12 group">
                     <img class="rounded-2xl" src="{{ url('/img/info/01.png') }}">
                     <!-- overlay -->
                     <div
@@ -283,7 +279,7 @@
                     </div>
                 </div>
 
-                <div class="relative md:w-5/12 group shadow-xl rounded-xl">
+                <div class="relative md:w-5/12 group">
                     <img class="rounded-2xl" src="{{ url('/img/info/02.png') }}">
                     <!-- overlay -->
                     <div
@@ -295,13 +291,12 @@
                         </a>
                     </div>
                 </div>
+
             </div>
+
         </div>
 
-        <hr class="mx-32 border border-dashed border-gray-200 my-24">
-
-        <!-- Card -->
-        <div class="sm:flex items-center sm:space-x-8">
+        <div class="sm:flex items-center sm:space-x-8 mt-36">
             <div data-aos="fade-right" class="sm:w-1/2 relative">
                 <div class="bg-yellow-500 rounded-full absolute w-12 h-12 z-0 -left-4 -top-3 animate-pulse"></div>
                 <h1 class="font-semibold relative z-50 text-darken lg:pr-10">Everything you can do in a
@@ -327,10 +322,7 @@
             </div>
         </div>
 
-        <hr class="mx-32 border border-dashed border-gray-200 my-24">
-
-        <!-- Card -->
-        <div class="md:flex md:space-x-10 items-start">
+        <div class="md:flex mt-40 md:space-x-10 items-start">
             <div data-aos="fade-down" class="md:w-7/12 relative">
                 <div style="background: #33EFA0"
                     class="w-32 h-32 rounded-full absolute z-0 left-4 -top-12 animate-pulse">
@@ -345,7 +337,7 @@
                     class="w-5 h-5 rounded-full absolute z-0 right-52 bottom-1 animate-ping"></div>
             </div>
             <div data-aos="fade-down" class="md:w-5/12 mt-20 md:mt-0 text-gray-500">
-                <h1 class="font-semibold text-darken lg:pr-40">A <span class="text-yellow-500">user
+                <h1 class= font-semibold text-darken lg:pr-40">A <span class="text-yellow-500">user
                         interface</span> designed for the classroom</h1>
                 <div class="flex items-center space-x-5 my-5">
                     <div class="flex-shrink bg-white shadow-lg rounded-full p-3 flex items-center justify-center">
@@ -381,94 +373,175 @@
             </div>
         </div>
 
-        <hr class="mx-32 border border-dashed border-gray-200 my-16">
-
         <!-- Latest News and Resources -->
-        <div data-aos="zoom-in" class="text-center">
-            <h1 class="text-darken font-semibold text-3xl">@lang('messages.news') : <span
-                    class="text-yellow-500">CARS-HUSOC</span></h1>
-            <p class="text-gray-500 my-5">@lang('messages.newsabout')</p>
+        <div data-aos="zoom-in" class="mt-16 text-center">
+            <h1 class="text-darken font-semibold">Latest News and Resources</h1>
+            <p class="text-gray-500 my-5">See the developments that have occurred to Skillines in the world</p>
         </div>
         <div data-aos="zoom-in-up" class="my-14 flex flex-col lg:flex-row lg:space-x-20">
             <div class="lg:w-6/12">
-                <img class="w-full mb-6 shadow-xl rounded-xl" src="{{ url('img/info/01.png') }}">
+                <img class="w-full mb-6" src="img/laptop-news.png">
                 <span class="bg-yellow-300 text-darken font-semibold px-4 py-px text-sm rounded-full">NEWS</span>
-                <h1 class="text-gray-800 font-semibold my-3 text-xl">
-                    โครงการอบรมทักษะภาษาอังกฤษสำหรับนิสิตระดับบัณฑิตศึกษา
-                </h1>
-                <p class="text-gray-500 mb-3">
-                    ศูนย์บริการวิชาการและวิจัย คณะมนุษยศาสตร์และสังคมศาสตร์ มหาวิทยาลัยมหาสารคาม...
-                </p>
-                <a href=""
-                    class="border-2 border-dashed border-yellow-300 hover:bg-yellow-300 hover:text-white p-2 rounded-lg text-xs">@lang('messages.read')...</a>
+                <h1 class="text-gray-800 font-semibold my-3 text-xl">Class adds $30 million to its balance sheet for a
+                    Zoom-friendly edtech solution</h1>
+                <p class="text-gray-500 mb-3">Class, launched less than a year ago by Blackboard co-founder Michael
+                    Chasen, integrates exclusively...</p>
+                <a href="" class="underline">Read more</a>
             </div>
             <div class="lg:w-7/12 flex flex-col justify-between mt-12 space-y-5 lg:space-y-0 lg:mt-0">
                 <div class="flex space-x-5">
                     <div class="w-4/12">
                         <div class="relative">
-                            <img class="rounded-xl w-full" src="{{ url('img/info/02.png') }}">
+                            <img class="rounded-xl w-full" src="img/children-laptop.png">
                             <span
-                                class="absolute bottom-2 right-2 bg-yellow-300 text-darken font-semibold px-4 py-px text-sm rounded-full hidden sm:block">NEWS</span>
+                                class="absolute bottom-2 right-2 bg-yellow-300 text-darken font-semibold px-4 py-px text-sm rounded-full hidden sm:block">PRESS
+                                RELEASE</span>
                         </div>
                     </div>
                     <div class="w-8/12">
-                        <h1 class="text-gray-800 text-sm sm:text-lg font-semibold">
-                            เปิดรับสมัครผู้เข้าสอบ TOEIC
-                        </h1>
-                        <p class="text-gray-500 my-2 sm:my-4 text-xs sm:text-md">
-                            จัดโดยศูนย์ทดสอบภาษาอังกฤษ คณะมนุษยศาสตร์และสังคมศาสตร์ มหาวิทยาลัยมหาสารคาม ร่วมมือกับ
-                            Center for...
-                        </p>
-                        <a href=""
-                            class="border-2 border-dashed border-yellow-300 hover:bg-yellow-300 hover:text-white p-2 rounded-lg text-xs">@lang('messages.read')...</a>
+                        <h1 class="text-gray-800 text-sm sm:text-lg font-semibold">Class Technologies Inc. Closes $30
+                            Million Series A Financing to Meet High Demand</h1>
+                        <p class="text-gray-500 my-2 sm:my-4 text-xs sm:text-md">Class Technologies Inc., the company
+                            that created Class,...</p>
                     </div>
                 </div>
                 <div class="flex space-x-5">
                     <div class="w-4/12">
                         <div class="relative">
-                            <img class="rounded-xl w-full" src="{{ url('img/info/03.png') }}">
+                            <img class="rounded-xl w-full" src="img/girl-laptop.png">
                             <span
                                 class="absolute bottom-2 right-2 bg-yellow-300 text-darken font-semibold px-4 py-px text-sm rounded-full hidden sm:block">NEWS</span>
                         </div>
                     </div>
                     <div class="w-8/12">
-                        <h1 class="text-gray-800 text-sm sm:text-lg font-semibold">ประกาศรับสมัครโครงการวิจัย
-                            สำหรับอาจารย์ บุคลากร และนิสิตระดับบัณฑิตศึกษา ประจำปีงบประมาณ พ.ศ.2568</h1>
-                        <p class="text-gray-500 my-2 sm:my-4 text-xs sm:text-md">ประกาศรับสมัครโครงการวิจัย
-                            สำหรับอาจารย์และบุคลากร ประจำปีงบประมาณ พ.ศ.2567 ตั้งแต่บัดนี้...</p>
-                        <a href=""
-                            class="border-2 border-dashed border-yellow-300 hover:bg-yellow-300 hover:text-white p-2 rounded-lg text-xs">@lang('messages.read')...</a>
+                        <h1 class="text-gray-800 text-sm sm:text-lg font-semibold">Zoom’s earliest investors are
+                            betting millions on a better Zoom for schools</h1>
+                        <p class="text-gray-500 my-2 sm:my-4 text-xs sm:text-md">Zoom was never created to be a
+                            consumer product. Nonetheless, the...</p>
                     </div>
                 </div>
                 <div class="flex space-x-5">
                     <div class="w-4/12">
                         <div class="relative">
-                            <img class="rounded-xl w-full" src="{{ url('img/info/04.png') }}">
+                            <img class="rounded-xl w-full" src="img/cat-laptop.png">
                             <span
                                 class="absolute bottom-2 right-2 bg-yellow-300 text-darken font-semibold px-4 py-px text-sm rounded-full hidden sm:block">NEWS</span>
                         </div>
                     </div>
                     <div class="w-8/12">
-                        <h1 class="text-gray-800 text-sm sm:text-lg font-semibold">เตรียมความพร้อมสอบ TOEIC กับ
-                            CARS-HUSOC</h1>
-                        <p class="text-gray-500 my-2 sm:my-4 text-xs sm:text-md">อบรมเข้มข้น 3 วัน
-                            เพื่อเพิ่มความมั่นใจในการสอบ TOEIC กับวิทยากรผู้เชี่ยวชาญ อาจารย์ดุจตะวัน อินศร...</p>
-                        <a href=""
-                            class="border-2 border-dashed border-yellow-300 hover:bg-yellow-300 hover:text-white p-2 rounded-lg text-xs">@lang('messages.read')...</a>
+                        <h1 class="text-gray-800 text-sm sm:text-lg font-semibold">Former Blackboard CEO Raises $16M to
+                            Bring LMS Features to Zoom Classrooms</h1>
+                        <p class="text-gray-500 my-2 sm:my-4 text-xs sm:text-md">This year, investors have reaped big
+                            financial returns from betting on Zoom...</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <hr class="mx-32 border border-dashed border-gray-200 my-16">
-
-        <!-- Calendar -->
-        <div data-aos="zoom-in" class="text-center">
-            <h1 class="text-darken font-semibold text-3xl">@lang('messages.calendar') : <span
-                    class="text-yellow-500">CARS-HUSOC</span></h1>
+        <!-- Tools For Teachers And Learners -->
+        <div class="flex flex-col md:flex-row items-center md:space-x-10 mt-16">
+            <div data-aos="fade-right" class="md:w-1/2 lg:pl-14">
+                <h1 class="text-darken font-semibold text-3xl lg:pr-56"><span class="text-yellow-500">Tools</span> For
+                    Teachers And Learners</h1>
+                <p class="text-gray-500 my-4 lg:pr-32">Class has a dynamic set of teaching tools built to be deployed
+                    and used during class. Teachers can handout assignments in real-time for students to complete and
+                    submit.</p>
+            </div>
+            <img data-aos="fade-left" class="md:w-1/2" src="img/girl-with-books.png">
         </div>
-        <div data-aos="zoom-in-up" class="mt-14 flex flex-col lg:flex-row lg:space-x-20">
-            <img class="" src="{{ url('img/info/calendar.png') }}">
+
+        <!-- Assessments, Quizzes, Tests -->
+        <div class="mt-20 flex flex-col-reverse md:flex-row items-center md:space-x-10">
+            <div data-aos="fade-right" class="md:w-6/12">
+                <img class="md:w-11/12" src="img/true-false.png">
+            </div>
+            <div data-aos="fade-left" class="md:w-6/12 md:transform md:-translate-y-20">
+                <h1 class="font-semibold text-darken text-3xl lg:pr-64">Assessments, <span
+                        class="text-yellow-500">Quizzes</span>, Tests</h1>
+                <p class="text-gray-500 my-5 lg:pr-52">Easily launch live assignments, quizzes, and tests. Student
+                    results are automatically entered in the online gradebook.</p>
+            </div>
+        </div>
+
+        <!-- Class Management Tools for Educators -->
+        <div class="flex flex-col md:flex-row items-center mt-12">
+            <div data-aos="fade-right" class="md:w-5/12">
+                <h1 class="text-darken font-semibold text-3xl leading-tight lg:pr-32"><span
+                        class="text-yellow-500">Class
+                        Management</span> Tools for Educators</h1>
+                <p class="my-5 lg:pr-14">Class provides tools to help run and manage the class such as Class Roster,
+                    Attendance, and more. With the Gradebook, teachers can review and grade tests and quizzes in
+                    real-time.</p>
+            </div>
+            <img data-aos="fade-left" class="md:w-7/12" src="img/gradebook.png">
+        </div>
+
+        <!-- One-on-One Discussions -->
+        <div class="mt-24 flex flex-col-reverse md:flex-row items-center md:space-x-10">
+            <div data-aos="fade-right" class="md:w-7/12">
+                <img class="md:w-11/12" src="img/discussion.png">
+            </div>
+            <div data-aos="fade-left" class="md:w-5/12 md:transform md:-translate-y-6">
+                <h1 class="font-semibold text-darken text-3xl lg:pr-64">One-on-One <span
+                        class="text-yellow-500">Discussions</span></h1>
+                <p class="text-gray-500 my-5 lg:pr-24">Teachers and teacher assistants can talk with students privately
+                    without leaving the Zoom environment.</p>
+            </div>
+        </div>
+
+        <button data-aos="flip-up"
+            class="px-5 py-3 border border-yellow-500 text-yellow-500 font-medium my-14 focus:outline-none transform transition hover:scale-110 duration-300 ease-in-out rounded-full mx-auto block">See
+            more features</button>
+
+        <!-- INTEGRATIONS -->
+        <div class="mt-24 flex flex-col md:flex-row items-start md:space-x-10">
+            <div data-aos="zoom-in-right" class="md:w-6/12">
+                <img class="md:w-8/12 mx-auto" src="img/integrations.png">
+            </div>
+            <div data-aos="zoom-in-left" class="md:w-6/12">
+                <div class="flex items-center space-x-20 mb-5">
+                    <span class="border border-gray-300 w-14 absolute"></span>
+                    <h1 class="text-gray-400 tracking-widest text-sm">INTEGRATIONS</h1>
+                </div>
+                <h1 class="font-semibold text-darken lg:pr-40">200+ educational tools and platform <span
+                        class="text-yellow-500">integrations</span></h1>
+                <p class="text-gray-500 my-5 lg:pr-20">Schoology has every tool your classroom needs and comes
+                    pre-integrated with more than 200+ tools, student information systems (SIS), and education
+                    platforms.</p>
+                <button
+                    class="px-5 py-3 border border-yellow-500 text-yellow-500 font-medium my-4 focus:outline-none transform transition hover:scale-110 duration-300 ease-in-out rounded-full">See
+                    All Integrations</button>
+            </div>
+        </div>
+
+        <!-- TESTIMONIAL -->
+        <div class="mt-24 flex flex-col-reverse md:flex-row items-start md:space-x-10">
+            <div data-aos="zoom-in-right" class="md:w-5/12">
+                <div class="flex items-center space-x-20 mb-5">
+                    <span class="border border-gray-300 w-14 absolute"></span>
+                    <h1 class="text-gray-400 tracking-widest text-sm">TESTIMONIAL</h1>
+                </div>
+                <h1 class="font-semibold text-darken lg:pr-40">What They Say?</h1>
+                <p class="text-gray-500 my-5 lg:pr-36">Skilline has got more than 100k positive ratings from our users
+                    around the world.</p>
+                <p class="text-gray-500 my-5 lg:pr-36">Some of the students and teachers were greatly helped by the
+                    Skilline.</p>
+                <p class="text-gray-500 my-5 lg:pr-36">Are you too? Please give your assessment</p>
+                <button
+                    class="flex items-center space-x-3 pl-3 border-b border-l border-t border-yellow-500 text-yellow-500 font-medium my-4 focus:outline-none transform transition hover:scale-110 duration-300 ease-in-out rounded-full">
+                    <span>Write your assessment</span>
+                    <div class="border border-yellow-500 h-14 w-14 rounded-full flex items-center justify-center">
+                        <svg class="w-5 h-5" viewBox="0 0 26 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M25.7071 8.70711C26.0976 8.31658 26.0976 7.68342 25.7071 7.2929L19.3431 0.928934C18.9526 0.538409 18.3195 0.538409 17.9289 0.928934C17.5384 1.31946 17.5384 1.95262 17.9289 2.34315L23.5858 8L17.9289 13.6569C17.5384 14.0474 17.5384 14.6805 17.9289 15.0711C18.3195 15.4616 18.9526 15.4616 19.3431 15.0711L25.7071 8.70711ZM-8.74228e-08 9L25 9L25 7L8.74228e-08 7L-8.74228e-08 9Z"
+                                fill="#F48C06" />
+                        </svg>
+                    </div>
+                </button>
+            </div>
+            <div data-aos="zoom-in-left" class="md:w-7/12">
+                <img class="md:w-10/12 mx-auto" src="img/testimonials.png">
+            </div>
         </div>
 
     </div>

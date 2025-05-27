@@ -10,12 +10,15 @@ import Profile from "../components/Profile.vue";
 import Detail from "../components/Detail.vue";
 import List from "../components/List.vue";
 import Condition from "../components/Condition.vue";
+import Cert from "../components/Cert.vue";
 
 // Admin
 import Admin from "../components/Admin.vue";
 import Stat from "../components/Stat.vue";
 import Content from "../components/Content.vue";
 import Member from "../components/Member.vue";
+import AddCont from "../components/AddCont.vue";
+import Mail from "../components/Mail.vue";
 
 import store from "../store";
 
@@ -93,6 +96,15 @@ const routes = [
         },
     },
     {
+        path: "/cert",
+        name: "cert",
+        component: Cert,
+        meta: {
+            layout: "auth",
+            guard: "auth",
+        },
+    },
+    {
         path: "/admin",
         name: "admin",
         component: Admin,
@@ -119,10 +131,28 @@ const routes = [
             guard: "admin",
         },
     },
-        {
+    {
         path: "/member",
         name: "member",
         component: Member,
+        meta: {
+            layout: "admin",
+            guard: "admin",
+        },
+    },
+    {
+        path: "/addcont",
+        name: "addcont",
+        component: AddCont,
+        meta: {
+            layout: "admin",
+            guard: "admin",
+        },
+    },
+    {
+        path: "/mail",
+        name: "mail",
+        component: Mail,
         meta: {
             layout: "admin",
             guard: "admin",

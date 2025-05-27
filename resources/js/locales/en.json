@@ -21,7 +21,7 @@
         "cond": "Terms & Conditions",
         "list": "Application List",
         "his": "History",
-        "cert": "Certificate",
+        "cert": "Certificate & file",
         "pri": "Privacy Policy",
         "set": "Setting",
         "help": "Help Center",
@@ -57,6 +57,18 @@
         "member": "Member",
         "stat": "Statistics",
         "cont": "Content",
-        "email": "Email"
+        "email": "Email",
+        "welcome": "Welcome : Administrator",
+        "home": "Home"
+    },
+    "addcont": {
+        "init": "Initialism",
+        "title": "Title",
+        "owner": "Owner",
+        "type": "Type",
+        "budget": "Budget",
+        "address": "Meet Room",
+        "add": "Add",
+        "detail": "Detail"
     }
 }

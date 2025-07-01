@@ -572,8 +572,8 @@
                     <p class="font-under text-xl text-white">ผู้ดูแล</p>
                     <hr class=" border border-dashed border-gray-50 my-2 mr-16">
                     <p class="text-left mt-4 text-gray-400 text-sm">
-                        ผู้ดูแลเว็บไซต์ : นายอรรถสิทธิ์ ศรีรักษ์<br>
-                        E-mail : attasit.s@msu.ac.th<br>
+                        ผู้ดูแลเว็บไซต์ : วงศ์นรินทร์ สุขวิชัย<br>
+                        E-mail : wongnarin.s.s@msu.ac.th<br>
                         เบอร์โทรศัพท์ : 091-132-7411 , 4717 (ภายใน)
                         <br><br>
                     <div class="flex space-x-1 text-sm">

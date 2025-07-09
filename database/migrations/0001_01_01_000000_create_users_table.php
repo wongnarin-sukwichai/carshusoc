@@ -17,15 +17,15 @@ return new class extends Migration
             $table->string('name');
             $table->string('engname');
             $table->date('born');
-            $table->integer('sex')->comment('1=ชาย,2=ญ,3=lgbt');
+            $table->integer('gender')->comment('1=ชาย,2=ญ,3=lgbt');
             $table->string('nation')->comment('สัญชาติ');
             $table->integer('ident')->nullable()->comment('เลขบัตรประชาชน');
             $table->integer('idcard')->nullable()->comment('เลขหนังสือเดินทาง');
             $table->string('email')->unique();
             $table->string('tel');
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('level')->nullable();
+            $table->string('level')->nullable('1=admin');
+            $table->string('edited')->nullable()->comment('admin แก้ไข level ล่าสุด');
             $table->rememberToken();
             $table->timestamps();
         });

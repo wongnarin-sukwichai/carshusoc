@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
+            $table->integer('course_id')->nullable()->comment('มีหมวดย่อยหรือไม่');
+            $table->string('title');
+            $table->longText('detail');
+            $table->string('facebook')->nullable();
+            $table->string('email')->nullable();
+            $table->string('website')->nullable();
+            $table->string('tel')->nullable();
+            $table->longText('other')->nullable();
             $table->timestamps();
         });
     }

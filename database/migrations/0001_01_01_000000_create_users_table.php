@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('name');
             $table->string('engname');
+            $table->integer('type')->comment('1=นิสิต,2=บุคลากร,3=บุคคลทั่วไป');
             $table->date('born');
             $table->integer('gender')->comment('1=ชาย,2=ญ,3=lgbt');
             $table->string('nation')->comment('สัญชาติ');

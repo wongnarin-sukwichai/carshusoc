@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('prices', function (Blueprint $table) {
+        Schema::create('totalscores', function (Blueprint $table) {
             $table->id();
-            $table->integer('course_id')->nullable();
             $table->integer('sort')->nullable()->comment('เรียงลำดับ');
-            $table->integer('type')->nullable();
             $table->string('title');
-            $table->integer('price');
             $table->timestamps();
         });
     }
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('prices');
+        Schema::dropIfExists('totalscores');
     }
 };

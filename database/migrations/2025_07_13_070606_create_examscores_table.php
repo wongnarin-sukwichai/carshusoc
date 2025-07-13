@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('scores', function (Blueprint $table) {
+        Schema::create('examscores', function (Blueprint $table) {
             $table->id();
             $table->integer('course_id');
-            $table->integer('user_id');
-            $table->integer('total_id');
-            $table->string('title');
-            $table->integer('score');
+            $table->integer('exam_id')->comment('ประเภทคะแนนการสอบ');
+            $table->integer('start')->comment('ช่วงคะแนนเริ่มต้น');
+            $table->integer('end')->comment('สิ้นสุดคะแนน');
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('scores');
+        Schema::dropIfExists('examscores');
     }
 };

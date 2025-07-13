@@ -13,13 +13,14 @@ return new class extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
-            $table->integer('course_id')->nullable()->comment('มีหมวดย่อยหรือไม่');
+            $table->string('pic')->nullable();
             $table->string('title');
-            $table->longText('detail');
+            $table->longText('detail')->nullable();
             $table->string('facebook')->nullable();
             $table->string('email')->nullable();
             $table->string('website')->nullable();
             $table->string('tel')->nullable();
+            $table->string('owner')->nullable();
             $table->longText('other')->nullable();
             $table->timestamps();
         });

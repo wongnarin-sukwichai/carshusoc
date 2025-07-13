@@ -11,8 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('slips', function (Blueprint $table) {
+        Schema::create('mails', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->longText('detail');
             $table->timestamps();
         });
     }
@@ -22,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('slips');
+        Schema::dropIfExists('mails');
     }
 };

@@ -13,10 +13,14 @@ class KindSeeder extends Seeder
      */
     public function run(): void
     {
-         Kind::factory()->create(
+        $data = [
             ['title' => 'จดหมายและอีเมลทางราชการ'],
             ['title' => 'เอกสารทางราชการและส่วนบุคคล'],
             ['title' => 'บทคัดย่อและเอกสารทางวิขาการ'],
-        );
+        ];
+
+        foreach ($data as $r) {
+            Kind::create($r);
+        }
     }
 }

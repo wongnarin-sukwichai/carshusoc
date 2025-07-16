@@ -13,12 +13,16 @@ class DegreeSeeder extends Seeder
      */
     public function run(): void
     {
-        Degree::factory()->create(
+        $data = [
             ['title' => 'มัธยม'],
             ['title' => 'ปริญญาตรี'],
             ['title' => 'ปริญญาโท'],
             ['title' => 'ปริญญาเอก'],
             ['title' => 'บุคคลทั่วไป'],
-        );
+        ];
+
+        foreach ($data as $r) {
+            Degree::create($r);
+        }
     }
 }

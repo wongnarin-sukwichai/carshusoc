@@ -14,11 +14,15 @@ class TypeSeeder extends Seeder
      */
     public function run(): void
     {
-        Type::factory()->create(
+        $data = [
             ['title' => 'มัธยม'],
             ['title' => 'นิสิต/นักศึกษา'],
             ['title' => 'บุคลากร'],
             ['title' => 'บุคคลทั่วไป'],
-        );
+        ];
+
+        foreach ($data as $r) {
+            Type::create($r);
+        }
     }
 }

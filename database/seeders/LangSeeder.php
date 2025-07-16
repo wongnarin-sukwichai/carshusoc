@@ -13,7 +13,7 @@ class LangSeeder extends Seeder
      */
     public function run(): void
     {
-         Lang::factory()->create(
+        $data = [
             ['title' => 'Thai'],
             ['title' => 'English'],
             ['title' => 'Japanese'],
@@ -22,6 +22,10 @@ class LangSeeder extends Seeder
             ['title' => 'French'],
             ['title' => 'Lao'],
             ['title' => 'Khmer'],
-        );
+        ];
+
+        foreach ($data as $r) {
+            Lang::create($r);
+        }
     }
 }

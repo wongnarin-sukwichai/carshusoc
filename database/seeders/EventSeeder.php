@@ -13,10 +13,14 @@ class EventSeeder extends Seeder
      */
     public function run(): void
     {
-        Event::factory()->create(
+        $data = [
             ['title' => 'Course'],
             ['title' => 'Service'],
             ['title' => 'Support'],
-        );
+        ];
+
+        foreach ($data as $r) {
+            Event::create($r);
+        }
     }
 }

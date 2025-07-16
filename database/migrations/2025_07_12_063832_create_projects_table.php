@@ -16,6 +16,9 @@ return new class extends Migration
             $table->string('pic')->nullable();
             $table->string('title');
             $table->longText('detail')->nullable();
+            $table->longText('objec')->nullable();
+            $table->longText('mission')->nullable();
+            $table->longText('scope')->nullable();
             $table->string('facebook')->nullable();
             $table->string('email')->nullable();
             $table->string('website')->nullable();
@@ -25,7 +28,6 @@ return new class extends Migration
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */

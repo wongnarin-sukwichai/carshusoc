@@ -13,10 +13,14 @@ class GenderSeeder extends Seeder
      */
     public function run(): void
     {
-        Gender::factory()->create(
+        $data = [
             ['title' => 'ชาย'],
             ['title' => 'หญิง'],
             ['title' => 'LGBTQ'],
-        );
+        ];
+
+        foreach ($data as $r) {
+            Gender::create($r);
+        }
     }
 }

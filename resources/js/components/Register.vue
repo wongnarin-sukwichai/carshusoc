@@ -23,6 +23,7 @@
                                 type="text"
                                 required
                                 class="w-full text-slate-800 text-sm border border-slate-300 px-4 py-3 rounded-md outline-blue-600"
+                                placeholder="firstname"
                             />
                         </div>
                     </div>
@@ -36,11 +37,12 @@
                             <input
                                 required
                                 class="w-full text-slate-800 text-sm border border-slate-300 px-4 py-3 rounded-md outline-blue-600"
+                                placeholder="lastname"
                             />
                         </div>
                     </div>
 
-                    <div>
+                    <div class="col-span-2">
                         <label
                             class="text-slate-800 text-sm font-medium mb-2 block"
                             >{{ $t('login.email') }} :</label
@@ -51,62 +53,13 @@
                                 type="text"
                                 required
                                 class="w-full text-slate-800 text-sm border border-slate-300 px-4 py-3 rounded-md outline-blue-600"
+                                placeholder="*** test@gmail.com ***"
                             />
                         </div>
-                    </div>
-
-                    <div>
-                        <label
-                            class="text-slate-800 text-sm font-medium mb-2 block"
-                            >{{ $t('login.pass') }} :</label
-                        >
-                        <div class="relative flex items-center">
-                            <input
-                                name="password"
-                                type="password"
-                                required
-                                class="w-full text-slate-800 text-sm border border-slate-300 px-4 py-3 rounded-md outline-blue-600"
-                            />
-                            <box-icon
-                                name="low-vision"
-                                size="sd"
-                                color="#abb2b9"
-                                class="w-6 h-6 absolute right-4 cursor-pointer hover:scale-110"
-                            ></box-icon>
-                        </div>
-                    </div>  
-
-                    <div>
-                        <label
-                            class="text-slate-800 text-sm font-medium mb-2 block"
-                            >{{ $t('regis.conpass') }} :</label
-                        >
-                        <div class="relative flex items-center">
-                            <input
-                                name="password"
-                                type="password"
-                                required
-                                class="w-full text-slate-800 text-sm border border-slate-300 px-4 py-3 rounded-md outline-blue-600"
-                            />
-                            <box-icon
-                                name="low-vision"
-                                size="sd"
-                                color="#abb2b9"
-                                class="w-6 h-6 absolute right-4 cursor-pointer hover:scale-110"
-                            ></box-icon>
-                        </div>
-                    </div> 
-                    
-                    <div>
-                        <label
-                            class="text-slate-800 text-sm font-medium mb-2 block"
-                            ></label
-                        >
-                        <div class="relative flex items-center">
-                           
-                        </div>
-                    </div>
+                    </div>           
                 </div>
+
+                <div class="mt-4 text-xs text-rose-300">** งดใช้ Email ของสถาบันการศึกษา (**.ac.th) เพื่อป้องกันการไม่ได้รับ Email ยืนยันตน</div>
 
               <hr class="my-8 border-1 border-dashed">
 

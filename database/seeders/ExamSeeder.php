@@ -13,10 +13,14 @@ class ExamSeeder extends Seeder
      */
     public function run(): void
     {
-         Exam::factory()->create(
+          $data = [
             ['title' => 'TOEIC'],
             ['title' => 'CEFR'],
             ['title' => 'EPT'],
-        );
+        ];
+
+        foreach ($data as $r) {
+            Exam::create($r);
+        }
     }
 }

@@ -31,6 +31,7 @@ return new class extends Migration
             $table->string('owner')->nullable();
             $table->longText('other')->nullable();
             $table->integer('status')->nullable()->comment('null=เปิด,1=จบคลอสไปแล้ว');
+            $table->string('created')->comment('ใครเป็นคนสร้าง');
             $table->timestamps();
         });
     }

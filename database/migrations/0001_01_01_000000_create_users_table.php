@@ -13,18 +13,22 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('engname');
-            $table->integer('type')->nullable()->comment('1=นิสิต,2=บุคลากร,3=บุคคลทั่วไป');
-            $table->integer('degree')->nullable()->comment('ระดับการศึกษา');
-            $table->date('born');
-            $table->integer('gender')->comment('1=ชาย,2=ญ,3=lgbt');
-            $table->string('nation')->comment('สัญชาติ');
-            $table->integer('ident')->nullable()->comment('เลขบัตรประชาชน');
-            $table->integer('idcard')->nullable()->comment('เลขหนังสือเดินทาง');
             $table->string('email')->unique();
-            $table->string('tel');
+            $table->string('pic')->nullable();
+            $table->string('name');
+            $table->string('surname');
+            $table->string('firstname')->nullable();
+            $table->string('lastname')->nullable();
+            $table->date('born')->nullable();
+            $table->integer('gender')->nullable()->comment('1=ชาย,2=ญ,3=lgbt');
+            $table->integer('type')->nullable()->comment('1=นิสิต,2=บุคลากร,3=บุคคลทั่วไป');
+            $table->integer('degree')->nullable()->comment('ระดับการศึกษา');         
+            $table->string('nation')->nullable()->comment('สัญชาติ');
+            $table->integer('ident')->nullable()->comment('1=เลขบัตรประชาชน,2=เลขหนังสือเดินทาง');
+            $table->integer('idcard')->nullable();
+            $table->string('tel')->nullable();
             $table->string('password');
+            $table->integer('status')->nullable()->comment('1=กรอกข้อมูลแล้ว');
             $table->string('level')->nullable('1=admin');
             $table->string('edited')->nullable()->comment('admin แก้ไข level ล่าสุด');
             $table->rememberToken();

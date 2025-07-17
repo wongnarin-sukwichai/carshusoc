@@ -15,7 +15,6 @@ class TypeSeeder extends Seeder
     public function run(): void
     {
         $data = [
-            ['title' => 'มัธยม'],
             ['title' => 'นิสิต/นักศึกษา'],
             ['title' => 'บุคลากร'],
             ['title' => 'บุคคลทั่วไป'],

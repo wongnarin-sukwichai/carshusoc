@@ -16,7 +16,9 @@
             <!-- Layout 1 -->
             <div class="border-2 border-dashed rounded-xl p-8">
                 <!-- picture -->
-                <div class="flex items-center justify-center">
+                <div class="flex items-center justify-center"
+                v-if="user.pic === null && this.file === null"
+                >
                     <div
                         class="border-2 rounded-full p-12 border-gray-200 border-dashed mt-6"
                     >
@@ -29,6 +31,21 @@
                     </div>
                 </div>
 
+                <div class="flex px-4 justify-center"
+                v-else
+                >
+                    <transition name="fade" mode="out-in">
+                        <div
+                            v-if="previewImage"
+                            class="imagePreviewWrapper rounded-full"
+                            :style="{
+                                'background-image': `url(${previewImage})`,
+                            }"
+                            @click="selectImage"
+                        ></div>
+                    </transition>
+                </div>
+
                 <div class="mt-6 flex justify-center items-center">
                     <box-icon
                         name="image"
@@ -36,9 +53,15 @@
                         color="#d1d5dc"
                         class="mr-2"
                     ></box-icon>
+                    <input
+                        class="w-48 cursor-pointer rounded border border-solid border-neutral-300 bg-clip-padding px-3 py-[0.32rem] text-xs font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:cursor-pointer file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:border-primary focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:file:bg-neutral-700 dark:file:text-neutral-100 dark:focus:border-primary mr-2"
+                        ref="fileInput"
+                        type="file"
+                        @input="pickFile"
+                    />
                     <button
                         type="button"
-                        class="px-2.5 py-1.5 text-sm text-gray-600 border-1 border-dashed border-gray-300 rounded-lg hover:border-sky-300 hover:text-white hover:bg-sky-300"
+                        class="px-2.5 py-1 text-sm text-gray-600 border-1 border-dashed border-gray-300 rounded-lg hover:border-sky-400 hover:text-white hover:bg-sky-300"
                     >
                         Upload
                     </button>
@@ -105,7 +128,7 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-2 gap-4 mt-6">
+                <div class="grid grid-cols-3 gap-4 mt-6">
                     <div>
                         <label
                             for="username"
@@ -152,6 +175,76 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Sex Dropdown -->
+                    <div>
+                        <label
+                            for="username"
+                            class="block text-md font-medium text-gray-900"
+                            >สัญชาติ :</label
+                        >
+
+                        <div class="relative block w-full text-left mt-2">
+                            <div>
+                                <button
+                                    type="button"
+                                    class="flex w-full items-center justify-between gap-2 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50"
+                                    id="menu-button"
+                                    aria-expanded="true"
+                                    aria-haspopup="true"
+                                    @click="showNation()"
+                                >
+                                    Options
+                                    <svg
+                                        class="-mr-1 size-5 text-gray-400"
+                                        viewBox="0 0 20 20"
+                                        fill="currentColor"
+                                        aria-hidden="true"
+                                        data-slot="icon"
+                                    >
+                                        <path
+                                            fill-rule="evenodd"
+                                            d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
+                                            clip-rule="evenodd"
+                                        />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Dropdown List -->
+                        <transition name="fade" mode="out-in">
+                            <div
+                                class="absolute z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-hidden"
+                                role="menu"
+                                aria-orientation="vertical"
+                                aria-labelledby="menu-button"
+                                tabindex="-1"
+                                v-show="nationShow"
+                            >
+                                <div
+                                    class="py-1 max-h-60 overflow-y-auto"
+                                    role="none"
+                                >
+                                    <!-- Active: "bg-gray-100 text-gray-900 outline-hidden", Not Active: "text-gray-700" -->
+                                    <div
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-100 cursor-pointer"
+                                        v-for="(nation, index) in nationList"
+                                        :key="index"
+                                        @click="
+                                            selectNation(
+                                                nation.id,
+                                                nation.title
+                                            )
+                                        "
+                                    >
+                                        {{ nation.title }}
+                                    </div>
+                                </div>
+                            </div>
+                        </transition>
+                    </div>
+                    <!-- End Dropdown -->
                 </div>
 
                 <div class="grid grid-cols-4 gap-4 mt-6">
@@ -181,10 +274,11 @@
                             <div>
                                 <button
                                     type="button"
-                                    class="inline-flex w-full rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50"
+                                    class="flex w-full items-center justify-between gap-2 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50"
                                     id="menu-button"
                                     aria-expanded="true"
                                     aria-haspopup="true"
+                                    @click="showGender()"
                                 >
                                     Options
                                     <svg
@@ -205,52 +299,33 @@
                         </div>
 
                         <!-- Dropdown List -->
-                        <div
-                            class="hidden absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-hidden"
-                            role="menu"
-                            aria-orientation="vertical"
-                            aria-labelledby="menu-button"
-                            tabindex="-1"
-                        >
-                            <div class="py-1" role="none">
-                                <!-- Active: "bg-gray-100 text-gray-900 outline-hidden", Not Active: "text-gray-700" -->
-                                <a
-                                    href="#"
-                                    class="block px-4 py-2 text-sm text-gray-700"
-                                    role="menuitem"
-                                    tabindex="-1"
-                                    id="menu-item-0"
-                                    >Account settings</a
-                                >
-                                <a
-                                    href="#"
-                                    class="block px-4 py-2 text-sm text-gray-700"
-                                    role="menuitem"
-                                    tabindex="-1"
-                                    id="menu-item-1"
-                                    >Support</a
-                                >
-                                <a
-                                    href="#"
-                                    class="block px-4 py-2 text-sm text-gray-700"
-                                    role="menuitem"
-                                    tabindex="-1"
-                                    id="menu-item-2"
-                                    >License</a
-                                >
-                                <form method="POST" action="#" role="none">
-                                    <button
-                                        type="submit"
-                                        class="block w-full px-4 py-2 text-left text-sm text-gray-700"
-                                        role="menuitem"
-                                        tabindex="-1"
-                                        id="menu-item-3"
+                        <transition name="fade" mode="out-in">
+                            <div
+                                class="absolute z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-hidden"
+                                role="menu"
+                                aria-orientation="vertical"
+                                aria-labelledby="menu-button"
+                                tabindex="-1"
+                                v-show="genderShow"
+                            >
+                                <div class="py-1" role="none">
+                                    <!-- Active: "bg-gray-100 text-gray-900 outline-hidden", Not Active: "text-gray-700" -->
+                                    <div
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-100 cursor-pointer"
+                                        v-for="(gender, index) in genderList"
+                                        :key="index"
+                                        @click="
+                                            selectGender(
+                                                gender.id,
+                                                gender.title
+                                            )
+                                        "
                                     >
-                                        Sign out
-                                    </button>
-                                </form>
+                                        {{ gender.title }}
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        </transition>
                     </div>
                     <!-- End Dropdown -->
 
@@ -266,10 +341,11 @@
                             <div>
                                 <button
                                     type="button"
-                                    class="inline-flex w-full rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50"
+                                    class="flex w-full items-center justify-between gap-2 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50"
                                     id="menu-button"
                                     aria-expanded="true"
                                     aria-haspopup="true"
+                                    @click="showType()"
                                 >
                                     Options
                                     <svg
@@ -290,52 +366,28 @@
                         </div>
 
                         <!-- Dropdown List -->
-                        <div
-                            class="hidden absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-hidden"
-                            role="menu"
-                            aria-orientation="vertical"
-                            aria-labelledby="menu-button"
-                            tabindex="-1"
-                        >
-                            <div class="py-1" role="none">
-                                <!-- Active: "bg-gray-100 text-gray-900 outline-hidden", Not Active: "text-gray-700" -->
-                                <a
-                                    href="#"
-                                    class="block px-4 py-2 text-sm text-gray-700"
-                                    role="menuitem"
-                                    tabindex="-1"
-                                    id="menu-item-0"
-                                    >Account settings</a
-                                >
-                                <a
-                                    href="#"
-                                    class="block px-4 py-2 text-sm text-gray-700"
-                                    role="menuitem"
-                                    tabindex="-1"
-                                    id="menu-item-1"
-                                    >Support</a
-                                >
-                                <a
-                                    href="#"
-                                    class="block px-4 py-2 text-sm text-gray-700"
-                                    role="menuitem"
-                                    tabindex="-1"
-                                    id="menu-item-2"
-                                    >License</a
-                                >
-                                <form method="POST" action="#" role="none">
-                                    <button
-                                        type="submit"
-                                        class="block w-full px-4 py-2 text-left text-sm text-gray-700"
-                                        role="menuitem"
-                                        tabindex="-1"
-                                        id="menu-item-3"
+                        <transition name="fade" mode="out-in">
+                            <div
+                                class="absolute z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-hidden"
+                                role="menu"
+                                aria-orientation="vertical"
+                                aria-labelledby="menu-button"
+                                tabindex="-1"
+                                v-show="typeShow"
+                            >
+                                <div class="py-1" role="none">
+                                    <!-- Active: "bg-gray-100 text-gray-900 outline-hidden", Not Active: "text-gray-700" -->
+                                    <div
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-100 cursor-pointer"
+                                        v-for="(type, index) in typeList"
+                                        :key="index"
+                                        :value="type.id"
                                     >
-                                        Sign out
-                                    </button>
-                                </form>
+                                        {{ type.title }}
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        </transition>
                     </div>
                     <!-- End Dropdown -->
 
@@ -351,10 +403,11 @@
                             <div>
                                 <button
                                     type="button"
-                                    class="inline-flex w-full rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50"
+                                    class="flex w-full items-center justify-between gap-2 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50"
                                     id="menu-button"
                                     aria-expanded="true"
                                     aria-haspopup="true"
+                                    @click="showDegree()"
                                 >
                                     Options
                                     <svg
@@ -375,52 +428,28 @@
                         </div>
 
                         <!-- Dropdown List -->
-                        <div
-                            class="hidden absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-hidden"
-                            role="menu"
-                            aria-orientation="vertical"
-                            aria-labelledby="menu-button"
-                            tabindex="-1"
-                        >
-                            <div class="py-1" role="none">
-                                <!-- Active: "bg-gray-100 text-gray-900 outline-hidden", Not Active: "text-gray-700" -->
-                                <a
-                                    href="#"
-                                    class="block px-4 py-2 text-sm text-gray-700"
-                                    role="menuitem"
-                                    tabindex="-1"
-                                    id="menu-item-0"
-                                    >Account settings</a
-                                >
-                                <a
-                                    href="#"
-                                    class="block px-4 py-2 text-sm text-gray-700"
-                                    role="menuitem"
-                                    tabindex="-1"
-                                    id="menu-item-1"
-                                    >Support</a
-                                >
-                                <a
-                                    href="#"
-                                    class="block px-4 py-2 text-sm text-gray-700"
-                                    role="menuitem"
-                                    tabindex="-1"
-                                    id="menu-item-2"
-                                    >License</a
-                                >
-                                <form method="POST" action="#" role="none">
-                                    <button
-                                        type="submit"
-                                        class="block w-full px-4 py-2 text-left text-sm text-gray-700"
-                                        role="menuitem"
-                                        tabindex="-1"
-                                        id="menu-item-3"
+                        <transition name="fade" mode="out-in">
+                            <div
+                                class="absolute z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-hidden"
+                                role="menu"
+                                aria-orientation="vertical"
+                                aria-labelledby="menu-button"
+                                tabindex="-1"
+                                v-show="degreeShow"
+                            >
+                                <div class="py-1" role="none">
+                                    <!-- Active: "bg-gray-100 text-gray-900 outline-hidden", Not Active: "text-gray-700" -->
+                                    <div
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-100 cursor-pointer"
+                                        v-for="(degree, index) in degreeList"
+                                        :key="index"
+                                        :value="degree.id"
                                     >
-                                        Sign out
-                                    </button>
-                                </form>
+                                        {{ degree.title }}
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        </transition>
                     </div>
                     <!-- End Dropdown -->
                 </div>
@@ -610,20 +639,110 @@
 </template>
 
 <script>
+import axios from "axios";
 import boxicons from "boxicons";
+import { types } from "sass";
 import Datepicker from "vuejs3-datepicker";
 
 export default {
-    mounted() {},
+    mounted() {
+        this.getGender();
+        this.getType();
+        this.getDegree();
+        this.getNation();
+    },
     data() {
         return {
             // picked: new Date(),
             picked: "2025-07-01",
             chgPass: false,
-            data: {},
+            genderShow: false,
+            typeShow: false,
+            degreeShow: false,
+            nationShow: false,
+            genderList: "",
+            typeList: "",
+            degreeList: "",
+            nationList: "",
+            file: null,
+            previewImage: "",
+            data: {
+                uid: "",
+                name: "",
+                surname: "",
+                firstname: "",
+                lastname: "",
+                born: "",
+                gender: "",
+                type: "",
+                degree: "",
+                nation: "",
+                ident: "",
+                idcard: "",
+                tel: "",
+                password: "",
+            },
         };
     },
-    methods: {},
+    methods: {
+        ////////////////////////////////////////////////////////////////
+        getGender() {
+            axios.get("/api/gender").then((response) => {
+                this.genderList = response.data;
+            });
+        },
+        getType() {
+            axios.get("/api/type").then((response) => {
+                this.typeList = response.data;
+            });
+        },
+        getDegree() {
+            axios.get("/api/degree").then((response) => {
+                this.degreeList = response.data;
+            });
+        },
+        getNation() {
+            axios.get("/api/nation").then((response) => {
+                this.nationList = response.data;
+            });
+        },
+        ////////////////////////////////////////////////////////////////
+        showGender() {
+            this.genderShow = !this.genderShow;
+        },
+        showType() {
+            this.typeShow = !this.typeShow;
+        },
+        showDegree() {
+            this.degreeShow = !this.degreeShow;
+        },
+        showNation() {
+            this.nationShow = !this.nationShow;
+        },
+        ////////////////////////////////////////////////////////////////
+        resetFile() {
+            this.$refs.fileInput.value = null; //clear ช่อง choose
+            this.previewImage = "";
+            this.file = "";
+        },
+        selectImage() {
+            this.$refs.fileInput.click();
+        },
+        pickFile() {
+            let input = this.$refs.fileInput;
+            this.file = input.files; //เอาไฟล์รูปเข้าตัวแปร file
+            //console.log(this.file[0])
+            if (this.file && this.file[0]) {
+                let reader = new FileReader();
+                reader.onload = (e) => {
+                    this.previewImage = e.target.result;
+                    //this.file = e.target.files[0];
+                };
+                reader.readAsDataURL(this.file[0]);
+                this.$emit("input", this.file[0]);
+            }
+        },
+    },
     computed: {
         user() {
             return this.$store.getters.user;
@@ -634,3 +753,15 @@ export default {
     },
 };
 </script>
+
+<style>
+.imagePreviewWrapper {
+    width: 250px;
+    height: 250px;
+    display: block;
+    cursor: pointer;
+    margin: 0 auto;
+    background-size: cover;
+    background-position: center center;
+}
+</style>

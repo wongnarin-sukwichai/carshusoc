@@ -14,7 +14,6 @@ class DegreeSeeder extends Seeder
     public function run(): void
     {
         $data = [
-            ['title' => 'มัธยม'],
             ['title' => 'ปริญญาตรี'],
             ['title' => 'ปริญญาโท'],
             ['title' => 'ปริญญาเอก'],

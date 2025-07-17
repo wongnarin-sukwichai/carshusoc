@@ -4,6 +4,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\DegreeController;
+use App\Http\Controllers\Api\GenderController;
+use App\Http\Controllers\Api\NationController;
+use App\Http\Controllers\Api\TypeController;
 
 Route::middleware(['web'])->group(function () {
 
@@ -16,6 +20,9 @@ Route::middleware(['web'])->group(function () {
     //Auth
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('user', UserController::class);
+        Route::resource('gender', GenderController::class);
+        Route::resource('type', TypeController::class);
+        Route::resource('degree', DegreeController::class);
+        Route::resource('nation', NationController::class);
     });
-    
 });

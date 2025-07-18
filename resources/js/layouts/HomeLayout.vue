@@ -129,17 +129,17 @@
                                     color="#85c1e9"
                                 ></box-icon>
                                 <span>{{ $t("home.pri") }}</span>
-                        </a>
+                            </a>
                         </li>
                     </ul>
 
                     <ul class="space-y-6 pl-3 mt-8">
-                        <li v-if="(user && user.level === 'admin')">
+                        <li v-if="user && user.level === 'admin'">
                             <router-link
                                 to="/admin"
                                 class="text-[#3949ab] font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all"
                             >
-                               <box-icon
+                                <box-icon
                                     name="cog"
                                     class="mr-2"
                                     color="#85c1e9"
@@ -179,23 +179,29 @@
 
                     <hr class="my-6 border-gray-200" />
 
-                    <router-link 
-                    to="/profile"
-                    class="flex flex-wrap items-center cursor-pointer">
+                    <router-link
+                        to="/profile"
+                        class="flex flex-wrap items-center cursor-pointer"
+                    >
                         <div class="relative">
-                            <box-icon
-                                name="user"
-                                size="md"
-                                color="#6a7282"
-                            ></box-icon>
+                            <div v-if="user.pic === null">
+                                <box-icon
+                                    name="user"
+                                    size="md"
+                                    color="#6a7282"
+                                ></box-icon>
+                            </div>
+                            <div v-else>
+                            <img
+                            class="rounded-full w-10"
+                            :src="pic + this.user.pic"
+                            /></div>
                             <span
                                 class="h-3 w-3 rounded-full bg-green-600 border-2 border-white block absolute bottom-0 right-0"
                             ></span>
                         </div>
 
-                        <div 
-                        v-if="user"
-                        class="ml-4">
+                        <div v-if="user" class="ml-4">
                             <p class="text-sm text-[#3949ab] font-semibold">
                                 {{ user.name }} {{ user.surname }}
                             </p>
@@ -271,6 +277,7 @@ export default {
         return {
             logo: "/img/logo/logo-rm.png",
             isSidebarOpen: true,
+            pic: "user/pics/thumbnails/",
         };
     },
     methods: {

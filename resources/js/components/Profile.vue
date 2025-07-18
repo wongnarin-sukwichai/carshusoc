@@ -13,11 +13,11 @@
         </div>
 
         <div class="grid grid-cols-3 gap-4">
-            <!-- Layout 1 -->
             <div class="border-2 border-dashed rounded-xl p-8">
                 <!-- picture -->
-                <div class="flex items-center justify-center"
-                v-if="user.pic === null && this.file === null"
+                <div
+                    class="flex items-center justify-center"
+                    v-if="this.user.pic === null && this.file === null"
                 >
                     <div
                         class="border-2 rounded-full p-12 border-gray-200 border-dashed mt-6"
@@ -30,10 +30,17 @@
                         ></box-icon>
                     </div>
                 </div>
-
-                <div class="flex px-4 justify-center"
-                v-else
+                <div
+                    class="flex items-center justify-center"
+                    v-else-if="this.user.pic !== null && this.file === null"
                 >
+                    <img
+                        class="border-gray-200 border-dashed w-42 rounded-full"
+                        :src="pic + this.user.pic"
+                    />
+                </div>
+
+                <div class="flex px-4 justify-center" v-else>
                     <transition name="fade" mode="out-in">
                         <div
                             v-if="previewImage"
@@ -62,10 +69,21 @@
                     <button
                         type="button"
                         class="px-2.5 py-1 text-sm text-gray-600 border-1 border-dashed border-gray-300 rounded-lg hover:border-sky-400 hover:text-white hover:bg-sky-300"
+                        @click="upload()"
                     >
                         Upload
                     </button>
                 </div>
+
+                <!-- Alert Upload-->
+                <transition name="fade" mode="out-in">
+                    <span
+                        class="flex items-center justify-center text-center text-xs text-rose-400"
+                        v-if="alertUpload"
+                        >*** กรุณาเลือกไฟล์รูปภาพ / Choose file : (jpg, jpeg,
+                        png) ***</span
+                    >
+                </transition>
 
                 <div
                     class="mt-6 border-2 border-gray-200 border-dashed p-8 rounded-xl"
@@ -76,7 +94,7 @@
                             <div>{{ $t("profile.email") }} :</div>
                         </div>
                         <div class="text-gray-600">
-                            <div>{{ user.name }} {{ user.surname }}</div>
+                            <div>{{ data.name }} {{ data.surname }}</div>
                             <div>{{ user.email }}</div>
                         </div>
                     </div>
@@ -101,7 +119,8 @@
                                     name="username"
                                     id="username"
                                     class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-md"
-                                    :placeholder="user.name"
+                                    :placeholder="data.name"
+                                    v-model="data.name"
                                 />
                             </div>
                         </div>
@@ -121,7 +140,8 @@
                                     name="username"
                                     id="username"
                                     class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-md"
-                                    :placeholder="user.surname"
+                                    :placeholder="data.surname"
+                                    v-model="data.surname"
                                 />
                             </div>
                         </div>
@@ -147,7 +167,8 @@
                                     name="username"
                                     id="username"
                                     class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-md"
-                                    :placeholder="user.firstname"
+                                    :placeholder="data.firstname"
+                                    v-model="data.firstname"
                                 />
                             </div>
                         </div>
@@ -170,7 +191,8 @@
                                     name="username"
                                     id="username"
                                     class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-md"
-                                    :placeholder="user.lastname"
+                                    :placeholder="data.lastname"
+                                    v-model="data.lastname"
                                 />
                             </div>
                         </div>
@@ -194,7 +216,12 @@
                                     aria-haspopup="true"
                                     @click="showNation()"
                                 >
-                                    Options
+                                    <span v-if="data.nation === null"
+                                        >เลือก</span
+                                    >
+                                    <span v-else>
+                                        {{ data.nation }}
+                                    </span>
                                     <svg
                                         class="-mr-1 size-5 text-gray-400"
                                         viewBox="0 0 20 20"
@@ -231,12 +258,7 @@
                                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-100 cursor-pointer"
                                         v-for="(nation, index) in nationList"
                                         :key="index"
-                                        @click="
-                                            selectNation(
-                                                nation.id,
-                                                nation.title
-                                            )
-                                        "
+                                        @click="setNation(nation.id)"
                                     >
                                         {{ nation.title }}
                                     </div>
@@ -256,7 +278,7 @@
                         >
                         <div class="mt-2">
                             <Datepicker
-                                v-model="picked"
+                                v-model="data.born"
                                 class="w-full text-sm"
                             />
                         </div>
@@ -280,7 +302,12 @@
                                     aria-haspopup="true"
                                     @click="showGender()"
                                 >
-                                    Options
+                                    <span v-if="data.gender === null"
+                                        >เลือก</span
+                                    >
+                                    <span v-else>
+                                        {{ data.gender }}
+                                    </span>
                                     <svg
                                         class="-mr-1 size-5 text-gray-400"
                                         viewBox="0 0 20 20"
@@ -314,12 +341,7 @@
                                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-100 cursor-pointer"
                                         v-for="(gender, index) in genderList"
                                         :key="index"
-                                        @click="
-                                            selectGender(
-                                                gender.id,
-                                                gender.title
-                                            )
-                                        "
+                                        @click="setGender(gender.id)"
                                     >
                                         {{ gender.title }}
                                     </div>
@@ -347,7 +369,10 @@
                                     aria-haspopup="true"
                                     @click="showType()"
                                 >
-                                    Options
+                                    <span v-if="data.type === null">เลือก</span>
+                                    <span v-else>
+                                        {{ data.type }}
+                                    </span>
                                     <svg
                                         class="-mr-1 size-5 text-gray-400"
                                         viewBox="0 0 20 20"
@@ -381,7 +406,7 @@
                                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-100 cursor-pointer"
                                         v-for="(type, index) in typeList"
                                         :key="index"
-                                        :value="type.id"
+                                        @click="setType(type.id)"
                                     >
                                         {{ type.title }}
                                     </div>
@@ -409,7 +434,12 @@
                                     aria-haspopup="true"
                                     @click="showDegree()"
                                 >
-                                    Options
+                                    <span v-if="data.degree === null"
+                                        >เลือก</span
+                                    >
+                                    <span v-else>
+                                        {{ data.degree }}
+                                    </span>
                                     <svg
                                         class="-mr-1 size-5 text-gray-400"
                                         viewBox="0 0 20 20"
@@ -443,7 +473,7 @@
                                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-100 cursor-pointer"
                                         v-for="(degree, index) in degreeList"
                                         :key="index"
-                                        :value="degree.id"
+                                        @click="setDegree(degree.id)"
                                     >
                                         {{ degree.title }}
                                     </div>
@@ -460,30 +490,32 @@
                             >ระบุตัวตนด้วย :</label
                         >
                         <div class="flex flex-col gap-2">
-                            <!-- เพศชาย -->
+                            <!-- เลขบัตรประชาชน -->
                             <label
                                 class="inline-flex items-center gap-x-2 cursor-pointer"
                             >
                                 <input
                                     type="radio"
                                     name="gender"
-                                    value="male"
+                                    :value="1"
                                     class="text-blue-600 focus:ring-blue-500 border-gray-300 rounded-full"
+                                    v-model="data.ident"
                                 />
                                 <span class="text-gray-700"
                                     >เลขบัตรประชาชน</span
                                 >
                             </label>
 
-                            <!-- เพศหญิง -->
+                            <!-- เลขหนังสือเดินทาง-->
                             <label
                                 class="inline-flex items-center gap-x-2 cursor-pointer"
                             >
                                 <input
                                     type="radio"
                                     name="gender"
-                                    value="female"
+                                    :value="2"
                                     class="text-pink-500 focus:ring-pink-400 border-gray-300 rounded-full"
+                                    v-model="data.ident"
                                 />
                                 <span class="text-gray-700"
                                     >เลขหนังสือเดินทาง</span
@@ -507,7 +539,7 @@
                                     name="username"
                                     id="username"
                                     class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-md"
-                                    :placeholder="user.born"
+                                    :placeholder="data.idcard"
                                 />
                             </div>
                         </div>
@@ -531,7 +563,8 @@
                                     name="username"
                                     id="username"
                                     class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-md"
-                                    :placeholder="user.born"
+                                    :placeholder="data.tel"
+                                    v-model="data.tel"
                                 />
                             </div>
                         </div>
@@ -593,9 +626,8 @@
                                 >
                                     <input
                                         type="text"
-                                        name="username"
-                                        id="username"
                                         class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-md"
+                                        v-model="data.password"
                                     />
                                 </div>
                             </div>
@@ -612,9 +644,8 @@
                                 >
                                     <input
                                         type="text"
-                                        name="username"
-                                        id="username"
                                         class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-md"
+                                        v-model="data.confirmPass"
                                     />
                                 </div>
                             </div>
@@ -643,31 +674,38 @@ import axios from "axios";
 import boxicons from "boxicons";
 import { types } from "sass";
 import Datepicker from "vuejs3-datepicker";
+import Swal from "sweetalert2";
 
 export default {
-    mounted() {
-        this.getGender();
-        this.getType();
-        this.getDegree();
-        this.getNation();
+    async mounted() {
+        await this.getUser();
+        await this.getGender();
+        await this.getType();
+        await this.getDegree();
+        await this.getNation();
     },
     data() {
         return {
-            // picked: new Date(),
-            picked: "2025-07-01",
             chgPass: false,
+            pic: "user/pics/",
+            ////////////////////////////////////////////////////////////////
             genderShow: false,
             typeShow: false,
             degreeShow: false,
             nationShow: false,
-            genderList: "",
-            typeList: "",
-            degreeList: "",
-            nationList: "",
+            ////////////////////////////////////////////////////////////////
+            alertUpload: false,
+            ////////////////////////////////////////////////////////////////
+            genderList: [],
+            typeList: [],
+            degreeList: [],
+            nationList: [],
+            ////////////////////////////////////////////////////////////////
             file: null,
             previewImage: "",
+            picName: "",
+            ////////////////////////////////////////////////////////////////
             data: {
-                uid: "",
                 name: "",
                 surname: "",
                 firstname: "",
@@ -681,30 +719,103 @@ export default {
                 idcard: "",
                 tel: "",
                 password: "",
+                confirmPass: ""
             },
         };
     },
     methods: {
         ////////////////////////////////////////////////////////////////
-        getGender() {
-            axios.get("/api/gender").then((response) => {
+        getUser() {
+            this.data.name = this.user.name;
+            this.data.surname = this.user.surname;
+            this.data.firstname = this.user.firstname;
+            this.data.lastname = this.user.lastname;
+            this.data.born = this.user.born;
+            this.data.gender = this.user.gender;
+            this.data.type = this.user.type;
+            this.data.degree = this.user.degree;
+            this.data.nation = this.user.natopn;
+            this.data.ident = this.user.ident;
+            this.data.idcard = this.user.idcard;
+            this.data.tel = this.user.tel;
+            this.data.password = this.user.password;
+        },
+        async getGender() {
+            await axios.get("/api/gender").then((response) => {
                 this.genderList = response.data;
             });
+            /////////////// ดึงค่ามาจาก user
+            if (this.user.gender !== null) {
+                this.setGender(this.user.gender);
+            }
         },
-        getType() {
-            axios.get("/api/type").then((response) => {
+        async getType() {
+            await axios.get("/api/type").then((response) => {
                 this.typeList = response.data;
             });
+            /////////////// ดึงค่ามาจาก user
+            if (this.user.type !== null) {
+                this.setType(this.user.type);
+            }
         },
-        getDegree() {
-            axios.get("/api/degree").then((response) => {
+        async getDegree() {
+            await axios.get("/api/degree").then((response) => {
                 this.degreeList = response.data;
             });
+            /////////////// ดึงค่ามาจาก user
+            if (this.user.degree !== null) {
+                this.setDegree(this.user.degree);
+            }
         },
-        getNation() {
-            axios.get("/api/nation").then((response) => {
+        async getNation() {
+            await axios.get("/api/nation").then((response) => {
                 this.nationList = response.data;
             });
+            /////////////// ดึงค่ามาจาก user
+            if (this.user.nation !== null) {
+                this.setNation(this.user.nation);
+            }
+        },
+        ////////////////////////////////////////////////////////////////
+        setNation(id) {
+            if (id != null) {
+                const arr = Array.from(this.nationList); // หรือ this.nationList.slice()
+                const res = arr.find((selection) => selection.id == id);
+                this.data.nation = res ? res.title : null;
+
+                this.nationShow = false;
+            }
+            return null;
+        },
+        setGender(id) {
+            if (id != null) {
+                const arr = Array.from(this.genderList); // หรือ this.nationList.slice()
+                const res = arr.find((selection) => selection.id == id);
+                this.data.gender = res ? res.title : null;
+
+                this.genderShow = false;
+            }
+            return null;
+        },
+        setType(id) {
+            if (id != null) {
+                const arr = Array.from(this.typeList); // หรือ this.nationList.slice()
+                const res = arr.find((selection) => selection.id == id);
+                this.data.type = res ? res.title : null;
+
+                this.typeShow = false;
+            }
+            return null;
+        },
+        setDegree(id) {
+            if (id != null) {
+                const arr = Array.from(this.degreeList); // หรือ this.nationList.slice()
+                const res = arr.find((selection) => selection.id == id);
+                this.data.degree = res ? res.title : null;
+
+                this.degreeShow = false;
+            }
+            return null;
         },
         ////////////////////////////////////////////////////////////////
         showGender() {
@@ -729,6 +840,8 @@ export default {
             this.$refs.fileInput.click();
         },
         pickFile() {
+            this.alertUpload = false;
+
             let input = this.$refs.fileInput;
             this.file = input.files; //เอาไฟล์รูปเข้าตัวแปร file
             //console.log(this.file[0])
@@ -740,6 +853,43 @@ export default {
                 };
                 reader.readAsDataURL(this.file[0]);
                 this.$emit("input", this.file[0]);
+            }
+        },
+        async upload() {
+            if (this.file == null) {
+                this.alertUpload = true;
+            } else {
+                let formData = new FormData(); //สร้าง FromData เพื่อรองรับข้อมูลประเภท File
+                formData.append("file", this.file[0]);
+
+                const config = {
+                    headers: {
+                        "content-type": "multipart/form-data",
+                    },
+                };
+
+                try {
+                    await axios
+                        .post("/api/upload", formData, config)
+                        .then((response) => {
+                            this.picName = response.data;
+                        });
+                    await axios
+                        .put("/api/userPic/" + this.user.id, {
+                            pic: this.picName,
+                        })
+                        .then(() => {
+                            this.user.pic = this.picName;
+
+                            Swal.fire({
+                                title: "Upload Complete",
+                                icon: "success",
+                                timer: 1500,
+                            });
+                        });
+                } catch (err) {
+                    throw err;
+                }
             }
         },
     },

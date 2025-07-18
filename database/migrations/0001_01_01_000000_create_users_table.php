@@ -23,7 +23,7 @@ return new class extends Migration
             $table->integer('gender')->nullable()->comment('1=ชาย,2=ญ,3=lgbt');
             $table->integer('type')->nullable()->comment('1=นิสิต,2=บุคลากร,3=บุคคลทั่วไป');
             $table->integer('degree')->nullable()->comment('ระดับการศึกษา');         
-            $table->string('nation')->nullable()->comment('สัญชาติ');
+            $table->integer('nation')->nullable()->comment('สัญชาติ');
             $table->integer('ident')->nullable()->comment('1=เลขบัตรประชาชน,2=เลขหนังสือเดินทาง');
             $table->integer('idcard')->nullable();
             $table->string('tel')->nullable();

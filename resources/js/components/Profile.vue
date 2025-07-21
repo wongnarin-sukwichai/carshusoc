@@ -154,8 +154,8 @@
                             for="username"
                             class="block text-md font-medium text-gray-900"
                             >ชื่อ (ภาษาอังกฤษ) :
-                            <span class="text-rose-300"
-                                >(ไม่บังคับ)</span
+                            <span class="text-sky-300 text-sm"
+                                >( Optional field. )</span
                             ></label
                         >
                         <div class="mt-2">
@@ -178,8 +178,8 @@
                             for="username"
                             class="block text-md font-medium text-gray-900"
                             >นามสกุล (ภาษาอังกฤษ) :
-                            <span class="text-rose-300"
-                                >(ไม่บังคับ)</span
+                            <span class="text-sky-300 text-sm"
+                                >( Optional field. )</span
                             ></label
                         >
                         <div class="mt-2">
@@ -203,7 +203,14 @@
                         <label
                             for="username"
                             class="block text-md font-medium text-gray-900"
-                            >สัญชาติ :</label
+                            >สัญชาติ :
+                            <transition name="fade" mode="out-in">
+                                <span
+                                    v-if="errors.nation"
+                                    class="text-rose-300 text-sm"
+                                    >{{ errors.nation }}</span
+                                ></transition
+                            ></label
                         >
 
                         <div class="relative block w-full text-left mt-2">
@@ -220,7 +227,7 @@
                                         >เลือก</span
                                     >
                                     <span v-else>
-                                        {{ data.nation }}
+                                        {{ setNation(data.nation) }}
                                     </span>
                                     <svg
                                         class="-mr-1 size-5 text-gray-400"
@@ -274,8 +281,15 @@
                         <label
                             for="username"
                             class="block text-md font-medium text-gray-900"
-                            >ว/ด/ป เกิด :</label
-                        >
+                            >ว/ด/ป เกิด :
+                            <transition name="fade" mode="out-in">
+                                <span
+                                    v-if="errors.born"
+                                    class="text-rose-300 text-sm"
+                                    >{{ errors.born }}</span
+                                ></transition
+                            >
+                        </label>
                         <div class="mt-2">
                             <Datepicker
                                 v-model="data.born"
@@ -289,8 +303,15 @@
                         <label
                             for="username"
                             class="block text-md font-medium text-gray-900"
-                            >เพศ :</label
-                        >
+                            >เพศ :
+                            <transition name="fade" mode="out-in">
+                                <span
+                                    v-if="errors.gender"
+                                    class="text-rose-300 text-sm"
+                                    >{{ errors.gender }}</span
+                                ></transition
+                            >
+                        </label>
 
                         <div class="relative block w-full text-left mt-2">
                             <div>
@@ -306,7 +327,7 @@
                                         >เลือก</span
                                     >
                                     <span v-else>
-                                        {{ data.gender }}
+                                        {{ setGender(data.gender) }}
                                     </span>
                                     <svg
                                         class="-mr-1 size-5 text-gray-400"
@@ -356,8 +377,15 @@
                         <label
                             for="username"
                             class="block text-md font-medium text-gray-900"
-                            >ประเภท :</label
-                        >
+                            >ประเภท :
+                            <transition name="fade" mode="out-in">
+                                <span
+                                    v-if="errors.type"
+                                    class="text-rose-300 text-sm"
+                                    >{{ errors.type }}</span
+                                ></transition
+                            >
+                        </label>
 
                         <div class="relative block w-full text-left mt-2">
                             <div>
@@ -371,7 +399,7 @@
                                 >
                                     <span v-if="data.type === null">เลือก</span>
                                     <span v-else>
-                                        {{ data.type }}
+                                        {{ setType(data.type) }}
                                     </span>
                                     <svg
                                         class="-mr-1 size-5 text-gray-400"
@@ -421,8 +449,15 @@
                         <label
                             for="username"
                             class="block text-md font-medium text-gray-900"
-                            >การศึกษา :</label
-                        >
+                            >การศึกษา :
+                            <transition name="fade" mode="out-in">
+                                <span
+                                    v-if="errors.degree"
+                                    class="text-rose-300 text-sm"
+                                    >{{ errors.degree }}</span
+                                ></transition
+                            >
+                        </label>
 
                         <div class="relative block w-full text-left mt-2">
                             <div>
@@ -438,7 +473,7 @@
                                         >เลือก</span
                                     >
                                     <span v-else>
-                                        {{ data.degree }}
+                                        {{ setDegree(data.degree) }}
                                     </span>
                                     <svg
                                         class="-mr-1 size-5 text-gray-400"
@@ -487,7 +522,14 @@
                 <div class="grid grid-cols-5 gap-4 mt-6">
                     <div class="space-y-2">
                         <label class="block text-md font-medium text-gray-900"
-                            >ระบุตัวตนด้วย :</label
+                            >ระบุตัวตนด้วย :
+                            <transition name="fade" mode="out-in">
+                                <span
+                                    v-if="errors.ident"
+                                    class="text-rose-300 text-sm"
+                                    >{{ errors.ident }}</span
+                                ></transition
+                            ></label
                         >
                         <div class="flex flex-col gap-2">
                             <!-- เลขบัตรประชาชน -->
@@ -528,18 +570,24 @@
                         <label
                             for="username"
                             class="block text-md font-medium text-gray-900"
-                            >หมายเลขระบุตัวตน :</label
-                        >
+                            >หมายเลขระบุตัวตน :
+                            <transition name="fade" mode="out-in">
+                                <span
+                                    v-if="errors.idcard"
+                                    class="text-rose-300 text-sm"
+                                    >{{ errors.idcard }}</span
+                                ></transition
+                            >
+                        </label>
                         <div class="mt-2">
                             <div
                                 class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600"
                             >
                                 <input
                                     type="text"
-                                    name="username"
-                                    id="username"
                                     class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-md"
                                     :placeholder="data.idcard"
+                                    v-model="data.idcard"
                                 />
                             </div>
                         </div>
@@ -550,8 +598,8 @@
                             for="username"
                             class="block text-md font-medium text-gray-900"
                             >โทรศัพท์ :
-                            <span class="text-rose-300"
-                                >(ไม่บังคับ)</span
+                            <span class="text-sky-300 text-sm"
+                                >( Optional field. )</span
                             ></label
                         >
                         <div class="mt-2">
@@ -588,7 +636,7 @@
                                 class="text-blue-600 focus:ring-blue-500 border-gray-300 rounded-full"
                                 checked
                                 :value="false"
-                                v-model="this.chgPass"
+                                v-model="data.chgPass"
                             />
                             <span class="text-gray-700">ไม่เปลี่ยน</span>
                         </label>
@@ -602,7 +650,7 @@
                                 name="chgPass"
                                 class="text-pink-500 focus:ring-pink-400 border-gray-300 rounded-full"
                                 :value="true"
-                                v-model="this.chgPass"
+                                v-model="data.chgPass"
                             />
                             <span class="text-gray-700">เปลี่ยนรหัสผ่าน</span>
                         </label>
@@ -611,7 +659,7 @@
 
                 <transition name="fade" mode="out-in">
                     <div
-                        v-show="chgPass === true"
+                        v-show="data.chgPass === true"
                         class="grid grid-cols-2 gap-4 mt-6"
                     >
                         <div>
@@ -619,6 +667,13 @@
                                 for="username"
                                 class="block text-md font-medium text-gray-900"
                                 >รหัสผ่านใหม่ :
+                                <transition name="fade" mode="out-in">
+                                    <span
+                                        v-if="errorsPass.pass"
+                                        class="text-rose-300 text-sm"
+                                        >** Required field.</span
+                                    ></transition
+                                >
                             </label>
                             <div class="mt-2">
                                 <div
@@ -627,7 +682,7 @@
                                     <input
                                         type="text"
                                         class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-md"
-                                        v-model="data.password"
+                                        v-model="data.pass"
                                     />
                                 </div>
                             </div>
@@ -636,8 +691,22 @@
                             <label
                                 for="username"
                                 class="block text-md font-medium text-gray-900"
-                                >ยืนยันรหัสผ่าน :</label
-                            >
+                                >ยืนยันรหัสผ่าน :
+                                <transition name="fade" mode="out-in">
+                                    <span
+                                        v-if="errorsPass.confirm"
+                                        class="text-rose-300 text-sm"
+                                        >** Required field.</span
+                                    ></transition
+                                >
+                                <transition name="fade" mode="out-in">
+                                    <span
+                                        v-if="errorsPass.notmatch"
+                                        class="text-rose-300 text-sm"
+                                        >** Not Match.</span
+                                    ></transition
+                                >
+                            </label>
                             <div class="mt-2">
                                 <div
                                     class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600"
@@ -645,7 +714,7 @@
                                     <input
                                         type="text"
                                         class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-md"
-                                        v-model="data.confirmPass"
+                                        v-model="data.confirm"
                                     />
                                 </div>
                             </div>
@@ -660,6 +729,7 @@
             <div class="col-span-2 mt-6 flex justify-end">
                 <button
                     class="flex border-2 border-dashed p-3 rounded-xl bg-amber-200 border-amber-300 hover:bg-amber-300"
+                    @click="sendData()"
                 >
                     <box-icon name="cog" class="mr-2"></box-icon>
                     {{ $t("profile.update") }}
@@ -686,7 +756,6 @@ export default {
     },
     data() {
         return {
-            chgPass: false,
             pic: "user/pics/",
             ////////////////////////////////////////////////////////////////
             genderShow: false,
@@ -718,8 +787,25 @@ export default {
                 ident: "",
                 idcard: "",
                 tel: "",
-                password: "",
-                confirmPass: ""
+                chgPass: false,
+                pass: "",
+                confirm: "",
+            },
+            errors: {
+                name: "",
+                surname: "",
+                born: "",
+                gender: "",
+                type: "",
+                degree: "",
+                nation: "",
+                ident: "",
+                idcard: "",
+            },
+            errorsPass: {
+                pass: false,
+                confirm: false,
+                notmatch: false,
             },
         };
     },
@@ -734,11 +820,10 @@ export default {
             this.data.gender = this.user.gender;
             this.data.type = this.user.type;
             this.data.degree = this.user.degree;
-            this.data.nation = this.user.natopn;
+            this.data.nation = this.user.nation;
             this.data.ident = this.user.ident;
             this.data.idcard = this.user.idcard;
             this.data.tel = this.user.tel;
-            this.data.password = this.user.password;
         },
         async getGender() {
             await axios.get("/api/gender").then((response) => {
@@ -778,42 +863,38 @@ export default {
         },
         ////////////////////////////////////////////////////////////////
         setNation(id) {
+            this.nationShow = false;
             if (id != null) {
                 const arr = Array.from(this.nationList); // หรือ this.nationList.slice()
                 const res = arr.find((selection) => selection.id == id);
-                this.data.nation = res ? res.title : null;
-
-                this.nationShow = false;
+                return res ? res.title : null;
             }
             return null;
         },
         setGender(id) {
+            this.genderShow = false;
             if (id != null) {
                 const arr = Array.from(this.genderList); // หรือ this.nationList.slice()
                 const res = arr.find((selection) => selection.id == id);
-                this.data.gender = res ? res.title : null;
-
-                this.genderShow = false;
+                return res ? res.title : null;
             }
             return null;
         },
         setType(id) {
+            this.typeShow = false;
             if (id != null) {
                 const arr = Array.from(this.typeList); // หรือ this.nationList.slice()
                 const res = arr.find((selection) => selection.id == id);
-                this.data.type = res ? res.title : null;
-
-                this.typeShow = false;
+                return res ? res.title : null;
             }
             return null;
         },
         setDegree(id) {
+            this.degreeShow = false;
             if (id != null) {
                 const arr = Array.from(this.degreeList); // หรือ this.nationList.slice()
                 const res = arr.find((selection) => selection.id == id);
-                this.data.degree = res ? res.title : null;
-
-                this.degreeShow = false;
+                return res ? res.title : null;
             }
             return null;
         },
@@ -891,6 +972,83 @@ export default {
                     throw err;
                 }
             }
+        },
+        sendData() {
+            console.log(this.data)
+            if (!this.validateData()) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "Check required fields please.",
+                });
+                return;
+            }
+            
+            // ตรวจเฉพาะเมื่อเลือกเปลี่ยนรหัสผ่าน
+            if (this.data.chgPass === true) {
+                const pass = this.data.pass;
+                const confirm = this.data.confirm;
+                const isEmpty = (val) =>
+                    val === null ||
+                    val === undefined ||
+                    val.toString().trim() === "";
+
+                // reset errors
+                this.errorsPass.pass = false;
+                this.errorsPass.confirm = false;
+                this.errorsPass.notmatch = false;
+
+                if (isEmpty(pass)) {
+                    this.errorsPass.pass = true;
+                    return;
+                }
+
+                if (isEmpty(confirm)) {
+                    this.errorsPass.confirm = true;
+                    return;
+                }
+
+                if (pass !== confirm) {
+                    this.errorsPass.notmatch = true;
+                    return;
+                }
+
+            } else {
+                // ✅ ไม่ได้เปลี่ยนรหัสผ่านก็ส่งข้อมูลได้
+                console.log("ส่งข้อมูลทั่วไป:", this.data);
+            }
+        },
+        validateData() {
+            let isValid = true;
+
+            const req = [
+                "name",
+                "surname",
+                "born",
+                "gender",
+                "type",
+                "degree",
+                "nation",
+                "ident",
+                "idcard",
+            ];
+
+            for (let key of req) {
+                const value = this.data[key];
+
+                if (
+                    value === null ||
+                    value === undefined ||
+                    value.toString().trim() === ""
+                ) {
+                    this.errors[key] = "** Required field.";
+                    isValid = false;
+                } else {
+                    this.errors[key] = ""; // เคลียร์ข้อความถ้ามีค่า
+                }
+            }
+
+            return isValid;
         },
     },
     computed: {

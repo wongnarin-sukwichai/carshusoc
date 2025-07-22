@@ -677,13 +677,20 @@
                             </label>
                             <div class="mt-2">
                                 <div
-                                    class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600"
+                                    class="flex relative items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600"
                                 >
                                     <input
-                                        type="text"
+                                        :type="showPass ? 'text' : 'password'"
                                         class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-md"
                                         v-model="data.pass"
                                     />
+                                    <box-icon
+                                        name="low-vision"
+                                        size="sd"
+                                        color="#abb2b9"
+                                        class="w-6 h-6 absolute right-3 cursor-pointer hover:scale-110"
+                                        @click="togglePass()"
+                                    ></box-icon>
                                 </div>
                             </div>
                         </div>
@@ -709,13 +716,22 @@
                             </label>
                             <div class="mt-2">
                                 <div
-                                    class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600"
+                                    class="flex relative items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600"
                                 >
                                     <input
-                                        type="text"
+                                        :type="
+                                            showConfirm ? 'text' : 'password'
+                                        "
                                         class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-md"
                                         v-model="data.confirm"
                                     />
+                                    <box-icon
+                                        name="low-vision"
+                                        size="sd"
+                                        color="#abb2b9"
+                                        class="w-6 h-6 absolute right-3 cursor-pointer hover:scale-110"
+                                        @click="toggleConfirm()"
+                                    ></box-icon>
                                 </div>
                             </div>
                         </div>
@@ -745,6 +761,7 @@ import boxicons from "boxicons";
 import { types } from "sass";
 import Datepicker from "vuejs3-datepicker";
 import Swal from "sweetalert2";
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 export default {
     async mounted() {
@@ -807,6 +824,8 @@ export default {
                 confirm: false,
                 notmatch: false,
             },
+            showPass: false,
+            showConfirm: false,
         };
     },
     methods: {
@@ -974,49 +993,76 @@ export default {
             }
         },
         sendData() {
-            console.log(this.data)
-            if (!this.validateData()) {
-                Swal.fire({
-                    icon: "error",
-                    title: "Error",
-                    text: "Check required fields please.",
-                });
-                return;
-            }
-            
-            // ตรวจเฉพาะเมื่อเลือกเปลี่ยนรหัสผ่าน
-            if (this.data.chgPass === true) {
-                const pass = this.data.pass;
-                const confirm = this.data.confirm;
-                const isEmpty = (val) =>
-                    val === null ||
-                    val === undefined ||
-                    val.toString().trim() === "";
+            Swal.fire({
+                title: "Are you sure?",
+                text: "Do you want to confirm the changes?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    if (!this.validateData()) {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: "Check required fields please.",
+                        });
+                        return;
+                    }
 
-                // reset errors
-                this.errorsPass.pass = false;
-                this.errorsPass.confirm = false;
-                this.errorsPass.notmatch = false;
+                    // ตรวจเฉพาะเมื่อเลือกเปลี่ยนรหัสผ่าน
+                    if (this.data.chgPass === true) {
+                        const pass = this.data.pass;
+                        const confirm = this.data.confirm;
+                        const isEmpty = (val) =>
+                            val === null ||
+                            val === undefined ||
+                            val.toString().trim() === "";
 
-                if (isEmpty(pass)) {
-                    this.errorsPass.pass = true;
-                    return;
+                        // reset errors
+                        this.errorsPass.pass = false;
+                        this.errorsPass.confirm = false;
+                        this.errorsPass.notmatch = false;
+
+                        if (isEmpty(pass)) {
+                            this.errorsPass.pass = true;
+                            return;
+                        }
+
+                        if (isEmpty(confirm)) {
+                            this.errorsPass.confirm = true;
+                            return;
+                        }
+
+                        if (pass !== confirm) {
+                            this.errorsPass.notmatch = true;
+                            return;
+                        }
+                        axios
+                            .put("/api/user/" + this.user.id, this.data)
+                            .then((response) => {
+                                Swal.fire({
+                                    title: response.message,
+                                    icon: "success",
+                                    draggable: true,
+                                });
+                            });
+                    } else {
+                        // ✅ ไม่ได้เปลี่ยนรหัสผ่านก็ส่งข้อมูลได้
+                        axios
+                            .put("/api/user/" + this.user.id, this.data)
+                            .then((response) => {
+                                Swal.fire({
+                                    title: response.message,
+                                    icon: "success",
+                                    draggable: true,
+                                });
+                            });
+                    }
                 }
-
-                if (isEmpty(confirm)) {
-                    this.errorsPass.confirm = true;
-                    return;
-                }
-
-                if (pass !== confirm) {
-                    this.errorsPass.notmatch = true;
-                    return;
-                }
-
-            } else {
-                // ✅ ไม่ได้เปลี่ยนรหัสผ่านก็ส่งข้อมูลได้
-                console.log("ส่งข้อมูลทั่วไป:", this.data);
-            }
+            });
         },
         validateData() {
             let isValid = true;
@@ -1049,6 +1095,12 @@ export default {
             }
 
             return isValid;
+        },
+        togglePass() {
+            this.showPass = !this.showPass;
+        },
+        toggleConfirm() {
+            this.showConfirm = !this.showConfirm;
         },
     },
     computed: {

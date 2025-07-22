@@ -58,7 +58,33 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id) {}
+    public function update(Request $request, string $id) {
+
+        $data = User::find($id);
+
+        $data->name = $request['name'];
+        $data->surname = $request['surname'];
+        $data->firstname = $request['firstname'];
+        $data->lastname = $request['lastname'];
+        $data->born = $request['born'];
+        $data->gender = $request['gender'];
+        $data->type = $request['type'];
+        $data->degree = $request['degree'];
+        $data->nation = $request['nation'];
+        $data->ident = $request['ident'];
+        $data->idcard = $request['idcard'];
+        $data->tel = $request['tel'];
+
+        if($request['chgPass'] == true) {
+            $data->password = bcrypt($request['password']);
+        }
+
+        $data->save();
+
+        return response()->json([
+            'message' => 'บันทึกข้อมูลเรียบร้อย'
+        ]);
+    }
 
     public function userPic(Request $request, string $id)
     {

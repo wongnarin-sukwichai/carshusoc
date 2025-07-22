@@ -23,6 +23,7 @@ Route::middleware(['web'])->group(function () {
 
         Route::get('user', UserController::class);
         Route::put('userPic/{id}', [UserController::class, 'userPic']);
+        Route::put('user/{id}', [UserController::class, 'update']);
 
         Route::resource('gender', GenderController::class);
         Route::resource('type', TypeController::class);

@@ -761,7 +761,6 @@ import boxicons from "boxicons";
 import { types } from "sass";
 import Datepicker from "vuejs3-datepicker";
 import Swal from "sweetalert2";
-import 'sweetalert2/dist/sweetalert2.min.css';
 
 export default {
     async mounted() {
@@ -993,21 +992,45 @@ export default {
             }
         },
         sendData() {
+            // SweetAlert Confirm
             Swal.fire({
                 title: "Are you sure?",
                 text: "Do you want to confirm the changes?",
-                icon: "warning",
+                icon: "question",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
                 confirmButtonText: "Yes",
+                customClass: {
+                    popup: "rounded-xl shadow-lg bg-white font-poppins",
+                    title: "text-2xl font-bold text-gray-800",
+                    htmlContainer: "text-base text-gray-600",
+                    confirmButton:
+                        "bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2",
+                    cancelButton:
+                        "bg-gray-300 hover:bg-gray-400 text-black font-medium px-4 py-2 ml-2",
+                },
+                didOpen: () => {
+                    Swal.getPopup().style.fontFamily = "Poppins, sans-serif";
+                },
             }).then((result) => {
                 if (result.isConfirmed) {
                     if (!this.validateData()) {
+                        // SweetAlert Error
                         Swal.fire({
                             icon: "error",
                             title: "Error",
                             text: "Check required fields please.",
+                            customClass: {
+                                popup: "rounded-xl shadow-lg bg-white font-poppins",
+                                title: "text-2xl font-bold text-gray-800",
+                                confirmButton:
+                                    "bg-rose-300 hover:bg-rose-400 text-white font-medium px-4 py-2",
+                            },
+                            didOpen: () => {
+                                Swal.getPopup().style.fontFamily =
+                                    "Poppins, sans-serif";
+                            },
                         });
                         return;
                     }
@@ -1041,23 +1064,72 @@ export default {
                             return;
                         }
                         axios
-                            .put("/api/user/" + this.user.id, this.data)
+                            .put("/api/user/" + this.user.id)
                             .then((response) => {
+                                // SweetAlert Success
                                 Swal.fire({
-                                    title: response.message,
+                                    title: response.data.message,
                                     icon: "success",
                                     draggable: true,
+                                    customClass: {
+                                        popup: "rounded-xl shadow-lg bg-white font-poppins",
+                                        title: "text-2xl text-gray-800",
+                                        htmlContainer:
+                                            "text-base text-gray-600",
+                                        confirmButton:
+                                            "bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2",
+                                        cancelButton:
+                                            "bg-gray-300 hover:bg-gray-400 text-black font-medium px-4 py-2 ml-2",
+                                    },
+                                    didOpen: () => {
+                                        Swal.getPopup().style.fontFamily =
+                                            "Poppins, sans-serif";
+                                    },
                                 });
                             });
                     } else {
                         // ✅ ไม่ได้เปลี่ยนรหัสผ่านก็ส่งข้อมูลได้
-                        axios
-                            .put("/api/user/" + this.user.id, this.data)
-                            .then((response) => {
+                        this.$store
+                            .dispatch("updateProfile", {
+                                id: this.user.id,
+                                payload: this.data,
+                            })
+                            .then(() => {
                                 Swal.fire({
-                                    title: response.message,
+                                    title: "Success!!",
                                     icon: "success",
                                     draggable: true,
+                                    customClass: {
+                                        popup: "rounded-xl shadow-lg bg-white font-poppins",
+                                        title: "text-2xl font-bold text-gray-800",
+                                        htmlContainer:
+                                            "text-base text-gray-600",
+                                        confirmButton:
+                                            "bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2",
+                                        cancelButton:
+                                            "bg-gray-300 hover:bg-gray-400 text-black font-medium px-4 py-2 ml-2",
+                                    },
+                                    didOpen: () => {
+                                        Swal.getPopup().style.fontFamily =
+                                            "Poppins, sans-serif";
+                                    },
+                                });
+                            })
+                            .catch((e) => {
+                                Swal.fire({
+                                    title: "Error!",
+                                    text: "Contact Staff Please.",
+                                    icon: "error",
+                                    customClass: {
+                                        popup: "rounded-xl shadow-lg bg-white font-poppins",
+                                        title: "text-2xl font-bold text-gray-800",
+                                        confirmButton:
+                                            "bg-rose-300 hover:bg-rose-400 text-white font-medium px-4 py-2",
+                                    },
+                                    didOpen: () => {
+                                        Swal.getPopup().style.fontFamily =
+                                            "Poppins, sans-serif";
+                                    },
                                 });
                             });
                     }

@@ -152,18 +152,26 @@
                         class="flex flex-wrap items-center cursor-pointer"
                     >
                         <div class="relative">
-                            <box-icon
-                                name="user"
-                                size="md"
-                                color="#6a7282"
-                            ></box-icon>
+                            <div v-if="user.pic === null">
+                                <box-icon
+                                    name="user"
+                                    size="md"
+                                    color="#6a7282"
+                                ></box-icon>
+                            </div>
+                            <div v-else>
+                                <img
+                                    class="rounded-full w-10"
+                                    :src="pic + this.user.pic"
+                                />
+                            </div>
                             <span
-                                class="h-3 w-3 rounded-full bg-green-600 border-2 border-#85c1e9 block absolute bottom-0 right-0"
+                                class="h-3 w-3 rounded-full bg-green-600 border-2 border-white block absolute bottom-0 right-0"
                             ></span>
                         </div>
 
-                        <div class="ml-4">
-                            <p class="text-sm text-gray-50 font-semibold">
+                        <div v-if="user" class="ml-4">
+                            <p class="text-sm text-[#3949ab] font-semibold">
                                 {{ user.name }} {{ user.surname }}
                             </p>
                             <p class="text-xs text-gray-500 mt-0.5">
@@ -238,6 +246,7 @@ export default {
         return {
             logo: "/img/logo/logo-rm.png",
             isSidebarOpen: true,
+            pic: "user/pics/thumbnails/",
         };
     },
     methods: {

@@ -22,45 +22,46 @@
             class="border-2 border-dashed border-gray-200 text-lg p-4 rounded-xl mb-2"
         >
             <div class="grid grid-cols-6 gap-4">
-                <div>
+                <div
+                v-for="(admin, index) in adminList"
+                :key="index"
+                >
                     <div
                         class="border-2 rounded-lg border-dashed border-gray-200"
                     >
-                        <img :src="pic1" class="rounded-lg" />
+                        <img :src="pic + admin.pic" class="rounded-lg w-auto" />
                     </div>
-                    <div class="mt-2 border-2 rounded-lg border-dashed border-gray-200 text-center p-2 text-[#85c1e9] text-sm">
-                        <p>รศ.ดร.ธีระ รุ่งธีระ</p>
-                        <p>เจ้าหน้าที่ดูแลระบบ</p>
-                    </div>
-                </div>
-                 <div>
                     <div
-                        class="border-2 rounded-lg border-dashed border-gray-200"
+                        class="mt-2 border-2 rounded-lg border-dashed border-gray-200 text-center p-2 text-[#85c1e9] text-sm"
                     >
-                        <img :src="pic2" class="rounded-lg" />
-                    </div>
-                    <div class="mt-2 border-2 rounded-lg border-dashed border-gray-200 text-center p-2 text-[#85c1e9] text-sm">
-                        <p>พักตร์พิไล น้อยวิมล</p>
+                        <p>{{ admin.name }} {{ admin.surname }}</p>
                         <p>เจ้าหน้าที่ดูแลระบบ</p>
                     </div>
                 </div>
-                <div class="border-2"></div>
-                <div class="border-2"></div>
-                <div class="border-2"></div>
-                <div class="border-2"></div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
-    mounted() {},
+    mounted() {
+        this.getAdmin();
+    },
     data() {
         return {
-            pic1: "img/profile/01.png",
-            pic2: "img/profile/02.jpg"
+            pic: "user/pics/",
+            adminList: "",
         };
+    },
+    methods: {
+        getAdmin() {
+            axios.get("/api/userAdmin").then((response) => {
+                this.adminList = response.data;
+            });
+        },
     },
 };
 </script>

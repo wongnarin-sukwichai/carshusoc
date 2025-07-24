@@ -6,7 +6,9 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\DegreeController;
 use App\Http\Controllers\Api\GenderController;
+use App\Http\Controllers\Api\MemberController;
 use App\Http\Controllers\Api\NationController;
+use App\Http\Controllers\Api\SearchController;
 use App\Http\Controllers\Api\TypeController;
 use App\Http\Controllers\Api\UploadController;
 
@@ -24,6 +26,12 @@ Route::middleware(['web'])->group(function () {
         Route::get('user', UserController::class);
         Route::put('userPic/{id}', [UserController::class, 'userPic']);
         Route::put('user/{id}', [UserController::class, 'update']);
+        Route::get('userAdmin', [UserController::class, 'userAdmin']);
+
+        Route::resource('member', MemberController::class);
+
+        Route::post('chkSearch', [SearchController::class, 'chkSearch']);
+        Route::post('search', [SearchController::class, 'Search']);
 
         Route::resource('gender', GenderController::class);
         Route::resource('type', TypeController::class);

@@ -23,6 +23,13 @@ class UserController extends Controller
         //
     }
 
+    public function userAdmin()
+    {
+        $data = User::where('level', 'admin')->get();
+
+        return response()->json($data);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -74,6 +81,7 @@ class UserController extends Controller
         $data->ident = $request['ident'];
         $data->idcard = $request['idcard'];
         $data->tel = $request['tel'];
+        $data->status = 1;
 
         if($request['chgPass'] == true) {
             $data->password = bcrypt($request['password']);
@@ -82,7 +90,7 @@ class UserController extends Controller
         $data->save();
 
         return response()->json([
-            'message' => 'บันทึกข้อมูลเรียบร้อย'
+            'message' => 'Success!!'
         ]);
     }
 
@@ -95,7 +103,7 @@ class UserController extends Controller
         $data->save();
 
         return response()->json([
-            'message' => 'บันทึกข้อมูลเรียบร้อย'
+            'message' => 'Success!!'
         ]);
     }
     /**

@@ -127,7 +127,7 @@
             </div>
             <div class="border-2 border-dashed rounded-xl hover:border-gray-300">
                 <router-link
-                    to="/addcont"
+                    to="/addcontent"
                     class="flex justify-center p-24 group overflow-hidden rounded-xl cursor-pointer"
                 >
                     <box-icon name="plus" size="lg" class="opacity-10 hover:scale-115 w-24 h-24"></box-icon>

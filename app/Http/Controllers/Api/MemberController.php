@@ -48,7 +48,19 @@ class MemberController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $data = User::find($id);
+
+        if ($data->level == 'admin') {
+            $data->level = null;
+        } else {
+            $data->level = 'admin';
+        }
+
+        $data->update();
+
+        return response()->json([
+            'message' => 'Success!!'
+        ]);
     }
 
     /**

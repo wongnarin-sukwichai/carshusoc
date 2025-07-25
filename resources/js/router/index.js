@@ -17,7 +17,7 @@ import Admin from "../components/Admin.vue";
 import Stat from "../components/Stat.vue";
 import Content from "../components/Content.vue";
 import Member from "../components/Member.vue";
-import AddCont from "../components/AddCont.vue";
+import AddContent from "../components/AddContent.vue";
 import Mail from "../components/Mail.vue";
 
 import store from "../store";
@@ -141,9 +141,9 @@ const routes = [
         },
     },
     {
-        path: "/addcont",
-        name: "addcont",
-        component: AddCont,
+        path: "/addcontent",
+        name: "addcontent",
+        component: AddContent,
         meta: {
             layout: "admin",
             guard: "admin",

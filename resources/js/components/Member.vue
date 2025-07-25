@@ -170,13 +170,28 @@
                                                         <div
                                                             class="w-48 flex items-center gap-3"
                                                         >
-                                                            <img
-                                                                :src="
-                                                                    path +
-                                                                    member.pic
+                                                            <div
+                                                                v-if="
+                                                                    member.pic !==
+                                                                    null
                                                                 "
-                                                                class="w-12 rounded-full"
-                                                            />
+                                                            >
+                                                                <img
+                                                                    :src="
+                                                                        path +
+                                                                        member.pic
+                                                                    "
+                                                                    class="w-12 rounded-full"
+                                                                />
+                                                            </div>
+                                                            <div v-else>
+                                                                <box-icon
+                                                                    name="user"
+                                                                    size="md"
+                                                                    color="#6a7282"
+                                                                    class="rounded-full"
+                                                                ></box-icon>
+                                                            </div>
                                                             <div class="data">
                                                                 <p
                                                                     class="font-normal text-sm text-gray-900"
@@ -251,7 +266,7 @@
                                                                 class="font-medium text-xs text-emerald-600"
                                                                 >Admin</span
                                                             >
-                                                        </div>
+                                                        </div>                                     
                                                     </td>
                                                     <td
                                                         class="flex p-4.5 items-center gap-0.5"
@@ -297,6 +312,7 @@
                                                         </button>
                                                         <button
                                                             class="p-2 rounded-full bg-white group transition-all duration-500 hover:bg-black flex item-center"
+                                                            @click="level(member.id)"
                                                         >
                                                             <svg
                                                                 width="20"
@@ -470,6 +486,54 @@ export default {
             }).then((result) => {
                 if (result.isConfirmed) {
                     axios.delete("/api/member/" + id).then((response) => {
+                        Swal.fire({
+                            title: response.data.message,
+                            icon: "success",
+                            draggable: true,
+                            customClass: {
+                                popup: "rounded-xl shadow-lg bg-white font-poppins",
+                                title: "text-2xl text-gray-800",
+                                htmlContainer: "text-base text-gray-600",
+                                confirmButton:
+                                    "bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2",
+                                cancelButton:
+                                    "bg-gray-300 hover:bg-gray-400 text-black font-medium px-4 py-2 ml-2",
+                            },
+                            didOpen: () => {
+                                Swal.getPopup().style.fontFamily =
+                                    "Poppins, sans-serif";
+                            },
+                        });
+                    });
+
+                    this.getMember();
+                }
+            });
+        },
+        level(id) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "Are you sure you want to change level this user?",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes",
+                customClass: {
+                    popup: "rounded-xl shadow-lg bg-white font-poppins",
+                    title: "text-2xl font-bold text-gray-400",
+                    htmlContainer: "text-base text-gray-600",
+                    confirmButton:
+                        "bg-emerald-400 hover:bg-emerald-500 text-white font-medium px-4 py-2",
+                    cancelButton:
+                        "bg-gray-300 hover:bg-gray-400 text-black font-medium px-4 py-2 ml-2",
+                },
+                didOpen: () => {
+                    Swal.getPopup().style.fontFamily = "Poppins, sans-serif";
+                },
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.get("/api/member/" + id + "/edit").then((response) => {
                         Swal.fire({
                             title: response.data.message,
                             icon: "success",

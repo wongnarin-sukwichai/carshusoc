@@ -102,12 +102,12 @@
                             วัตถุประสงค์ :</label
                         >
                         <div class="mt-2">
-                            <textarea
-                                name="about"
-                                id="about"
-                                rows="3"
-                                class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-md"
-                            ></textarea>
+                            <ckeditor
+                                class="max-height-48"
+                                :editor="editor"
+                                v-model="editorData"
+                                :config="editorConfig"
+                            />
                         </div>
                     </div>
                 </div>
@@ -121,12 +121,12 @@
                             พันธกิจ :</label
                         >
                         <div class="mt-2">
-                            <textarea
-                                name="about"
-                                id="about"
-                                rows="3"
-                                class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-md"
-                            ></textarea>
+                            <ckeditor
+                                class="max-height-48"
+                                :editor="editor"
+                                v-model="editorData"
+                                :config="editorConfig"
+                            />
                         </div>
                     </div>
                 </div>
@@ -140,12 +140,12 @@
                             ขอบเขตการดำเนินงาน :</label
                         >
                         <div class="mt-2">
-                            <textarea
-                                name="about"
-                                id="about"
-                                rows="3"
-                                class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-md"
-                            ></textarea>
+                            <ckeditor
+                                class="max-height-48"
+                                :editor="editor"
+                                v-model="editorData"
+                                :config="editorConfig"
+                            />
                         </div>
                     </div>
                 </div>
@@ -262,8 +262,8 @@
                             <textarea
                                 name="about"
                                 id="about"
-                                rows="3"
-                                class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-md"
+                                rows=""
+                                class="block w-full rounded-md bg-white px-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-md"
                             ></textarea>
                         </div>
                     </div>
@@ -287,8 +287,22 @@
 
 <script>
 import boxicons from "boxicons";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 export default {
     mounted() {},
+    data() {
+        return {
+            editor: ClassicEditor,
+            editorData: "",
+            editorConfig: {},
+        };
+    },
 };
 </script>
+
+<style>
+.ck-editor__editable {
+    max-height: 400px;
+}
+</style>

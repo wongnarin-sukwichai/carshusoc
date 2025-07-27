@@ -1,33 +1,34 @@
-import './bootstrap';
+import "./bootstrap";
 
-import { createApp } from 'vue';
-import { createI18n } from 'vue-i18n'
+import { createApp } from "vue";
+import { createI18n } from "vue-i18n";
 
-import App from './components/App.vue';
-import store from './store/index';
-import router from './router/index';
+import App from "./components/App.vue";
+import store from "./store/index";
+import router from "./router/index";
 
-import en from './locales/en.json'
-import th from './locales/th.json'
+import en from "./locales/en.json";
+import th from "./locales/th.json";
+
+import CKEditor from '@ckeditor/ckeditor5-vue';
 
 // ดึง locale จาก Laravel ที่ส่งมาผ่าน window
-const locale = window.Laravel?.locale || 'en'
+const locale = window.Laravel?.locale || "en";
 
 const i18n = createI18n({
-  legacy: false,
-  locale: locale,
-  fallbackLocale: 'en',
-  messages: {
-    en,
-    th
-  }
-})
+    legacy: false,
+    locale: locale,
+    fallbackLocale: "en",
+    messages: {
+        en,
+        th,
+    },
+});
 
-const app = createApp(App)
+const app = createApp(App);
 
-app.use(store)
-app.use(router)
-app.use(i18n)
-app.mount('#app')
-
-
+app.use(store);
+app.use(router);
+app.use(i18n);
+app.use(CKEditor);
+app.mount("#app");

@@ -370,7 +370,7 @@ export default {
     },
     data() {
         return {
-            path: "user/pics/thumbnails/",
+            path: "img/profiles/thumbnails/",
             ////////////////////////////////////////////////////////////////
             memberList: [],
             typeList: [],

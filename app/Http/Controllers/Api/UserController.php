@@ -51,7 +51,11 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $data = User::find($id);
+
+        return response()->json([
+            "message" => $data->name . ' ' . $data->surname
+        ]);
     }
 
     /**
@@ -65,7 +69,8 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id) {
+    public function update(Request $request, string $id)
+    {
 
         $data = User::find($id);
 
@@ -83,7 +88,7 @@ class UserController extends Controller
         $data->tel = $request['tel'];
         $data->status = 1;
 
-        if($request['chgPass'] == true) {
+        if ($request['chgPass'] == true) {
             $data->password = bcrypt($request['password']);
         }
 

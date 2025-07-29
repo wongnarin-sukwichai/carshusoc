@@ -52,7 +52,7 @@ export default {
     },
     data() {
         return {
-            pic: "user/pics/",
+            pic: "img/profiles/",
             adminList: "",
         };
     },

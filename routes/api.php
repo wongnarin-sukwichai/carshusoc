@@ -4,7 +4,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\ContentController;
 use App\Http\Controllers\Api\DegreeController;
+use App\Http\Controllers\Api\EventController;
 use App\Http\Controllers\Api\GenderController;
 use App\Http\Controllers\Api\MemberController;
 use App\Http\Controllers\Api\NationController;
@@ -27,17 +29,24 @@ Route::middleware(['web'])->group(function () {
         Route::put('userPic/{id}', [UserController::class, 'userPic']);
         Route::put('user/{id}', [UserController::class, 'update']);
         Route::get('userAdmin', [UserController::class, 'userAdmin']);
+        Route::get('user/{id}', [UserController::class, 'show']);
 
         Route::resource('member', MemberController::class);
 
         Route::post('chkSearch', [SearchController::class, 'chkSearch']);
-        Route::post('search', [SearchController::class, 'Search']);
+        Route::post('search', [SearchController::class, 'Search']);     
 
         Route::resource('gender', GenderController::class);
         Route::resource('type', TypeController::class);
         Route::resource('degree', DegreeController::class);
         Route::resource('nation', NationController::class);
         Route::resource('upload', UploadController::class);
-        
+        Route::resource('event', EventController::class);
+
+        Route::post('uploadContent', [UploadController::class, 'uploadContent']);
+        Route::resource('content', ContentController::class);
+
+        Route::get('detail/{id}', [ContentController::class, 'detail']);
+
     });
 });

@@ -277,7 +277,7 @@ export default {
         return {
             logo: "/img/logo/logo-rm.png",
             isSidebarOpen: true,
-            pic: "user/pics/thumbnails/",
+            pic: "img/profiles/thumbnails/",
         };
     },
     methods: {

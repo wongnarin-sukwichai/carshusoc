@@ -772,7 +772,7 @@ export default {
     },
     data() {
         return {
-            pic: "user/pics/",
+            pic: "img/profiles/",
             ////////////////////////////////////////////////////////////////
             genderShow: false,
             typeShow: false,
@@ -984,6 +984,19 @@ export default {
                                 title: "Upload Complete",
                                 icon: "success",
                                 timer: 1500,
+                                customClass: {
+                                    popup: "rounded-xl shadow-lg bg-white font-poppins",
+                                    title: "text-2xl font-bold text-gray-800",
+                                    htmlContainer: "text-base text-gray-600",
+                                    confirmButton:
+                                        "bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2",
+                                    cancelButton:
+                                        "bg-gray-300 hover:bg-gray-400 text-black font-medium px-4 py-2 ml-2",
+                                },
+                                didOpen: () => {
+                                    Swal.getPopup().style.fontFamily =
+                                        "Poppins, sans-serif";
+                                },
                             });
                         });
                 } catch (err) {

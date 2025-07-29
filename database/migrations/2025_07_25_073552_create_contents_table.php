@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('tel')->nullable();
             $table->string('owner')->nullable();
             $table->longText('other')->nullable();
+            $table->integer('created_by')->nullable();
             $table->timestamps();
         });
     }

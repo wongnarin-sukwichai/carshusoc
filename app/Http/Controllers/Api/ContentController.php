@@ -55,7 +55,6 @@ class ContentController extends Controller
         return response()->json([
             'message' => 'Success!!'
         ]);
-
     }
 
     /**
@@ -63,7 +62,9 @@ class ContentController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $data = Content::find($id);
+
+        return response()->json($data);
     }
 
     public function detail(string $id)
@@ -86,7 +87,28 @@ class ContentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = Content::find($id);
+
+        $data->pic = $request['pic'];
+        $data->title = $request['title'];
+        $data->short_name = $request['short_name'];
+        $data->event_id = $request['event_id'];
+        $data->detail = $request['detail'];
+        $data->mission = $request['mission'];
+        $data->scope = $request['scope'];
+        $data->facebook = $request['facebook'];
+        $data->email = $request['email'];
+        $data->website = $request['website'];
+        $data->tel = $request['tel'];
+        $data->owner = $request['owner'];
+        $data->other = $request['other'];
+        $data->created_by = $request['created_by'];
+
+        $data->save();
+
+        return response()->json([
+            'message' => 'Success!!'
+        ]);
     }
 
     /**

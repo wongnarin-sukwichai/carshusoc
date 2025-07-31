@@ -18,6 +18,7 @@ import Stat from "../components/Stat.vue";
 import Content from "../components/Content.vue";
 import Member from "../components/Member.vue";
 import AddContent from "../components/AddContent.vue";
+import EditContent from "../components/EditContent.vue";
 import Mail from "../components/Mail.vue";
 
 import store from "../store";
@@ -141,9 +142,18 @@ const routes = [
         },
     },
     {
-        path: "/addcontent",
-        name: "addcontent",
+        path: "/addContent",
+        name: "addContent",
         component: AddContent,
+        meta: {
+            layout: "admin",
+            guard: "admin",
+        },
+    },
+    {
+        path: "/editContent/:id",
+        name: "editContent",
+        component: EditContent,
         meta: {
             layout: "admin",
             guard: "admin",

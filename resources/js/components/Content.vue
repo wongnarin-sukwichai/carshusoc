@@ -29,7 +29,7 @@
                             {{ $t("home.detail") }}
                         </button>
 
-                         <button
+                        <button
                             class="px-12 py-2 rounded-full text-amber-600 text-md border-2 border-amber-400 hover:bg-amber-400 hover:text-white z-10 mb-4"
                             @click="getEdit(content.id)"
                         >
@@ -43,7 +43,7 @@
                 class="border-2 border-dashed rounded-xl hover:border-gray-300"
             >
                 <router-link
-                    to="/addcontent"
+                    to="/addContent"
                     class="flex justify-center p-24 group overflow-hidden rounded-xl cursor-pointer"
                 >
                     <box-icon
@@ -79,8 +79,11 @@ export default {
             });
         },
         getDetail(id) {
-            const url = this.$router.resolve({ path: '/detail/' + id }).href;
+            const url = this.$router.resolve({ path: "/detail/" + id }).href;
             window.open(url, "_blank");
+        },
+        getEdit(id) {
+            this.$router.push("/editContent/" + id);
         },
     },
 };

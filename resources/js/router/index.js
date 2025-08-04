@@ -11,6 +11,7 @@ import Detail from "../components/Detail.vue";
 import List from "../components/List.vue";
 import Condition from "../components/Condition.vue";
 import Cert from "../components/Cert.vue";
+import Course from "../components/Course.vue";
 
 // Admin
 import Admin from "../components/Admin.vue";
@@ -104,6 +105,15 @@ const routes = [
             layout: "auth",
             guard: "auth",
         },
+    },
+    {
+        path: "/course/:id",
+        name: "course",
+        component: Course,
+        meta: {
+            layout: "auth",
+            guard: "auth"
+        }
     },
     {
         path: "/admin",

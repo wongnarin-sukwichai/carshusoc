@@ -2,14 +2,12 @@
     <div class="bg-white p-8 rounded-2xl md:ml-8">
         <div class="mb-6 flex items-center">
             <box-icon
-                name="layer-plus"
+                name="cog"
                 class="mr-2"
                 size="lg"
                 color="#85c1e9"
             ></box-icon>
-            <span class="text-[#85c1e9] text-2xl font-bold">{{
-                $t("admin.cont")
-            }}</span>
+            <span class="text-[#85c1e9] text-2xl font-bold">แก้ไขเนื้อหา</span>
         </div>
 
         <input
@@ -103,81 +101,6 @@
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <label
-                            for="username"
-                            class="block text-md font-medium text-gray-900"
-                            >{{ $t("addcont.type") }} :
-                            <transition name="fade" mode="out-in">
-                                <span
-                                    v-if="errors.event_id"
-                                    class="text-rose-300 text-sm"
-                                    >{{ errors.event_id }}</span
-                                ></transition
-                            ></label
-                        >
-
-                        <div class="relative block w-full text-left mt-2">
-                            <div>
-                                <button
-                                    type="button"
-                                    class="flex w-full items-center justify-between gap-2 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50"
-                                    id="menu-button"
-                                    aria-expanded="true"
-                                    aria-haspopup="true"
-                                    @click="showEvent()"
-                                >
-                                    <span v-if="data.event_id === ''"
-                                        >เลือก</span
-                                    >
-                                    <span v-else>
-                                        {{ setEvent(data.event_id) }}
-                                    </span>
-                                    <svg
-                                        class="-mr-1 size-5 text-gray-400"
-                                        viewBox="0 0 20 20"
-                                        fill="currentColor"
-                                        aria-hidden="true"
-                                        data-slot="icon"
-                                    >
-                                        <path
-                                            fill-rule="evenodd"
-                                            d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
-                                            clip-rule="evenodd"
-                                        />
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Dropdown List -->
-                        <transition name="fade" mode="out-in">
-                            <div
-                                class="absolute z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-hidden"
-                                role="menu"
-                                aria-orientation="vertical"
-                                aria-labelledby="menu-button"
-                                tabindex="-1"
-                                v-show="eventShow"
-                            >
-                                <div
-                                    class="py-1 max-h-60 overflow-y-auto"
-                                    role="none"
-                                >
-                                    <!-- Active: "bg-gray-100 text-gray-900 outline-hidden", Not Active: "text-gray-700" -->
-                                    <div
-                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-100 cursor-pointer"
-                                        v-for="(event, index) in eventList"
-                                        :key="index"
-                                        @click="setEvent(event.id)"
-                                    >
-                                        {{ event.title }}
-                                    </div>
-                                </div>
-                            </div>
-                        </transition>
-                    </div>
-                    <!-- End Dropdown -->
                 </div>
 
                 <div class="mt-6">
@@ -434,7 +357,6 @@ import Swal from "sweetalert2";
 export default {
     mounted() {
         this.getContent();
-        this.getEvent();
         this.getAdmin();
     },
     data() {
@@ -471,7 +393,6 @@ export default {
                 pic: "",
                 title: "",
                 short_name: "",
-                event_id: "",
                 detail: "",
                 mission: "",
                 scope: "",
@@ -486,7 +407,6 @@ export default {
                 pic: "",
                 title: "",
                 short_name: "",
-                event_id: "",
                 owner: "",
             },
         };
@@ -508,30 +428,12 @@ export default {
                     this.previewImage = "/img/contents/" + this.contentList.pic;
                 });
         },
-        getEvent() {
-            axios.get("/api/event").then((response) => {
-                this.eventList = response.data;
-            });
-        },
         getAdmin() {
             axios.get("/api/userAdmin").then((response) => {
                 this.adminList = response.data;
             });
         },
         ////////////////////////////////////////////////////////////////
-        setEvent(id) {
-            this.eventShow = false;
-
-            this.data.event_id = id;
-
-            if (id != null) {
-                const arr = Array.from(this.eventList); // หรือ this.nationList.slice()
-                const res = arr.find((selection) => selection.id == id);
-                return res ? res.title : null;
-            }
-
-            return null;
-        },
         setAdmin(id) {
             this.adminShow = false;
 
@@ -546,9 +448,6 @@ export default {
             return null;
         },
         ////////////////////////////////////////////////////////////////
-        showEvent() {
-            this.eventShow = !this.eventShow;
-        },
         showAdmin() {
             this.adminShow = !this.adminShow;
         },
@@ -578,79 +477,112 @@ export default {
             }
         },
         async sendData() {
-            if (!this.validateData()) {
-                // SweetAlert Error
-                Swal.fire({
-                    icon: "error",
-                    title: "Error",
-                    text: "Check required fields please.",
-                    customClass: {
-                        popup: "rounded-xl shadow-lg bg-white font-poppins",
-                        title: "text-2xl font-bold text-gray-800",
-                        confirmButton:
-                            "bg-rose-300 hover:bg-rose-400 text-white font-medium px-4 py-2",
-                    },
-                    didOpen: () => {
-                        Swal.getPopup().style.fontFamily =
-                            "Poppins, sans-serif";
-                    },
-                });
-                return;
-            } else {
-                try {
-                    if (this.file && this.file.length > 0) {
-                        let formData = new FormData(); //สร้าง FromData เพื่อรองรับข้อมูลประเภท File
-                        formData.append("file", this.file[0]);
-
-                        const config = {
-                            headers: {
-                                "content-type": "multipart/form-data",
-                            },
-                        };
-                        await axios
-                            .post("/api/uploadContent", formData, config)
-                            .then((response) => {
-                                this.data.pic = response.data;
+            // SweetAlert Confirm
+            Swal.fire({
+                title: "Are you sure?",
+                text: "Do you want to confirm the changes?",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes",
+                customClass: {
+                    popup: "rounded-xl shadow-lg bg-white font-poppins",
+                    title: "text-2xl font-bold text-gray-800",
+                    htmlContainer: "text-base text-gray-600",
+                    confirmButton:
+                        "bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2",
+                    cancelButton:
+                        "bg-gray-300 hover:bg-gray-400 text-black font-medium px-4 py-2 ml-2",
+                },
+                didOpen: () => {
+                    Swal.getPopup().style.fontFamily = "Poppins, sans-serif";
+                },
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    try {
+                        if (!this.validateData()) {
+                            // SweetAlert Error
+                            Swal.fire({
+                                icon: "error",
+                                title: "Error",
+                                text: "Check required fields please.",
+                                customClass: {
+                                    popup: "rounded-xl shadow-lg bg-white font-poppins",
+                                    title: "text-2xl font-bold text-gray-800",
+                                    confirmButton:
+                                        "bg-rose-300 hover:bg-rose-400 text-white font-medium px-4 py-2",
+                                },
+                                didOpen: () => {
+                                    Swal.getPopup().style.fontFamily =
+                                        "Poppins, sans-serif";
+                                },
                             });
-                    } else {
-                        if (this.data.pic !== null || this.data.pic !== "") {
-                            await axios
-                                .put(
-                                    "/api/content/" + this.$route.params.id,
-                                    this.data
-                                )
-                                .then((response) => {
-                                    Swal.fire({
-                                        title: response.data.message,
-                                        icon: "success",
-                                        draggable: true,
-                                        customClass: {
-                                            popup: "rounded-xl shadow-lg bg-white font-poppins",
-                                            title: "text-2xl text-gray-800",
-                                            htmlContainer:
-                                                "text-base text-gray-600",
-                                            confirmButton:
-                                                "bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2",
-                                            cancelButton:
-                                                "bg-gray-300 hover:bg-gray-400 text-black font-medium px-4 py-2 ml-2",
-                                        },
-                                        didOpen: () => {
-                                            Swal.getPopup().style.fontFamily =
-                                                "Poppins, sans-serif";
-                                        },
+                            return;
+                        } else {
+                            if (this.file && this.file.length > 0) {
+                                let formData = new FormData(); //สร้าง FromData เพื่อรองรับข้อมูลประเภท File
+                                formData.append("file", this.file[0]);
+
+                                const config = {
+                                    headers: {
+                                        "content-type": "multipart/form-data",
+                                    },
+                                };
+                                await axios
+                                    .post(
+                                        "/api/uploadContent",
+                                        formData,
+                                        config
+                                    )
+                                    .then((response) => {
+                                        this.data.pic = response.data;
                                     });
-                                });
+                            }
+
+                            if (
+                                this.data.pic !== null ||
+                                this.data.pic !== ""
+                            ) {
+                                await axios
+                                    .put(
+                                        "/api/content/" + this.$route.params.id,
+                                        this.data
+                                    )
+                                    .then((response) => {
+                                        Swal.fire({
+                                            title: response.data.message,
+                                            icon: "success",
+                                            draggable: true,
+                                            customClass: {
+                                                popup: "rounded-xl shadow-lg bg-white font-poppins",
+                                                title: "text-2xl text-gray-800",
+                                                htmlContainer:
+                                                    "text-base text-gray-600",
+                                                confirmButton:
+                                                    "bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2",
+                                                cancelButton:
+                                                    "bg-gray-300 hover:bg-gray-400 text-black font-medium px-4 py-2 ml-2",
+                                            },
+                                            didOpen: () => {
+                                                Swal.getPopup().style.fontFamily =
+                                                    "Poppins, sans-serif";
+                                            },
+                                        });
+                                        this.$router.push("/content");
+                                    });
+                            }
                         }
+                    } catch (err) {
+                        throw err;
                     }
-                } catch (err) {
-                    throw err;
                 }
-            }
+            });
         },
         validateData() {
             let isValid = true;
 
-            const req = ["title", "short_name", "event_id", "owner"];
+            const req = ["title", "short_name", "owner"];
 
             for (let key of req) {
                 const value = this.data[key];

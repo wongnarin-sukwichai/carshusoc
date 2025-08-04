@@ -13,10 +13,21 @@ return new class extends Migration
     {
         Schema::create('sections', function (Blueprint $table) {
             $table->id();
-            $table->integer('coures_id');
-            $table->integer('user_id');
-            $table->date('regis');
-            $table->integer('status')->nullable()->comment('null=pending,1=active,2=complete,0=cancel');
+            $table->integer('content_id');
+            $table->integer('event_id')->comment('ประเภท');
+            $table->string('title');
+            $table->date('start')->nullable()->comment('วันเปิดรับสมัคร');
+            $table->date('end')->nullable()->comment('วันปิดรับสมัคร');
+            $table->date('examdate')->nullable()->comment('วันสอบ');
+            $table->string('examtime')->nullable()->comment('เวลาสอบ');
+            $table->longText('meet')->nullable()->comment('สถานที่สอบ');
+            $table->integer('price')->nullable()->comment('ค่าบริการ');
+            $table->integer('postage')->nullable()->comment('ค่าไปรษณีย์');
+            $table->string('owner')->nullable();
+            $table->longText('other')->nullable();
+            $table->integer('alert')->nullable()->comment('1=แสดง Alert');
+            $table->integer('status')->nullable()->comment('null=เปิด,1=จบคลอสไปแล้ว');
+            $table->string('created')->comment('ใครเป็นคนสร้าง');
             $table->timestamps();
         });
     }

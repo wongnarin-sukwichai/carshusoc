@@ -20,21 +20,84 @@
 
                     <!-- ปุ่มอยู่ชัดเจน -->
                     <div
-                        class="absolute inset-0 flex flex-col items-center justify-center space-x-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
+                        class="absolute inset-0 flex flex-row items-center justify-center space-x-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
                     >
-                        <button
-                            class="px-12 py-2 rounded-full text-blue-600 text-md border-2 border-blue-400 hover:bg-blue-400 hover:text-white z-10 mb-4"
-                            @click="getDetail(content.id)"
-                        >
-                            {{ $t("home.detail") }}
-                        </button>
+                        <div class="relative inline-block">
+                            <box-icon
+                                name="detail"
+                                size="lg"
+                                :color="
+                                    detailHover
+                                        ? '#ffffff'
+                                        : 'oklch(70.7% 0.165 254.624)'
+                                "
+                                @mouseenter="detailHover = true"
+                                @mouseleave="detailHover = false"
+                                class="p-2 rounded-full border-2 border-blue-400 hover:bg-blue-400 z-10"
+                                @click="getDetail(content.id)"
+                            >
+                            </box-icon>
 
-                        <button
-                            class="px-12 py-2 rounded-full text-amber-600 text-md border-2 border-amber-400 hover:bg-amber-400 hover:text-white z-10 mb-4"
-                            @click="getEdit(content.id)"
-                        >
-                            แก้ไข
-                        </button>
+                            <!-- ✅ Popover -->
+                            <div
+                                v-if="detailHover"
+                                class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 w-24 p-1 bg-white border border-gray-900 rounded-full shadow text-xs text-center text-gray-900 z-20"
+                            >
+                                รายละเอียด
+                            </div>
+                        </div>
+
+                        <div class="relative inline-block">
+                            <box-icon
+                                name="cog"
+                                size="lg"
+                                :color="
+                                    editHover
+                                        ? '#ffffff'
+                                        : 'oklch(66.6% 0.179 58.318)'
+                                "
+                                @mouseenter="editHover = true"
+                                @mouseleave="editHover = false"
+                                class="p-2 rounded-full text-amber-600 border-2 border-amber-400 hover:bg-amber-400 z-10"
+                                @click="getEdit(content.id)"
+                            >
+                                แก้ไข
+                            </box-icon>
+
+                            <!-- ✅ Popover -->
+                            <div
+                                v-if="editHover"
+                                class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 w-24 p-1 bg-white border border-gray-900 rounded-full shadow text-xs text-center text-gray-900 z-20"
+                            >
+                                แก้ไข
+                            </div>
+                        </div>
+
+                        <div class="relative inline-block">
+                            <box-icon
+                                name="plus"
+                                size="lg"
+                                :color="
+                                    addHover
+                                        ? '#ffffff'
+                                        : 'oklch(64.8% 0.2 131.684)'
+                                "
+                                @mouseenter="addHover = true"
+                                @mouseleave="addHover = false"
+                                class="p-2 rounded-full text-lime-600 border-2 border-lime-400 hover:bg-lime-400 z-10"
+                                @click="getAdd(content.id)"
+                            >
+                                แก้ไข
+                            </box-icon>
+
+                            <!-- ✅ Popover -->
+                            <div
+                                v-if="addHover"
+                                class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 w-24 p-1 bg-white border border-gray-900 rounded-full shadow text-xs text-center text-gray-900 z-20"
+                            >
+                                เพิ่ม
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -59,6 +122,7 @@
 
 <script>
 import "boxicons";
+import boxicons from "boxicons";
 
 export default {
     mounted() {
@@ -70,6 +134,10 @@ export default {
             pic: "img/contents/",
             ////////////////////////////////////////////////////////////////
             contentList: [],
+            ////////////////////////////////////////////////////////////////
+            detailHover: false,
+            editHover: false,
+            addHover: false,
         };
     },
     methods: {

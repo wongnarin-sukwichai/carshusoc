@@ -1,11 +1,13 @@
 <template>
     <div class="bg-white p-8 rounded-2xl md:ml-8">
         <div class="grid grid-cols-4 gap-4">
-            <div class="border-2 border-dashed rounded-xl">
+            <div
+                class="border-2 border-dashed rounded-xl"
+                v-for="(content, index) in contentList"
+                :key="index"
+            >
                 <div
                     class="relative group overflow-hidden rounded-xl cursor-pointer"
-                    v-for="(content, index) in contentList"
-                    :key="index"
                 >
                     <img
                         :src="pic + content.pic"
@@ -34,13 +36,13 @@
                         </button>
                     </div>
                 </div>
-            </div>          
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
     mounted() {
@@ -49,21 +51,21 @@ export default {
     data() {
         return {
             pic: "img/contents/",
-            contentList: []
+            contentList: [],
         };
     },
     methods: {
         getContent() {
-            axios.get('/api/content').then((response) => {
-                this.contentList = response.data
-            })
+            axios.get("/api/content").then((response) => {
+                this.contentList = response.data;
+            });
         },
         getDetail(id) {
             this.$router.push("/detail/" + id);
         },
         getCourse(id) {
-            this.$router.push('/course/' + id);
-        }
+            this.$router.push("/course/" + id);
+        },
     },
 };
 </script>

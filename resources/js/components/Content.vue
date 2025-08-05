@@ -85,7 +85,7 @@
                                 @mouseenter="addHover = true"
                                 @mouseleave="addHover = false"
                                 class="p-2 rounded-full text-lime-600 border-2 border-lime-400 hover:bg-lime-400 z-10"
-                                @click="getAdd(content.id)"
+                                @click="getSection(content.id)"
                             >
                                 แก้ไข
                             </box-icon>
@@ -103,11 +103,11 @@
             </div>
 
             <div
-                class="border-2 border-dashed rounded-xl hover:border-gray-300"
+                class="border-2 border-dashed rounded-xl hover:border-lime-400"
             >
                 <router-link
                     to="/addContent"
-                    class="flex justify-center p-24 group overflow-hidden rounded-xl cursor-pointer"
+                    class="flex items-center justify-center p-24 group overflow-hidden rounded-xl cursor-pointer h-full w-full"
                 >
                     <box-icon
                         name="plus"
@@ -122,7 +122,6 @@
 
 <script>
 import "boxicons";
-import boxicons from "boxicons";
 
 export default {
     mounted() {
@@ -152,6 +151,9 @@ export default {
         },
         getEdit(id) {
             this.$router.push("/editContent/" + id);
+        },
+        getSection(id) {
+            this.$router.push("/section/" + id);
         },
     },
 };

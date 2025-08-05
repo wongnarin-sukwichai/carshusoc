@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('section_id');
             $table->integer('user_id');
+            $table->integer('price')->nullable()->comment('ยอดที่ต้องโอน');
             $table->string('payment')->nullable()->comment('หลักฐานการโอน');
             $table->string('cert')->nullable()->comment('path Certificate');
             $table->date('submit')->nullable()->comment('กำหนดวันรับงานคืน');

@@ -21,6 +21,8 @@ import Member from "../components/Member.vue";
 import AddContent from "../components/AddContent.vue";
 import EditContent from "../components/EditContent.vue";
 import Mail from "../components/Mail.vue";
+import Section from "../components/Section.vue";
+import AddSection from "../components/AddSection.vue";
 
 import store from "../store";
 
@@ -164,6 +166,24 @@ const routes = [
         path: "/editContent/:id",
         name: "editContent",
         component: EditContent,
+        meta: {
+            layout: "admin",
+            guard: "admin",
+        },
+    },
+    {
+        path: "/section/:id",
+        name: "section",
+        component: Section,
+        meta: {
+            layout: "admin",
+            guard: "admin",
+        },
+    },
+        {
+        path: "/addSection/:id",
+        name: "addSection",
+        component: AddSection,
         meta: {
             layout: "admin",
             guard: "admin",

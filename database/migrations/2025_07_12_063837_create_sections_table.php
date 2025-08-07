@@ -23,7 +23,6 @@ return new class extends Migration
             $table->longText('meet')->nullable()->comment('สถานที่สอบ');
             $table->integer('price')->nullable()->comment('ค่าบริการ');
             $table->integer('postage')->nullable()->comment('ค่าไปรษณีย์');
-            $table->string('owner')->nullable();
             $table->longText('other')->nullable();
             $table->integer('alert')->nullable()->comment('1=แสดง Alert');
             $table->integer('status')->nullable()->comment('null=เปิด,1=จบคลอสไปแล้ว');

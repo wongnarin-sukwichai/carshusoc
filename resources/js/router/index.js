@@ -11,7 +11,7 @@ import Detail from "../components/Detail.vue";
 import List from "../components/List.vue";
 import Condition from "../components/Condition.vue";
 import Cert from "../components/Cert.vue";
-import Course from "../components/Course.vue";
+import ShowSection from "../components/ShowSection.vue";
 
 // Admin
 import Admin from "../components/Admin.vue";
@@ -23,6 +23,7 @@ import EditContent from "../components/EditContent.vue";
 import Mail from "../components/Mail.vue";
 import Section from "../components/Section.vue";
 import AddSection from "../components/AddSection.vue";
+import EditSection from "../components/EditSection.vue";
 
 import store from "../store";
 
@@ -108,15 +109,16 @@ const routes = [
             guard: "auth",
         },
     },
-    {
-        path: "/course/:id",
-        name: "course",
-        component: Course,
+        {
+        path: "/showSection/:id",
+        name: "showSection",
+        component: ShowSection,
         meta: {
             layout: "auth",
-            guard: "auth"
-        }
+            guard: "auth",
+        },
     },
+///////////////////////////////////////////////////////////////////////////////
     {
         path: "/admin",
         name: "admin",
@@ -180,10 +182,19 @@ const routes = [
             guard: "admin",
         },
     },
-        {
+    {
         path: "/addSection/:id",
         name: "addSection",
         component: AddSection,
+        meta: {
+            layout: "admin",
+            guard: "admin",
+        },
+    },
+    {
+        path: "/editSection/:id",
+        name: "editSection",
+        component: EditSection,
         meta: {
             layout: "admin",
             guard: "admin",

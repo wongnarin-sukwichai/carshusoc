@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -71,14 +72,13 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-
         $data = User::find($id);
 
         $data->name = $request['name'];
         $data->surname = $request['surname'];
         $data->firstname = $request['firstname'];
         $data->lastname = $request['lastname'];
-        $data->born = $request['born'];
+        $data->born = Carbon::parse($request['born'])->format('Y-m-d');
         $data->gender = $request['gender'];
         $data->type = $request['type'];
         $data->degree = $request['degree'];

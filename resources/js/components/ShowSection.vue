@@ -47,7 +47,9 @@
                                     <span class="font-semibold"
                                         >ค่าสมัคร :</span
                                     >
-                                    {{ Number(section.price).toLocaleString() }}
+                                    {{
+                                        Number(section.price).toLocaleString()
+                                    }}
                                     บาท
                                 </p>
                                 <p v-if="section.postage">
@@ -59,20 +61,10 @@
                             </div>
 
                             <button
-                                class="bg-white p-2 rounded-full w-2/4 mt-2 text-gray-900 hover:scale-105 hover:border-2 hover:border-amber-400 hover:text-amber-400"
-                                @click="editSection(section.id)"
+                                class="bg-white p-2 rounded-full w-2/4 mt-2 text-gray-900 hover:scale-105 hover:border-2 hover:border-sky-400 hover:text-sky-400"
+                                @click="sendData()"
                             >
-                                <div class="flex items-center justify-center">
-                                    <box-icon
-                                        name="cog"
-                                        size="sm"
-                                        class="mr-1"
-                                        color="oklch(82.8% 0.189 84.429)"
-                                    ></box-icon>
-                                    <span class="text-amber-400 hover:text-amber-500"
-                                        >แก้ไขข้อมูล</span
-                                    >
-                                </div>
+                                ลงทะเบียน
                             </button>
                         </div>
                     </div>
@@ -114,20 +106,15 @@ export default {
     },
     methods: {
         getSection() {
-            axios
-                .get("/api/section/" + this.$route.params.id)
-                .then((response) => {
-                    this.sectionList = response.data;
-                });
+            axios.get("/api/section/" + this.$route.params.id).then((response) => {
+                this.sectionList = response.data;
+            });
         },
         addSection() {
             this.$router.push("/addSection/" + this.$route.params.id);
         },
         setMoment(id) {
             return moment(id).format("L");
-        },
-        editSection(id) {
-            this.$router.push("/editSection/" + id);
         },
     },
 };

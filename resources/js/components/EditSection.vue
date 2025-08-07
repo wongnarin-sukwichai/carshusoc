@@ -2,13 +2,13 @@
     <div class="bg-white p-8 rounded-2xl md:ml-8">
         <div class="mb-6 flex items-center">
             <box-icon
-                name="layer-plus"
+                name="cog"
                 class="mr-2"
                 size="lg"
                 color="#85c1e9"
             ></box-icon>
             <span class="text-[#85c1e9] text-2xl font-bold">
-                เพิ่มเนื้อหา
+                แก้ไขเนื้อหา
             </span>
         </div>
 
@@ -303,11 +303,11 @@
             <div></div>
             <div class="col-span-2 mt-6 flex justify-end">
                 <button
-                    class="flex border-2 border-dashed p-2 rounded-xl bg-lime-200 border-lime-300 hover:bg-lime-300"
+                    class="flex border-2 border-dashed p-2 rounded-xl bg-amber-300 border-amber-400 hover:bg-amber-400"
                     @click="sendData()"
                 >
-                    <box-icon name="plus-circle" class="mr-2"></box-icon>
-                    {{ $t("addcont.add") }}
+                    <box-icon name="cog" class="mr-2"></box-icon>
+                    แก้ไขข้อมูล
                 </button>
             </div>
         </div>
@@ -322,6 +322,7 @@ import Swal from "sweetalert2";
 export default {
     mounted() {
         this.getEvent();
+        this.getSection();
     },
     data() {
         return {
@@ -331,7 +332,7 @@ export default {
             eventShow: false,
             ////////////////////////////////////////////////////////////////
             data: {
-                content_id: this.$route.params.id,
+                content_id: "",
                 event_id: "",
                 title: "",
                 start: "",
@@ -355,6 +356,20 @@ export default {
             axios.get("/api/event").then((response) => {
                 this.eventList = response.data;
             });
+        },
+        getSection() {
+            axios
+                .get("/api/section/" + this.$route.params.id + "/edit")
+                .then((response) => {
+                    console.log(response.data)
+                    this.sectionList = response.data;
+
+                    for (let key in this.data) {
+                        if (this.sectionList.hasOwnProperty(key)) {
+                            this.data[key] = this.sectionList[key] ?? "";
+                        }
+                    }
+                });
         },
         ////////////////////////////////////////////////////////////////
         setEvent(id) {
@@ -420,7 +435,7 @@ export default {
                             return;
                         } else {
                             await axios
-                                .post("/api/section", this.data)
+                                .put("/api/section/" + this.$route.params.id, this.data)
                                 .then((response) => {
                                     Swal.fire({
                                         title: response.data.message,

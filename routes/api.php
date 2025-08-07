@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\GenderController;
 use App\Http\Controllers\Api\MemberController;
 use App\Http\Controllers\Api\NationController;
 use App\Http\Controllers\Api\SearchController;
+use App\Http\Controllers\Api\SectionController;
 use App\Http\Controllers\Api\TypeController;
 use App\Http\Controllers\Api\UploadController;
 
@@ -45,6 +46,8 @@ Route::middleware(['web'])->group(function () {
 
         Route::post('uploadContent', [UploadController::class, 'uploadContent']);
         Route::resource('content', ContentController::class);
+
+        Route::resource('section', SectionController::class);
 
         Route::get('detail/{id}', [ContentController::class, 'detail']);
 

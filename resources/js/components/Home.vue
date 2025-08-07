@@ -32,7 +32,7 @@
                             class="px-8 py-2 rounded-full text-lime-600 text-lg border-2 border-lime-500 hover:bg-lime-500 hover:text-white z-10"
                             @click="getCourse(content.id)"
                         >
-                            {{ $t("home.reg") }}
+                            รายการ
                         </button>
                     </div>
                 </div>
@@ -64,7 +64,7 @@ export default {
             this.$router.push("/detail/" + id);
         },
         getCourse(id) {
-            this.$router.push("/course/" + id);
+            this.$router.push("/showSection/" + id);
         },
     },
 };

@@ -35,15 +35,15 @@
                     <ul class="space-y-6 pl-3 flex-1">
                         <li>
                             <router-link
-                                to="/admin"
+                                to="/enroll"
                                 class="text-gray-50 font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all"
                             >
                                 <box-icon
-                                    name="shield-plus"
+                                    name="list-check"
                                     class="mr-2"
                                     color="#85c1e9"
                                 ></box-icon>
-                                {{ $t("home.home") }}
+                                รายการลงทะเบียน
                             </router-link>
                         </li>
                         <li>
@@ -84,6 +84,19 @@
                                     color="#85c1e9"
                                 ></box-icon>
                                 {{ $t("admin.email") }}
+                            </router-link>
+                        </li>
+                        <li>
+                            <router-link
+                                to="/admin"
+                                class="text-gray-50 font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all"
+                            >
+                                <box-icon
+                                    name="user"
+                                    class="mr-2"
+                                    color="#85c1e9"
+                                ></box-icon>
+                                เจ้าหน้าที่ดูแลระบบ
                             </router-link>
                         </li>
                         <li>

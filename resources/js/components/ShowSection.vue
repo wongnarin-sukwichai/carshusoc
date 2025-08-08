@@ -18,7 +18,20 @@
                 v-for="(section, index) in sectionList"
                 :key="index"
             >
-                <div class="card-container">
+                <div
+                    class="absolute inset-0 flex items-center justify-center pointer-events-none select-none text-[58px] font-bold text-red-400 rotate-[-20deg]"
+                    v-if="moment(section.end).format('YYYY-MM-DD') < today"
+                >
+                    EXPIRED
+                </div>
+
+                <div
+                    class="card-container"
+                    :class="{
+                        'opacity-5':
+                            moment(section.end).format('YYYY-MM-DD') < today,
+                    }"
+                >
                     <div class="card">
                         <div class="front-content">
                             <p>{{ section.title }}</p>
@@ -47,9 +60,7 @@
                                     <span class="font-semibold"
                                         >ค่าสมัคร :</span
                                     >
-                                    {{
-                                        Number(section.price).toLocaleString()
-                                    }}
+                                    {{ Number(section.price).toLocaleString() }}
                                     บาท
                                 </p>
                                 <p v-if="section.postage">
@@ -61,29 +72,17 @@
                             </div>
 
                             <button
-                                class="bg-white p-2 rounded-full w-2/4 mt-2 text-gray-900 hover:scale-105 hover:border-2 hover:border-sky-400 hover:text-sky-400"
-                                @click="sendData()"
+                                v-if="
+                                    moment(section.end).format('YYYY-MM-DD') >=
+                                    today
+                                "
+                                class="bg-white p-2 rounded-full w-2/4 mt-2 text-gray-900 hover:scale-105 hover:border-2 hover:border-sky-600 hover:text-sky-600"
+                                @click="sendData(section.id)"
                             >
                                 ลงทะเบียน
                             </button>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <!-- plus -->
-            <div
-                class="border-2 border-dashed rounded-xl hover:border-lime-400"
-                @click="addSection()"
-            >
-                <div
-                    class="flex items-center justify-center group overflow-hidden rounded-xl cursor-pointer h-full w-full"
-                >
-                    <box-icon
-                        name="plus"
-                        size="lg"
-                        class="opacity-10 hover:scale-115"
-                    ></box-icon>
                 </div>
             </div>
         </div>
@@ -94,6 +93,7 @@
 import axios from "axios";
 import "boxicons";
 import moment from "moment";
+import Swal from "sweetalert2";
 
 export default {
     mounted() {
@@ -101,20 +101,105 @@ export default {
     },
     data() {
         return {
+            moment: moment,
+            today: moment().format("YYYY-MM-DD"),
             sectionList: [],
+            data: {
+                content_id: this.$route.params.id,
+                section_id: "",
+            },
         };
     },
     methods: {
         getSection() {
-            axios.get("/api/section/" + this.$route.params.id).then((response) => {
-                this.sectionList = response.data;
-            });
+            axios
+                .get("/api/section/" + this.$route.params.id)
+                .then((response) => {
+                    this.sectionList = response.data;
+                });
         },
         addSection() {
             this.$router.push("/addSection/" + this.$route.params.id);
         },
         setMoment(id) {
             return moment(id).format("L");
+        },
+        sendData(id) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "Do you want to confirm to Register",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes",
+                customClass: {
+                    popup: "rounded-xl shadow-lg bg-white font-poppins",
+                    title: "text-2xl font-bold text-gray-800",
+                    htmlContainer: "text-base text-gray-600",
+                    confirmButton:
+                        "bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2",
+                    cancelButton:
+                        "bg-gray-300 hover:bg-gray-400 text-black font-medium px-4 py-2 ml-2",
+                },
+                didOpen: () => {
+                    Swal.getPopup().style.fontFamily = "Poppins, sans-serif";
+                },
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    this.data.section_id = id;
+
+                    if (this.user.status === null) {
+                        Swal.fire({
+                            title: "Warning",
+                            text: "Please complete your personal information.",
+                            icon: "warning",
+                            customClass: {
+                                popup: "rounded-xl shadow-lg bg-white font-poppins",
+                                title: "text-2xl font-bold text-gray-800",
+                                confirmButton:
+                                    "bg-rose-300 hover:bg-rose-400 text-white font-medium px-4 py-2",
+                            },
+                            didOpen: () => {
+                                Swal.getPopup().style.fontFamily =
+                                    "Poppins, sans-serif";
+                            },
+                        });
+                        this.$router.push("/profile");
+                    } else {
+                        axios
+                            .post("/api/enroll", this.data)
+                            .then((response) => {
+                                Swal.fire({
+                                    title: "Success!!",
+                                    icon: "success",
+                                    draggable: true,
+                                    customClass: {
+                                        popup: "rounded-xl shadow-lg bg-white font-poppins",
+                                        title: "text-2xl font-bold text-gray-800",
+                                        htmlContainer:
+                                            "text-base text-gray-600",
+                                        confirmButton:
+                                            "bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2",
+                                        cancelButton:
+                                            "bg-gray-300 hover:bg-gray-400 text-black font-medium px-4 py-2 ml-2",
+                                    },
+                                    didOpen: () => {
+                                        Swal.getPopup().style.fontFamily =
+                                            "Poppins, sans-serif";
+                                    },
+                                });
+                                this.data.section_id = "";
+                                this.$router.push("/list");
+                            });
+                    }
+                }
+            });
+        },
+    },
+    computed: {
+        user() {
+            return this.$store.getters.user;
         },
     },
 };
@@ -151,7 +236,11 @@ export default {
     font-size: 32px;
     font-weight: 700;
     opacity: 1;
-    background: linear-gradient(-45deg, #000000 0%, #000000 100%);
+    background: linear-gradient(
+        -45deg,
+        oklch(27.9% 0.041 260.031) 0%,
+        oklch(27.9% 0.041 260.031) 100%
+    );
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -170,7 +259,11 @@ export default {
     justify-content: center;
     text-align: center;
     gap: 10px;
-    background: linear-gradient(-45deg, #000000 0%, #000000 100%);
+    background: linear-gradient(
+        -45deg,
+        oklch(27.9% 0.041 260.031) 0%,
+        oklch(27.9% 0.041 260.031) 100%
+    );
     color: #e8e8e8;
     padding: 20px;
     line-height: 1.5;

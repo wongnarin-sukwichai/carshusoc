@@ -76,7 +76,7 @@
                         </li>
                         <li>
                             <router-link
-                                to="/list"
+                                to="/showEnroll"
                                 class="text-[#3949ab] font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all"
                             >
                                 <box-icon
@@ -136,7 +136,7 @@
                     <ul class="space-y-6 pl-3 mt-8">
                         <li v-if="user && user.level === 'admin'">
                             <router-link
-                                to="/admin"
+                                to="/enroll"
                                 class="text-[#3949ab] font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all"
                             >
                                 <box-icon

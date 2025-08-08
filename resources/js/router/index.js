@@ -8,7 +8,7 @@ import Home from "../components/Home.vue";
 import Information from "../components/Information.vue";
 import Profile from "../components/Profile.vue";
 import Detail from "../components/Detail.vue";
-import List from "../components/List.vue";
+import ShowEnroll from "../components/ShowEnroll.vue";
 import Condition from "../components/Condition.vue";
 import Cert from "../components/Cert.vue";
 import ShowSection from "../components/ShowSection.vue";
@@ -24,8 +24,10 @@ import Mail from "../components/Mail.vue";
 import Section from "../components/Section.vue";
 import AddSection from "../components/AddSection.vue";
 import EditSection from "../components/EditSection.vue";
+import Enroll from "../components/Enroll.vue";
 
 import store from "../store";
+
 
 const routes = [
     {
@@ -83,9 +85,9 @@ const routes = [
         },
     },
     {
-        path: "/list",
-        name: "list",
-        component: List,
+        path: "/showEnroll",
+        name: "showEnroll",
+        component: ShowEnroll,
         meta: {
             layout: "auth",
             guard: "auth",
@@ -119,6 +121,15 @@ const routes = [
         },
     },
 ///////////////////////////////////////////////////////////////////////////////
+    {
+        path: "/enroll",
+        name: "enroll",
+        component: Enroll,
+        meta: {
+            layout: "admin",
+            guard: "admin",
+        },
+    },
     {
         path: "/admin",
         name: "admin",

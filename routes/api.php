@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ContentController;
 use App\Http\Controllers\Api\DegreeController;
+use App\Http\Controllers\Api\EnrollController;
 use App\Http\Controllers\Api\EventController;
 use App\Http\Controllers\Api\GenderController;
 use App\Http\Controllers\Api\MemberController;
@@ -48,6 +49,8 @@ Route::middleware(['web'])->group(function () {
         Route::resource('content', ContentController::class);
 
         Route::resource('section', SectionController::class);
+
+        Route::resource('enroll', EnrollController::class);
 
         Route::get('detail/{id}', [ContentController::class, 'detail']);
 

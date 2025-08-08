@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('enrolls', function (Blueprint $table) {
             $table->id();
+            $table->integer('content_id');
             $table->integer('section_id');
             $table->integer('user_id');
-            $table->integer('price')->nullable()->comment('ยอดที่ต้องโอน');
-            $table->string('payment')->nullable()->comment('หลักฐานการโอน');
             $table->string('cert')->nullable()->comment('path Certificate');
             $table->date('submit')->nullable()->comment('กำหนดวันรับงานคืน');
+            $table->integer('pay')->nullable()->comment('ราคาที่ต้องจ่าย-งานแปลภาษา-เจ้าหน้าที่ประเมิน	');
             $table->string('work')->nullable()->comment('path ผู้ใช้ส่งงาน');
             $table->string('complete')->nullable()->comment('path จนท.คืนงาน');
             $table->longText('other')->nullable();

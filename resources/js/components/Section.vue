@@ -69,7 +69,8 @@
                                         class="mr-1"
                                         color="oklch(82.8% 0.189 84.429)"
                                     ></box-icon>
-                                    <span class="text-amber-400 hover:text-amber-500"
+                                    <span
+                                        class="text-amber-400 hover:text-amber-500"
                                         >แก้ไขข้อมูล</span
                                     >
                                 </div>
@@ -164,7 +165,11 @@ export default {
     font-size: 32px;
     font-weight: 700;
     opacity: 1;
-    background: linear-gradient(-45deg, #000000 0%, #000000 100%);
+    background: linear-gradient(
+        -45deg,
+        oklch(27.9% 0.041 260.031) 0%,
+        oklch(27.9% 0.041 260.031) 100%
+    );
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -183,7 +188,11 @@ export default {
     justify-content: center;
     text-align: center;
     gap: 10px;
-    background: linear-gradient(-45deg, #000000 0%, #000000 100%);
+    background: linear-gradient(
+        -45deg,
+        oklch(27.9% 0.041 260.031) 0%,
+        oklch(27.9% 0.041 260.031) 100%
+    );
     color: #e8e8e8;
     padding: 20px;
     line-height: 1.5;

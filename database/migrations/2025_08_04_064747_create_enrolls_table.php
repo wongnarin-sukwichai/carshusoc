@@ -18,7 +18,9 @@ return new class extends Migration
             $table->integer('user_id');
             $table->string('cert')->nullable()->comment('path Certificate');
             $table->date('submit')->nullable()->comment('กำหนดวันรับงานคืน');
-            $table->integer('pay')->nullable()->comment('ราคาที่ต้องจ่าย-งานแปลภาษา-เจ้าหน้าที่ประเมิน	');
+            $table->integer('pay')->nullable()->comment('ราคาที่ต้องจ่าย-งานแปลภาษา-เจ้าหน้าที่ประเมิน');
+            $table->integer('tag')->nullable()->comment('ค่าไปรษณีย์');
+            $table->integer('tag')->nullable()->comment('จำนวนสลิปการโอนที่ส่งเข้ามา');
             $table->string('work')->nullable()->comment('path ผู้ใช้ส่งงาน');
             $table->string('complete')->nullable()->comment('path จนท.คืนงาน');
             $table->longText('other')->nullable();

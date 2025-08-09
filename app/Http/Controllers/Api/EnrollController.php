@@ -32,7 +32,6 @@ class EnrollController extends Controller
                 'sections.examdate',
                 'sections.examtime',
                 'sections.meet',
-                'sections.price',
                 'sections.postage',
                 'sections.other AS section_other',
                 'sections.alert',
@@ -61,10 +60,16 @@ class EnrollController extends Controller
      */
     public function store(Request $request)
     {
+        $res = Section::find($request['section_id']);
+        $pay = $res->price;
+        $tag = $res->postage;
+
         $data = new Enroll();
 
         $data->content_id = $request['content_id'];
         $data->section_id = $request['section_id'];
+        $data->pay = $pay;
+        $data->tag = $tag;
         $data->user_id = Auth::user()->id;
 
         $data->save();
@@ -79,7 +84,28 @@ class EnrollController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $data = DB::table('enrolls')
+            ->where('enrolls.id', $id)
+            ->join('sections', 'enrolls.section_id', 'sections.id')
+            ->join('users', 'enrolls.user_id', 'users.id')
+            ->select(
+                'enrolls.*',
+                'sections.event_id',
+                'sections.title',
+                'sections.start',
+                'sections.end',
+                'sections.examdate',
+                'sections.examtime',
+                'sections.meet',
+                'sections.other AS section_other',
+                'sections.alert',
+                'sections.status',
+                'users.name',
+                'users.surname'
+            )
+            ->get();
+
+        return response()->json($data);
     }
 
     /**

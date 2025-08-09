@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
             KindSeeder::class,
             DegreeSeeder::class,
             EventSeeder::class,
-            ExamSeeder::class
+            ExamSeeder::class,
+            UserSeeder::class
         ]);
     }
 }

@@ -102,6 +102,29 @@
                         >
                     </p>
                 </form>
+                <div
+                    class="flex justify-center text-sm border-t-2 border-dashed mt-2"
+                >
+                    <div class="mt-2">
+                        <span
+                            :class="{
+                                'font-bold text-blue-600':
+                                    $i18n.locale === 'th',
+                            }"
+                            @click="chgLang('th')"
+                            >TH</span
+                        >
+                        <span class="px-2"> | </span>
+                        <span
+                            :class="{
+                                'font-bold text-blue-600':
+                                    $i18n.locale === 'en',
+                            }"
+                            @click="chgLang('en')"
+                            >EN</span
+                        >
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -146,6 +169,22 @@ export default {
         togglePassword() {
             this.showPassword = !this.showPassword;
         },
+        async chgLang(id) {
+            this.$i18n.locale = id;
+            localStorage.setItem("locale", id);
+            window.location.reload();
+        },
     },
 };
 </script>
+
+<style>
+:deep(.fade-enter-active),
+:deep(.fade-leave-active) {
+    transition: opacity 0.5s ease;
+}
+:deep(.fade-enter-from),
+:deep(.fade-leave-to) {
+    opacity: 0;
+}
+</style>

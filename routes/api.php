@@ -36,7 +36,8 @@ Route::middleware(['web'])->group(function () {
         Route::resource('member', MemberController::class);
 
         Route::post('chkSearch', [SearchController::class, 'chkSearch']);
-        Route::post('search', [SearchController::class, 'Search']);     
+        Route::post('search', [SearchController::class, 'Search']);   
+        Route::post('searchEnroll', [SearchController::class, 'SearchEnroll']);
 
         Route::resource('gender', GenderController::class);
         Route::resource('type', TypeController::class);

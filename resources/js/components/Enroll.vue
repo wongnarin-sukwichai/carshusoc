@@ -375,9 +375,62 @@
                 </div>
             </div>
         </div>
+
+        <div class="mt-4">
+            <div class="flex">
+                <span
+                    class="py-1.5 px-2.5 bg-amber-50 rounded-full flex items-center justify-center w-20 text-xs text-amber-600 mb-2"
+                    >Pending</span
+                >
+                <span class="py-1 ml-2 text-sm text-gray-700 font-semibold"
+                    >: รอชำระเงิน</span
+                >
+            </div>
+
+            <div class="flex">
+                <span
+                    class="py-1.5 px-2.5 bg-sky-50 rounded-full flex items-center justify-center w-20 text-xs text-sky-600 mb-2"
+                    >Active</span
+                >
+                <span class="py-1 ml-2 text-sm text-gray-700 font-semibold"
+                    >: รอการตรวจสอบ</span
+                >
+            </div>
+
+            <div class="flex">
+                <span
+                    class="py-1.5 px-2.5 bg-emerald-50 rounded-full flex items-center justify-center w-20 text-xs text-emerald-600 mb-2"
+                    >Complete</span
+                >
+                <span class="py-1 ml-2 text-sm text-gray-700 font-semibold"
+                    >: ผ่านการตรวจสอบ</span
+                >
+            </div>
+
+            <div class="flex">
+                <span
+                    class="py-1.5 px-2.5 bg-gray-50 rounded-full flex items-center justify-center w-20 text-xs text-gray-600 mb-2"
+                    >Finished</span
+                >
+                <span class="py-1 ml-2 text-sm text-gray-700 font-semibold"
+                    >: เสร็จสิ้นการสอบ/อบรม/ส่งงาน</span
+                >
+            </div>
+
+            <div class="flex">
+                <span
+                    class="py-1.5 px-2.5 bg-red-50 rounded-full flex items-center justify-center w-20 text-xs text-red-600 mb-2"
+                    >Cancel</span
+                >
+                <span class="py-1 ml-2 text-sm text-gray-700 font-semibold"
+                    >: ยกเลิก</span
+                >
+            </div>
+        </div>
     </div>
 
     <!----------------------------------- MODAL ------------------------------------------------------->
+
     <!-- Modal Detail -->
     <transition name="fade" mode="out-in">
         <div class="relative z-10" v-show="this.modalDetail">
@@ -499,7 +552,261 @@
                                         <td
                                             class="border border-gray-300 px-2 py-1 text-center"
                                         >
-                                            ข้อความจากเจ้าหน้าที่
+                                            อื่นๆ
+                                        </td>
+                                        <td
+                                            class="border border-gray-300 px-8 py-1"
+                                        >
+                                            {{ detailList.section_other }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            colspan="2"
+                                            class="px-2 py-1 bg-gray-100"
+                                        ></td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            class="border border-gray-300 px-2 py-1 text-center"
+                                        >
+                                            ค่าบริการที่ต้องชำระ
+                                        </td>
+                                        <td
+                                            class="border border-gray-300 px-8 py-1"
+                                        >
+                                            {{
+                                                Number(
+                                                    detailList.pay +
+                                                        detailList.tag
+                                                ).toLocaleString()
+                                            }}
+                                        </td>
+                                    </tr>
+                                    <template v-if="detailList.event_id !== 3">
+                                        <tr>
+                                            <td
+                                                class="border border-gray-300 px-2 py-1 text-center"
+                                            >
+                                                เอกสารแล้วเสร็จ
+                                            </td>
+                                            <td
+                                                class="border border-gray-300 px-8 py-1"
+                                            >
+                                                {{ detailList.complete }}
+                                            </td>
+                                        </tr>
+                                    </template>
+                                    <tr>
+                                        <td
+                                            class="border border-gray-300 px-2 py-1 text-center"
+                                        >
+                                            เจ้าหน้าที่
+                                        </td>
+                                        <td
+                                            class="border border-gray-300 px-8 py-1"
+                                        >
+                                            {{ detailList.other }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            colspan="2"
+                                            class="px-2 py-1 bg-gray-100"
+                                        ></td>
+                                    </tr>
+                                    <template v-if="detailList.event_id !== 3">
+                                        <tr>
+                                            <td
+                                                class="border border-gray-300 px-2 py-1 text-center"
+                                            >
+                                                กำหนดวันรับงาน
+                                            </td>
+                                            <td
+                                                class="border border-gray-300 px-8 py-1"
+                                            >
+                                                {{ detailList.submit }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td
+                                                class="border border-gray-300 px-2 py-1 text-center"
+                                            >
+                                                ไฟล์ส่งเอกสาร
+                                            </td>
+                                            <td
+                                                class="border border-gray-300 px-8 py-1"
+                                            >
+                                                {{ detailList.work }}
+                                            </td>
+                                        </tr>
+                                    </template>
+                                    <tr>
+                                        <td
+                                            class="border border-gray-300 px-2 py-1 text-center"
+                                        >
+                                            สถานะการโอน
+                                        </td>
+                                        <td
+                                            class="border border-gray-300 px-8 py-1"
+                                        >
+                                            {{ detailList.total }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            class="border border-gray-300 px-2 py-1 text-center"
+                                        >
+                                            ข้อความ
+                                        </td>
+                                        <td
+                                            class="border border-gray-300 px-8 py-1"
+                                        >
+                                            {{ detailList.comment }}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div
+                            class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6"
+                        >
+                            <button
+                                type="button"
+                                class="inline-flex w-full justify-center rounded-lg bg-red-300 px-3 py-1.5 text-sm text-white shadow-xs hover:bg-red-400 sm:ml-3 sm:w-auto"
+                                @click="close()"
+                            >
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </transition>
+
+    <!-- Modal Edit -->
+    <transition name="fade" mode="out-in">
+        <div class="relative z-10" v-show="this.modalEdit">
+            <div
+                class="fixed inset-0 bg-gray-500/50 bg-opacity-90 transition-opacity"
+            ></div>
+
+            <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+                <div
+                    class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
+                >
+                    <div
+                        class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"
+                    >
+                        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                            <table
+                                class="table-auto w-full border border-gray-300 text-sm text-left text-gray-700"
+                            >
+                                <thead class="bg-gray-100 text-center">
+                                    <tr>
+                                        <th
+                                            class="border border-gray-300 px-4 p-1"
+                                        >
+                                            หัวข้อ
+                                        </th>
+                                        <th class="border border-gray-300 px-4">
+                                            รายละเอียด
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td
+                                            class="border border-gray-300 px-2 py-1 text-center"
+                                        >
+                                            ประเภท
+                                        </td>
+                                        <td
+                                            class="border border-gray-300 px-8 py-1 font-semibold"
+                                        >
+                                            {{ detailList.title }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            class="border border-gray-300 px-2 py-1 text-center"
+                                        >
+                                            ชื่อ - นามสกุล
+                                        </td>
+                                        <td
+                                            class="border border-gray-300 px-8 py-1"
+                                        >
+                                            {{ detailList.name }}
+                                            {{ detailList.surname }}
+                                        </td>
+                                    </tr>
+                                    <template
+                                        v-if="
+                                            detailList.event_id === 1 ||
+                                            detailList.event_id === 2
+                                        "
+                                    >
+                                        <tr>
+                                            <td
+                                                class="border border-gray-300 px-2 py-1 text-center"
+                                            >
+                                                เริ่ม - สิ้นสุด
+                                            </td>
+                                            <td
+                                                class="border border-gray-300 px-8 py-1 text-xs"
+                                            >
+                                                {{
+                                                    setMoment(detailList.start)
+                                                }}
+                                                <span class="px-1 font-semibold"
+                                                    >-</span
+                                                >
+                                                {{ setMoment(detailList.end) }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td
+                                                class="border border-gray-300 px-2 py-1 text-center"
+                                            >
+                                                วันสอบ/อบรม
+                                            </td>
+                                            <td
+                                                class="border border-gray-300 px-8 py-1"
+                                            >
+                                                {{ detailList.examdate }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td
+                                                class="border border-gray-300 px-2 py-1 text-center"
+                                            >
+                                                เวลาสอบ/อบรม
+                                            </td>
+                                            <td
+                                                class="border border-gray-300 px-8 py-1"
+                                            >
+                                                {{ detailList.examtime }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td
+                                                class="border border-gray-300 px-2 py-1 text-center"
+                                            >
+                                                สถานที่สอบ/อบรม
+                                            </td>
+                                            <td
+                                                class="border border-gray-300 px-8 py-1"
+                                            >
+                                                {{ detailList.meet }}
+                                            </td>
+                                        </tr>
+                                    </template>
+                                    <tr>
+                                        <td
+                                            class="border border-gray-300 px-2 py-1 text-center"
+                                        >
+                                            อื่นๆ
                                         </td>
                                         <td
                                             class="border border-gray-300 px-8 py-1"
@@ -613,6 +920,15 @@ export default {
             searchData: {
                 search: "",
             },
+            data: {
+                submit: "",
+                pay: "",
+                tag: "",
+                complete: "",
+                other: "",
+                status: "",
+                alert: "",
+            },
             ////////////////////////////////////////////////////////////////
         };
     },
@@ -663,9 +979,15 @@ export default {
                 this.detailList = response.data[0];
             });
         },
-        showEdit(id) {},
+        showEdit(id) {
+            this.modalEdit = true;
+            axios.get("/api/enroll/" + id + "/edit").then((response) => {
+                this.editList = response.data[0];
+            });
+        },
         close() {
             this.modalDetail = false;
+            this.modalEdit = false;
         },
     },
     components: {

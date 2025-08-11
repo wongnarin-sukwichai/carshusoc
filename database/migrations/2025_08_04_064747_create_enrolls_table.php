@@ -23,8 +23,9 @@ return new class extends Migration
             $table->integer('tag')->nullable()->comment('จำนวนสลิปการโอนที่ส่งเข้ามา');
             $table->string('work')->nullable()->comment('path ผู้ใช้ส่งงาน');
             $table->string('complete')->nullable()->comment('path จนท.คืนงาน');
-            $table->longText('other')->nullable();
-            $table->integer('status')->nullable()->comment('null=pending,1=active,2=complete,0=cancel');
+            $table->longText('other')->nullable()->comment('ข้อความจากเจ้าหน้าที่');
+            $table->longText('comment')->nullable()->comment('ข้อความจากผู้ใช้');
+            $table->integer('status')->nullable()->comment('null=pending,,0=cancel,1=active,2=complete,4=finished(จบงานแล้วไม่ต้องแสดงข้อมูลห้อง,ตรวจสิทธิ์รับใบ cert)');
             $table->integer('alert')->nullable()->comment('1=แสดง Alert');
             $table->timestamps();
         });

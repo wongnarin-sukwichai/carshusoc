@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\SearchController;
 use App\Http\Controllers\Api\SectionController;
 use App\Http\Controllers\Api\TypeController;
 use App\Http\Controllers\Api\UploadController;
+use App\Http\Controllers\Api\CourseController;
 
 Route::middleware(['web'])->group(function () {
 
@@ -54,6 +55,8 @@ Route::middleware(['web'])->group(function () {
         Route::resource('enroll', EnrollController::class);
 
         Route::get('detail/{id}', [ContentController::class, 'detail']);
+
+        Route::resource('course', CourseController::class);
 
     });
 });

@@ -58,23 +58,40 @@
                                 </p>
                             </div>
 
-                            <button
-                                class="bg-white p-2 rounded-full w-2/4 mt-2 text-gray-900 hover:scale-105 hover:border-2 hover:border-amber-400 hover:text-amber-400"
-                                @click="editSection(section.id)"
-                            >
-                                <div class="flex items-center justify-center">
-                                    <box-icon
-                                        name="cog"
-                                        size="sm"
-                                        class="mr-1"
-                                        color="oklch(82.8% 0.189 84.429)"
-                                    ></box-icon>
-                                    <span
-                                        class="text-amber-400 hover:text-amber-500"
-                                        >แก้ไขข้อมูล</span
+                            <div class="flex">
+                                <button
+                                    class="bg-white p-2 rounded-full mt-2 text-gray-900 border-2 hover:border-2 hover:border-amber-400"
+                                    @click="editSection(section.id)"
+                                >
+                                    <div
+                                        class="flex items-center justify-center"
                                     >
-                                </div>
-                            </button>
+                                        <box-icon
+                                            name="cog"
+                                            size="sm"
+                                            color="oklch(82.8% 0.189 84.429)"
+                                            class="hover:scale-115"
+                                        ></box-icon>
+                                    </div>
+                                </button>
+
+                                <button
+                                    class="bg-white p-2 rounded-full mt-2 text-gray-900 border-2 hover:border-2 hover:border-lime-400 ml-2"
+                                    
+                                >
+                                    <div
+                                        class="flex items-center justify-center"
+                                    >
+                                        <box-icon
+                                            name="plus"
+                                            size="sm"
+                                            color="oklch(64.8% 0.2 131.684)"
+                                            class="hover:scale-115"
+                                        ></box-icon>
+                                    </div>
+                                </button>
+                            </div>
+
                         </div>
                     </div>
                 </div>

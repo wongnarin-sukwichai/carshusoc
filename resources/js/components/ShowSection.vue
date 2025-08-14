@@ -77,7 +77,7 @@
                                     today
                                 "
                                 class="bg-white p-2 rounded-full w-2/4 mt-2 text-gray-900 hover:scale-105 hover:border-2 hover:border-sky-600 hover:text-sky-600"
-                                @click="sendData(section.id)"
+                                @click="chkCourse(section.id, section.course)"
                             >
                                 ลงทะเบียน
                             </button>
@@ -87,6 +87,78 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal Add Course -->
+    <transition name="fade" mode="out-in">
+        <div class="relative z-10" v-show="this.modalCourse">
+            <div
+                class="fixed inset-0 bg-gray-500/50 bg-opacity-90 transition-opacity"
+            ></div>
+            <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+                <div
+                    class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
+                >
+                    <div
+                        class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"
+                    >
+                        <div class="bg-white p-4 rounded-2xl mt-4">
+                            <div
+                                class="font-semibold text-xl text-gray-400 mb-2"
+                            >** กรุณาเลือกบริการ</div>
+                            <div
+                                class="relative border-2 border-dashed rounded-xl cursor-pointer hover:border-sky-400 hover:border-3 p-4 group mb-2"
+                                v-for="(course, index) in courseList"
+                                :key="index"
+                                @click="sendData(course.price, course.postage)"
+                            >
+                                <span
+                                    class="font-semibold text-lg text-[#85c1e9]"
+                                    >{{ course.title }} :
+                                </span>
+                                <div
+                                    class="border-1 border-dashed w-2/3 my-3"
+                                ></div>
+                                <div class="text-md">
+                                    <span class="font-semibold pr-2"
+                                        >ค่าบริการ :</span
+                                    >
+                                    {{ Number(course.price).toLocaleString() }}
+                                </div>
+                                <div
+                                    class="text-md mt-2"
+                                    v-if="course.postage !== null"
+                                >
+                                    <span class="font-semibold pr-2"
+                                        >ค่าไปรษณีย์ :</span
+                                    >
+                                    {{ course.postage }}
+                                </div>
+                                <div
+                                    class="text-md mt-2"
+                                    v-if="course.other !== null"
+                                >
+                                    <span class="font-semibold pr-2"
+                                        >หมายเหตุ : </span
+                                    >{{ course.other }}
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-gray-50 px-4 py-2 sm:flex sm:flex-row-reverse sm:px-6"
+                        >
+                            <button
+                                type="button"
+                                class="inline-flex w-full justify-center rounded-lg bg-red-300 px-3 py-1.5 text-sm text-white shadow-xs hover:bg-red-400 sm:ml-3 sm:w-auto"
+                                @click="close()"
+                            >
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </transition>
 </template>
 
 <script>
@@ -104,9 +176,13 @@ export default {
             moment: moment,
             today: moment().format("YYYY-MM-DD"),
             sectionList: [],
+            courseList: [],
+            modalCourse: false,
             data: {
                 content_id: this.$route.params.id,
                 section_id: "",
+                price: "",
+                postage: "",
             },
         };
     },
@@ -124,7 +200,26 @@ export default {
         setMoment(id) {
             return moment(id).format("L");
         },
-        sendData(id) {
+        chkCourse(id, code) {
+            this.data.section_id = id;
+
+            if (code == null) {
+                const arr = Array.from(this.sectionList);
+                const res = arr.find((selection) => selection.id == id);
+
+                this.sendData(res.price, res.postage);
+            } else {
+                axios.get("/api/course/" + id).then((response) => {
+                    this.courseList = response.data;
+                });
+
+                this.modalCourse = true;
+            }
+        },
+        close() {
+            this.modalCourse = false;
+        },
+        sendData(id, code) {
             Swal.fire({
                 title: "Are you sure?",
                 text: "Do you want to confirm to Register",
@@ -147,8 +242,6 @@ export default {
                 },
             }).then(async (result) => {
                 if (result.isConfirmed) {
-                    this.data.section_id = id;
-
                     if (this.user.status === null) {
                         Swal.fire({
                             title: "Warning",
@@ -167,6 +260,10 @@ export default {
                         });
                         this.$router.push("/profile");
                     } else {
+
+                        this.data.price = id;
+                        this.data.postage = code;
+
                         axios
                             .post("/api/enroll", this.data)
                             .then((response) => {
@@ -190,7 +287,7 @@ export default {
                                     },
                                 });
                                 this.data.section_id = "";
-                                this.$router.push("/list");
+                                this.$router.push("/enroll");
                             });
                     }
                 }

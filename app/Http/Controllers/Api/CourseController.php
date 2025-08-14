@@ -42,7 +42,7 @@ class CourseController extends Controller
         $data->save();
 
         Section::where('id', $request['section_id'])->update([
-            'sub' => 1
+            'course' => 1
         ]);
 
         return response()->json([

@@ -121,6 +121,12 @@
                                                         scope="col"
                                                         class="p-4.5 text-left whitespace-nowrap text-sm leading-6 font-semibold text-gray-900 capitalize"
                                                     >
+                                                        File
+                                                    </th>
+                                                    <th
+                                                        scope="col"
+                                                        class="p-4.5 text-left whitespace-nowrap text-sm leading-6 font-semibold text-gray-900 capitalize"
+                                                    >
                                                         Status
                                                     </th>
                                                     <th
@@ -267,8 +273,30 @@
                                                             name="paypal"
                                                             color="oklch(50% 0.134 242.749)"
                                                             class="cursor-pointer hover:scale-120"
+                                                            v-if="
+                                                                enroll.total !==
+                                                                null
+                                                            "
                                                             @click="
                                                                 showPayment(
+                                                                    enroll.id
+                                                                )
+                                                            "
+                                                        ></box-icon>
+                                                    </td>
+                                                    <td
+                                                        class="p-4.5 text-xs leading-6 font-medium text-gray-900 break-words whitespace-normal"
+                                                    >
+                                                        <box-icon
+                                                            name="file"
+                                                            color="oklch(50% 0.134 242.749)"
+                                                            class="cursor-pointer hover:scale-120"
+                                                            v-if="
+                                                                enroll.total !==
+                                                                null
+                                                            "
+                                                            @click="
+                                                                showFile(
                                                                     enroll.id
                                                                 )
                                                             "
@@ -469,7 +497,7 @@
                                             ประเภท
                                         </td>
                                         <td
-                                            class="border border-gray-300 px-8 py-1 font-semibold"
+                                            class="border border-gray-300 px-4 py-1 font-semibold"
                                         >
                                             {{ detailList.title }}
                                         </td>
@@ -481,7 +509,7 @@
                                             ชื่อ - นามสกุล
                                         </td>
                                         <td
-                                            class="border border-gray-300 px-8 py-1"
+                                            class="border border-gray-300 px-4 py-1"
                                         >
                                             {{ detailList.name }}
                                             {{ detailList.surname }}
@@ -500,7 +528,7 @@
                                                 เริ่ม - สิ้นสุด
                                             </td>
                                             <td
-                                                class="border border-gray-300 px-8 py-1 text-xs"
+                                                class="border border-gray-300 px-4 py-1 text-xs"
                                             >
                                                 {{
                                                     setMoment(detailList.start)
@@ -518,7 +546,7 @@
                                                 วันสอบ/อบรม
                                             </td>
                                             <td
-                                                class="border border-gray-300 px-8 py-1"
+                                                class="border border-gray-300 px-4 py-1"
                                             >
                                                 {{ detailList.examdate }}
                                             </td>
@@ -530,7 +558,7 @@
                                                 เวลาสอบ/อบรม
                                             </td>
                                             <td
-                                                class="border border-gray-300 px-8 py-1"
+                                                class="border border-gray-300 px-4 py-1"
                                             >
                                                 {{ detailList.examtime }}
                                             </td>
@@ -542,7 +570,7 @@
                                                 สถานที่สอบ/อบรม
                                             </td>
                                             <td
-                                                class="border border-gray-300 px-8 py-1"
+                                                class="border border-gray-300 px-4 py-1"
                                             >
                                                 {{ detailList.meet }}
                                             </td>
@@ -555,7 +583,7 @@
                                             อื่นๆ
                                         </td>
                                         <td
-                                            class="border border-gray-300 px-8 py-1"
+                                            class="border border-gray-300 px-4 py-1"
                                         >
                                             {{ detailList.section_other }}
                                         </td>
@@ -570,10 +598,44 @@
                                         <td
                                             class="border border-gray-300 px-2 py-1 text-center"
                                         >
+                                            ค่าลงทะเบียน
+                                        </td>
+                                        <td
+                                            class="border border-gray-300 px-4 py-1"
+                                        >
+                                            {{
+                                                Number(
+                                                    detailList.pay +
+                                                        detailList.tag
+                                                ).toLocaleString()
+                                            }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            class="border border-gray-300 px-2 py-1 text-center"
+                                        >
+                                            ค่าส่งไปรษณีย์
+                                        </td>
+                                        <td
+                                            class="border border-gray-300 px-4 py-1"
+                                            v-if="detailList.tag !== null"
+                                        >
+                                            {{
+                                                Number(
+                                                    detailList.tag
+                                                ).toLocaleString()
+                                            }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            class="border border-gray-300 px-2 py-1 text-center"
+                                        >
                                             ค่าบริการที่ต้องชำระ
                                         </td>
                                         <td
-                                            class="border border-gray-300 px-8 py-1"
+                                            class="border border-gray-300 px-4 py-1"
                                         >
                                             {{
                                                 Number(
@@ -591,7 +653,7 @@
                                                 เอกสารแล้วเสร็จ
                                             </td>
                                             <td
-                                                class="border border-gray-300 px-8 py-1"
+                                                class="border border-gray-300 px-4 py-1"
                                             >
                                                 {{ detailList.complete }}
                                             </td>
@@ -604,7 +666,7 @@
                                             เจ้าหน้าที่
                                         </td>
                                         <td
-                                            class="border border-gray-300 px-8 py-1"
+                                            class="border border-gray-300 px-4 py-1"
                                         >
                                             {{ detailList.other }}
                                         </td>
@@ -623,7 +685,7 @@
                                                 กำหนดวันรับงาน
                                             </td>
                                             <td
-                                                class="border border-gray-300 px-8 py-1"
+                                                class="border border-gray-300 px-4 py-1"
                                             >
                                                 {{ detailList.submit }}
                                             </td>
@@ -635,9 +697,20 @@
                                                 ไฟล์ส่งเอกสาร
                                             </td>
                                             <td
-                                                class="border border-gray-300 px-8 py-1"
+                                                class="border border-gray-300 px-4 py-1"
                                             >
-                                                {{ detailList.work }}
+                                                <box-icon
+                                                    name="file"
+                                                    color="oklch(50% 0.134 242.749)"
+                                                    class="cursor-pointer hover:scale-120"
+                                                    v-if="
+                                                        detailList.total !==
+                                                        null
+                                                    "
+                                                    @click="
+                                                        showFile(detailList.id)
+                                                    "
+                                                ></box-icon>
                                             </td>
                                         </tr>
                                     </template>
@@ -645,12 +718,21 @@
                                         <td
                                             class="border border-gray-300 px-2 py-1 text-center"
                                         >
-                                            สถานะการโอน
+                                            หลักฐานการโอน
                                         </td>
                                         <td
-                                            class="border border-gray-300 px-8 py-1"
+                                            class="border border-gray-300 px-4 py-1"
                                         >
-                                            {{ detailList.total }}
+                                            <box-icon
+                                                type="logo"
+                                                name="paypal"
+                                                color="oklch(50% 0.134 242.749)"
+                                                class="cursor-pointer hover:scale-120"
+                                                v-if="detailList.total !== null"
+                                                @click="
+                                                    showPayment(detailList.id)
+                                                "
+                                            ></box-icon>
                                         </td>
                                     </tr>
                                     <tr>
@@ -660,7 +742,7 @@
                                             ข้อความ
                                         </td>
                                         <td
-                                            class="border border-gray-300 px-8 py-1"
+                                            class="border border-gray-300 px-4 py-1"
                                         >
                                             {{ detailList.comment }}
                                         </td>
@@ -723,7 +805,7 @@
                                             ประเภท
                                         </td>
                                         <td
-                                            class="border border-gray-300 px-8 py-1 font-semibold"
+                                            class="border border-gray-300 px-4 py-1 font-semibold"
                                         >
                                             {{ detailList.title }}
                                         </td>
@@ -735,7 +817,7 @@
                                             ชื่อ - นามสกุล
                                         </td>
                                         <td
-                                            class="border border-gray-300 px-8 py-1"
+                                            class="border border-gray-300 px-4 py-1"
                                         >
                                             {{ detailList.name }}
                                             {{ detailList.surname }}
@@ -754,7 +836,7 @@
                                                 เริ่ม - สิ้นสุด
                                             </td>
                                             <td
-                                                class="border border-gray-300 px-8 py-1 text-xs"
+                                                class="border border-gray-300 px-4 py-1 text-xs"
                                             >
                                                 {{
                                                     setMoment(detailList.start)
@@ -772,7 +854,7 @@
                                                 วันสอบ/อบรม
                                             </td>
                                             <td
-                                                class="border border-gray-300 px-8 py-1"
+                                                class="border border-gray-300 px-4 py-1"
                                             >
                                                 {{ detailList.examdate }}
                                             </td>
@@ -784,7 +866,7 @@
                                                 เวลาสอบ/อบรม
                                             </td>
                                             <td
-                                                class="border border-gray-300 px-8 py-1"
+                                                class="border border-gray-300 px-4 py-1"
                                             >
                                                 {{ detailList.examtime }}
                                             </td>
@@ -796,7 +878,7 @@
                                                 สถานที่สอบ/อบรม
                                             </td>
                                             <td
-                                                class="border border-gray-300 px-8 py-1"
+                                                class="border border-gray-300 px-4 py-1"
                                             >
                                                 {{ detailList.meet }}
                                             </td>
@@ -809,7 +891,7 @@
                                             อื่นๆ
                                         </td>
                                         <td
-                                            class="border border-gray-300 px-8 py-1"
+                                            class="border border-gray-300 px-4 py-1"
                                         >
                                             {{ detailList.section_other }}
                                         </td>
@@ -827,29 +909,16 @@
                                             ค่าบริการที่ต้องชำระ
                                         </td>
                                         <td
-                                            class="border border-gray-300 px-8 py-1"
+                                            class="border border-gray-300 px-4 py-1"
                                         >
-                                            {{
-                                                Number(
-                                                    detailList.pay +
-                                                        detailList.tag
-                                                ).toLocaleString()
-                                            }}
+                                            <input
+                                                type="number"
+                                                class="border rounded-sm pl-2 py-0.5"
+                                                v-model="data.pay"
+                                            />
                                         </td>
                                     </tr>
-                                    <template v-if="detailList.event_id === 3">
-                                        <tr>
-                                            <td
-                                                class="border border-gray-300 px-2 py-1 text-center"
-                                            >
-                                                ไฟล์ส่งเอกสาร
-                                            </td>
-                                            <td
-                                                class="border border-gray-300 px-8 py-1"
-                                            >
-                                                {{ detailList.work }}
-                                            </td>
-                                        </tr>
+                                    <template v-if="detailList.event_id !== 3">
                                         <tr>
                                             <td
                                                 class="border border-gray-300 px-2 py-1 text-center"
@@ -857,9 +926,21 @@
                                                 เอกสารแล้วเสร็จ
                                             </td>
                                             <td
-                                                class="border border-gray-300 px-8 py-1"
+                                                class="border border-gray-300 px-4 py-1"
                                             >
-                                                {{ detailList.complete }}
+                                                <label
+                                                >
+                                                    <box-icon
+                                                        name="cloud-upload"
+                                                        color="oklch(78.9% 0.154 211.53)"
+                                                        class="cursor-pointer hover:scale-115"
+                                                    ></box-icon>
+                                                    <input
+                                                        type="file"
+                                                        @click="uploadFile()"
+                                                        hidden
+                                                    />
+                                                </label>
                                             </td>
                                         </tr>
                                     </template>
@@ -867,12 +948,92 @@
                                         <td
                                             class="border border-gray-300 px-2 py-1 text-center"
                                         >
-                                            ข้อความจากผู้ใช้
+                                            เจ้าหน้าที่
                                         </td>
                                         <td
-                                            class="border border-gray-300 px-8 py-1"
+                                            class="border border-gray-300 px-4 py-1"
                                         >
-                                            {{ detailList.other }}
+                                            <textarea
+                                                class="border w-full"
+                                                v-model="data.other"
+                                            >
+                                            </textarea>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            colspan="2"
+                                            class="px-2 py-1 bg-gray-100"
+                                        ></td>
+                                    </tr>
+                                    <template v-if="detailList.event_id !== 3">
+                                        <tr>
+                                            <td
+                                                class="border border-gray-300 px-2 py-1 text-center"
+                                            >
+                                                กำหนดวันรับงาน
+                                            </td>
+                                            <td
+                                                class="border border-gray-300 px-4 py-1"
+                                            >
+                                                {{ detailList.submit }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td
+                                                class="border border-gray-300 px-2 py-1 text-center"
+                                            >
+                                                ไฟล์ส่งเอกสาร
+                                            </td>
+                                            <td
+                                                class="border border-gray-300 px-4 py-1"
+                                            >
+                                                <box-icon
+                                                    name="file"
+                                                    color="oklch(50% 0.134 242.749)"
+                                                    class="cursor-pointer hover:scale-120"
+                                                    v-if="
+                                                        detailList.total !==
+                                                        null
+                                                    "
+                                                    @click="
+                                                        showFile(detailList.id)
+                                                    "
+                                                ></box-icon>
+                                            </td>
+                                        </tr>
+                                    </template>
+                                    <tr>
+                                        <td
+                                            class="border border-gray-300 px-2 py-1 text-center"
+                                        >
+                                            หลักฐานการโอน
+                                        </td>
+                                        <td
+                                            class="border border-gray-300 px-4 py-1"
+                                        >
+                                            <box-icon
+                                                type="logo"
+                                                name="paypal"
+                                                color="oklch(50% 0.134 242.749)"
+                                                class="cursor-pointer hover:scale-120"
+                                                v-if="detailList.total !== null"
+                                                @click="
+                                                    showPayment(detailList.id)
+                                                "
+                                            ></box-icon>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            class="border border-gray-300 px-2 py-1 text-center"
+                                        >
+                                            ข้อความ
+                                        </td>
+                                        <td
+                                            class="border border-gray-300 px-4 py-1"
+                                        >
+                                            {{ detailList.comment }}
                                         </td>
                                     </tr>
                                 </tbody>
@@ -883,10 +1044,17 @@
                         >
                             <button
                                 type="button"
-                                class="inline-flex w-full justify-center rounded-lg bg-red-300 px-3 py-1.5 text-sm text-white shadow-xs hover:bg-red-400 sm:ml-3 sm:w-auto"
+                                class="inline-flex w-full justify-center rounded-lg bg-green-600 px-3 py-1.5 text-sm text-white shadow-xs hover:bg-green-700 sm:ml-2 sm:w-auto"
                                 @click="close()"
                             >
-                                Close
+                                บันทึก
+                            </button>
+                            <button
+                                type="button"
+                                class="inline-flex w-full justify-center rounded-lg bg-red-300 px-3 py-1.5 text-sm text-white shadow-xs hover:bg-red-400 sm:ml-2 sm:w-auto"
+                                @click="close()"
+                            >
+                                ปิด
                             </button>
                         </div>
                     </div>
@@ -982,7 +1150,14 @@ export default {
         showEdit(id) {
             this.modalEdit = true;
             axios.get("/api/enroll/" + id + "/edit").then((response) => {
-                this.editList = response.data[0];
+                this.detailList = response.data[0];
+
+                this.data.pay = response.data[0].pay;
+                this.data.postage = response.data[0].postage;
+                this.data.complete = response.data[0].complete;
+                this.data.other = response.data[0].other;
+                this.data.status = response.data[0].status;
+                this.data.alert = response.data[0].alert;
             });
         },
         close() {

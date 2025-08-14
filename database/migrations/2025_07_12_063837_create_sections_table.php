@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('content_id');
             $table->integer('event_id')->comment('ประเภท');
-            $table->integer('sub')->nullable()->comment('null=ไม่มี,1=มี subcategory ย่อย');
+            $table->integer('course')->nullable()->comment('null=ไม่มี,1=มี course ย่อย');
             $table->string('title');
             $table->date('start')->nullable()->comment('วันเปิดรับสมัคร');
             $table->date('end')->nullable()->comment('วันปิดรับสมัคร');

@@ -109,7 +109,7 @@
                                                         scope="col"
                                                         class="p-4.5 text-left whitespace-nowrap text-sm leading-6 font-semibold text-gray-900 capitalize"
                                                     >
-                                                        Postage
+                                                        Shipping
                                                     </th>
                                                     <th
                                                         scope="col"
@@ -345,6 +345,19 @@
                                                         </div>
 
                                                         <div
+                                                            class="py-1.5 px-2.5 bg-gray-50 rounded-full flex justify-center w-20 items-center gap-1 hover:scale-105 cursor-pointer"
+                                                            v-else-if="
+                                                                enroll.status ===
+                                                                3
+                                                            "
+                                                        >
+                                                            <span
+                                                                class="font-medium text-xs text-gray-700"
+                                                                >Finished</span
+                                                            >
+                                                        </div>
+
+                                                        <div
                                                             class="py-1.5 px-2.5 bg-red-50 rounded-full flex w-20 justify-center items-center gap-1 hover:scale-105 cursor-pointer"
                                                             v-else
                                                         >
@@ -558,7 +571,7 @@
                                                 เวลาสอบ/อบรม
                                             </td>
                                             <td
-                                                class="border border-gray-300 px-4 py-1"
+                                                class="border border-gray-300 px-4 py-1 text-xs"
                                             >
                                                 {{ detailList.examtime }}
                                             </td>
@@ -906,16 +919,48 @@
                                         <td
                                             class="border border-gray-300 px-2 py-1 text-center"
                                         >
-                                            ค่าบริการที่ต้องชำระ
+                                            ค่าลงทะเบียน
                                         </td>
                                         <td
                                             class="border border-gray-300 px-4 py-1"
                                         >
                                             <input
                                                 type="number"
-                                                class="border rounded-sm pl-2 py-0.5"
+                                                class="border rounded-md pl-2 py-0.5"
                                                 v-model="data.pay"
                                             />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            class="border border-gray-300 px-2 py-1 text-center"
+                                        >
+                                            ค่าส่งไปรษณีย์
+                                        </td>
+                                        <td
+                                            class="border border-gray-300 px-4 py-1"
+                                        >
+                                            <input
+                                                type="number"
+                                                class="border rounded-md pl-2 py-0.5"
+                                                v-model="data.tag"
+                                            />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            class="border border-gray-300 px-2 py-1 text-center"
+                                        >
+                                            ค่าบริการที่ต้องชำระ
+                                        </td>
+                                        <td
+                                            class="border border-gray-300 px-4 py-1"
+                                        >
+                                            {{
+                                                Number(
+                                                    data.pay + data.tag
+                                                ).toLocaleString()
+                                            }}
                                         </td>
                                     </tr>
                                     <template v-if="detailList.event_id !== 3">
@@ -929,17 +974,29 @@
                                                 class="border border-gray-300 px-4 py-1"
                                             >
                                                 <label
+                                                    class="flex items-center justify-between w-full"
                                                 >
-                                                    <box-icon
-                                                        name="cloud-upload"
-                                                        color="oklch(78.9% 0.154 211.53)"
-                                                        class="cursor-pointer hover:scale-115"
-                                                    ></box-icon>
-                                                    <input
-                                                        type="file"
-                                                        @click="uploadFile()"
-                                                        hidden
-                                                    />
+                                                    <span
+                                                        class="border-r-2 mr-2"
+                                                    >
+                                                        <input
+                                                            class="w-48 cursor-pointer rounded border border-solid border-neutral-300 bg-clip-padding px-3 py-[0.32rem] text-xs font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:cursor-pointer file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:border-primary focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:file:bg-neutral-700 dark:file:text-neutral-100 dark:focus:border-primary mr-2"
+                                                            ref="fileInput"
+                                                            type="file"
+                                                            @input="pickFile()"
+                                                        />
+                                                    </span>
+                                                    <span
+                                                        class="items-end justify-end"
+                                                        ><box-icon
+                                                            name="file"
+                                                            color="oklch(50% 0.134 242.749)"
+                                                            class="cursor-pointer hover:scale-115"
+                                                            v-for="n in +data.complete ||
+                                                            0"
+                                                            :key="`complete-${n}`"
+                                                        ></box-icon
+                                                    ></span>
                                                 </label>
                                             </td>
                                         </tr>
@@ -954,10 +1011,88 @@
                                             class="border border-gray-300 px-4 py-1"
                                         >
                                             <textarea
-                                                class="border w-full"
+                                                class="border w-full rounded-md py-1 px-2"
                                                 v-model="data.other"
                                             >
                                             </textarea>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            class="border border-gray-300 px-2 py-1 text-center"
+                                        >
+                                            สถานะ
+                                        </td>
+                                        <td
+                                            class="border border-gray-300 px-4 py-1"
+                                        >
+                                            <fieldset>
+                                                <div>
+                                                    <input
+                                                        class="peer/draft cursor-pointer"
+                                                        name="status"
+                                                        type="radio"
+                                                        :value="null"
+                                                        v-model="data.status"
+                                                    />
+                                                    <label
+                                                        class="peer-checked/draft:text-amber-600 pl-2 text-xs"
+                                                        >Pending</label
+                                                    >
+                                                </div>
+                                                <div>
+                                                    <input
+                                                        class="peer/draft cursor-pointer"
+                                                        name="status"
+                                                        type="radio"
+                                                        :value="1"
+                                                        v-model="data.status"
+                                                    />
+                                                    <label
+                                                        class="peer-checked/draft:text-sky-600 pl-2 text-xs"
+                                                        >Active</label
+                                                    >
+                                                </div>
+                                                <div>
+                                                    <input
+                                                        class="peer/draft cursor-pointer"
+                                                        name="status"
+                                                        type="radio"
+                                                        :value="2"
+                                                        v-model="data.status"
+                                                    />
+                                                    <label
+                                                        class="peer-checked/draft:text-emerald-600 pl-2 text-xs"
+                                                        >Complete</label
+                                                    >
+                                                </div>
+                                                <div>
+                                                    <input
+                                                        class="peer/draft cursor-pointer"
+                                                        name="status"
+                                                        type="radio"
+                                                        :value="3"
+                                                        v-model="data.status"
+                                                    />
+                                                    <label
+                                                        class="peer-checked/draft:text-gray-400 pl-2 text-xs"
+                                                        >Finished</label
+                                                    >
+                                                </div>
+                                                <div>
+                                                    <input
+                                                        class="peer/draft cursor-pointer"
+                                                        name="status"
+                                                        type="radio"
+                                                        :value="0"
+                                                        v-model="data.status"
+                                                    />
+                                                    <label
+                                                        class="peer-checked/draft:text-red-600 pl-2 text-xs"
+                                                        >Cancel</label
+                                                    >
+                                                </div>
+                                            </fieldset>
                                         </td>
                                     </tr>
                                     <tr>
@@ -1045,7 +1180,7 @@
                             <button
                                 type="button"
                                 class="inline-flex w-full justify-center rounded-lg bg-green-600 px-3 py-1.5 text-sm text-white shadow-xs hover:bg-green-700 sm:ml-2 sm:w-auto"
-                                @click="close()"
+                                @click="sendData()"
                             >
                                 บันทึก
                             </button>
@@ -1068,6 +1203,7 @@
 import axios from "axios";
 import { TailwindPagination } from "laravel-vue-pagination";
 import moment from "moment";
+import Swal from "sweetalert2";
 
 export default {
     async mounted() {
@@ -1084,11 +1220,13 @@ export default {
             ////////////////////////////////////////////////////////////////
             enrollList: [],
             detailList: [],
+            file: null,
             ////////////////////////////////////////////////////////////////
             searchData: {
                 search: "",
             },
             data: {
+                id: "",
                 submit: "",
                 pay: "",
                 tag: "",
@@ -1152,8 +1290,9 @@ export default {
             axios.get("/api/enroll/" + id + "/edit").then((response) => {
                 this.detailList = response.data[0];
 
+                this.data.id = id
                 this.data.pay = response.data[0].pay;
-                this.data.postage = response.data[0].postage;
+                this.data.tag = response.data[0].tag;
                 this.data.complete = response.data[0].complete;
                 this.data.other = response.data[0].other;
                 this.data.status = response.data[0].status;
@@ -1163,6 +1302,50 @@ export default {
         close() {
             this.modalDetail = false;
             this.modalEdit = false;
+
+            this.$refs.fileInput.value = null; //clear ช่อง choose
+            this.file = null;
+        },
+        pickFile() {
+            let input = this.$refs.fileInput;
+            this.file = input.files; //เอาไฟล์รูปเข้าตัวแปร file
+            ////////////////////////////////////////////////////////////
+        },
+        async sendData() {
+            // SweetAlert Confirm
+            Swal.fire({
+                title: "Are you sure?",
+                text: "Do you want to confirm",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes",
+                customClass: {
+                    popup: "rounded-xl shadow-lg bg-white font-poppins",
+                    title: "text-2xl font-bold text-gray-800",
+                    htmlContainer: "text-base text-gray-600",
+                    confirmButton:
+                        "bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2",
+                    cancelButton:
+                        "bg-gray-300 hover:bg-gray-400 text-black font-medium px-4 py-2 ml-2",
+                },
+                didOpen: () => {
+                    Swal.getPopup().style.fontFamily = "Poppins, sans-serif";
+                },
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    try {
+                        if (this.file != null) {
+
+                        } else {
+
+                        }
+                    } catch (err) {
+                        throw err;
+                    }
+                }
+            });
         },
     },
     components: {

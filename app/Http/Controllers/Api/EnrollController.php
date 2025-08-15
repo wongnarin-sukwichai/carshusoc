@@ -35,7 +35,7 @@ class EnrollController extends Controller
                 'sections.postage',
                 'sections.other AS section_other',
                 'sections.alert',
-                'sections.status',
+                'sections.status AS section_status',
                 'users.email',
                 'users.pic',
                 'users.name',
@@ -96,7 +96,7 @@ class EnrollController extends Controller
                 'sections.meet',
                 'sections.other AS section_other',
                 'sections.alert',
-                'sections.status',
+                'sections.status AS section_status',
                 'users.name',
                 'users.surname'
             )
@@ -125,7 +125,7 @@ class EnrollController extends Controller
                 'sections.meet',
                 'sections.other AS section_other',
                 'sections.alert',
-                'sections.status',
+                'sections.status AS section_status',
                 'users.name',
                 'users.surname'
             )

@@ -21,11 +21,11 @@ return new class extends Migration
             $table->integer('pay')->nullable()->comment('ราคาที่ต้องจ่าย-งานแปลภาษา-เจ้าหน้าที่ประเมิน');
             $table->integer('tag')->nullable()->comment('ค่าไปรษณีย์');
             $table->integer('tag')->nullable()->comment('จำนวนสลิปการโอนที่ส่งเข้ามา');
-            $table->string('work')->nullable()->comment('path ผู้ใช้ส่งงาน');
-            $table->string('complete')->nullable()->comment('path จนท.คืนงาน');
+            $table->integer('work')->nullable()->comment('null=ไม่มี, 1+=มีผู้ใช้ส่งงาน');
+            $table->integer('complete')->nullable()->comment('null=ไม่มี, 1+=มีผู้ใช้ส่งงาน');
             $table->longText('other')->nullable()->comment('ข้อความจากเจ้าหน้าที่');
             $table->longText('comment')->nullable()->comment('ข้อความจากผู้ใช้');
-            $table->integer('status')->nullable()->comment('null=pending,,0=cancel,1=active,2=complete,4=finished(จบงานแล้วไม่ต้องแสดงข้อมูลห้อง,ตรวจสิทธิ์รับใบ cert)');
+            $table->integer('status')->nullable()->comment('null=pending,,0=cancel,1=active,2=complete,3=finished(จบงานแล้วไม่ต้องแสดงข้อมูลห้อง,ตรวจสิทธิ์รับใบ cert)');
             $table->integer('alert')->nullable()->comment('1=แสดง Alert');
             $table->timestamps();
         });

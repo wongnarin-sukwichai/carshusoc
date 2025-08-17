@@ -4,6 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+use App\Models\Complete;
+use App\Models\Enroll;
 
 class CompleteController extends Controller
 {
@@ -28,7 +32,30 @@ class CompleteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if (!empty($request['filename'])) {
+            $res = new Complete();
+
+            $res->enroll_id = $request['id'];
+            $res->title = $request['filename'];
+            $res->owner = Auth::user()->id;
+
+            $res->save();
+        }
+        ////////////////////////////////////////////////////////////
+        $data = Enroll::find($request['id']);
+
+        $data->pay = $request['pay'];
+        $data->tag = $request['tag'];
+        $data->complete = $request['complete'];
+        $data->other = $request['other'];
+        $data->status = $request['status'];
+        $data->alert = $request['alert'];
+
+        $data->save();
+
+        return response()->json([
+            'message' => 'Success!!'
+        ]);
     }
 
     /**
@@ -36,7 +63,9 @@ class CompleteController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $data = Complete::where('enroll_id', $id)->get();
+
+        return response()->json($data);
     }
 
     /**

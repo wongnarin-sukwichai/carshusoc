@@ -63,5 +63,7 @@ Route::middleware(['web'])->group(function () {
         Route::resource('complete', CompleteController::class);
         Route::resource('work', WorkController::class);
 
+        Route::post('uploadComplete', [UploadController::class, 'uploadComplete']);
+
     });
 });

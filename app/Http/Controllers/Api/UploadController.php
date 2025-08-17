@@ -9,6 +9,8 @@ use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 use Illuminate\Support\Facades\File;
 
+use Illuminate\Support\Carbon;
+
 class UploadController extends Controller
 {
     /**
@@ -62,7 +64,7 @@ class UploadController extends Controller
             'file' => 'required|mimes:png,jpg,jpeg'
         ]);
 
-         $image = $request->file('file');                                                 //ดึงไฟล์รูปภาพ 
+        $image = $request->file('file');                                                 //ดึงไฟล์รูปภาพ 
         $manager = new ImageManager(new Driver());
         $thumbnail = $manager->read($image)->resize(319, 319);                           //Resize รูปภาพ
         $image_name = uniqid() . '.' . $image->getClientOriginalExtension();            //ตั้งชื่อใหม่ให้รูปภาพ / ข้างหลังคือการดึงชื่อนามสกุลไฟล์เดิมมาต่อท้าย
@@ -80,6 +82,28 @@ class UploadController extends Controller
         $thumbnail->save($chkThumb . $image_name);                                     //ถ้า resize ให้ใช้ save และ
 
         return response()->json($image_name);
+    }
+
+    public function uploadComplete(Request $request)
+    {
+
+        $request->validate([
+            'file' => 'required|mimes:doc,docx,xls,xlsx,pdf'
+        ]);
+
+        $file = $request->file('file');                                                 //ดึงไฟล์รูปภาพ 
+        $file_name = uniqid() . '.' . $file->getClientOriginalExtension();            //ตั้งชื่อใหม่ให้รูปภาพ / ข้างหลังคือการดึงชื่อนามสกุลไฟล์เดิมมาต่อท้าย
+
+        $date = Carbon::now()->format('Y/m/d');
+        $serv_path = "files/completes/{$date}";                                                 //สร้าง Path สำหรับ save file 
+
+        $chkPath = public_path($serv_path);                                             //public_path ตือ folder public
+
+        if (!File::exists($chkPath)) File::makeDirectory($chkPath, 0777, true);         //Check ว่ามี folder ไหม ถ้าไม่มีให้สร้าง folder ขึ้นมาใหม่
+
+        $file->move($chkPath, $file_name);                                           //ถ้าไม่ได้ resize ให้ใช้คำสั่ง move และ , พร้อมตั้งชื่อไฟล์
+
+        return response()->json($file_name);
     }
 
     /**

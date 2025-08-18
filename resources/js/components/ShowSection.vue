@@ -33,11 +33,22 @@
                     }"
                 >
                     <div class="card">
-                        <div class="front-content">
+                         <div
+                            class="front-content"
+                            :class="{
+                                'text-md': section.title.length > 20,
+                                'text-2xl':
+                                    section.title.length > 10 &&
+                                    section.title.length <= 20,
+                                'text-3xl': section.title.length <= 10,
+                            }"
+                        >
                             <p>{{ section.title }}</p>
                         </div>
                         <div class="content">
-                            <p class="heading">Detail</p>
+                             <p class="heading border-b-1 border-dashed">
+                                รายละเอียด
+                            </p>
                             <div class="text-sm text-left pl-2">
                                 <p v-if="section.start">
                                     <span class="font-semibold"
@@ -287,7 +298,7 @@ export default {
                                     },
                                 });
                                 this.data.section_id = "";
-                                this.$router.push("/enroll");
+                                this.$router.push("/showEnroll");
                             });
                     }
                 }
@@ -323,6 +334,7 @@ export default {
 .card .front-content {
     width: 100%;
     height: 100%;
+    padding: 8%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -330,7 +342,6 @@ export default {
 }
 
 .card .front-content p {
-    font-size: 32px;
     font-weight: 700;
     opacity: 1;
     background: linear-gradient(

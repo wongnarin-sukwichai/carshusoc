@@ -391,6 +391,7 @@ export default {
                 pic: "",
                 title: "",
                 short_name: "",
+                file: "",
                 event_id: "",
                 detail: "",
                 mission: "",

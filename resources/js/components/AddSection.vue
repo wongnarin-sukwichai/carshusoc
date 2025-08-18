@@ -17,7 +17,10 @@
             <div
                 class="border-2 border-dashed rounded-xl p-8 h-64 flex items-center justify-center"
             >
-                <span class="text-3xl font-semibold">{{ data.title }}</span>
+                <span 
+                class="font-semibold"
+                :class="data.title.length > 10 ? 'text-md' : 'text-3xl'"
+                >{{ data.title }}</span>
             </div>
 
             <!-- Main 2 -->
@@ -347,7 +350,7 @@
                                     </li>
                                     <li>
                                         หากมีหมวดหมู่ย่อย
-                                        เพราะระบบจะอ้างอิงราคาจากหมวดหมู่ย่อยก่อนเสมอ
+                                        ระบบจะอ้างอิงราคาจากหมวดหมู่ย่อยก่อนเสมอ
                                     </li>
                                     <li>
                                         ไม่ต้องใส่ราคา

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('pic')->nullable();
             $table->string('title');
             $table->string('short_name')->nullable();
+            $table->string('file')->nullable();
             $table->longText('detail')->nullable();
             $table->longText('mission')->nullable();
             $table->longText('scope')->nullable();

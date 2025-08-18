@@ -632,7 +632,7 @@
                                                     </td>
                                                     <td
                                                         class="p-4.5 text-xs leading-6 font-medium text-gray-900 break-words whitespace-normal"
-                                                    >
+                                                    >7
                                                         https://zoom.us/j/8642097531?pwd=K9u8TfYwLmNpR2hzWXFVZg
                                                     </td>
                                                     <td

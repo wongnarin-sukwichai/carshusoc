@@ -722,7 +722,7 @@
                                             <td
                                                 class="border border-gray-300 px-2 py-1 text-center"
                                             >
-                                                ไฟล์ส่งเอกสาร
+                                                ไฟล์เอกสาร
                                             </td>
                                             <td
                                                 class="border border-gray-300 px-4 py-1"
@@ -732,7 +732,7 @@
                                                     color="oklch(50% 0.134 242.749)"
                                                     class="cursor-pointer hover:scale-120"
                                                     v-if="
-                                                        detailList.total !==
+                                                        detailList.work !==
                                                         null
                                                     "
                                                     @click="
@@ -986,7 +986,7 @@
                                                 เอกสารแล้วเสร็จ
                                             </td>
                                             <td
-                                                class="flex border border-gray-300 px-4 py-1"
+                                                class="flex px-4 py-1"
                                             >
                                                 <span
                                                     class="items-center justify-between w-full"
@@ -1293,8 +1293,9 @@ export default {
             modalEdit: false,
             modalComplete: false,
             ////////////////////////////////////////////////////////////////
+            eventList: [],
             enrollList: [],
-            detailList: [],
+            detailList: [],     
             file: null,
             completeList: [],
             ////////////////////////////////////////////////////////////////
@@ -1312,6 +1313,7 @@ export default {
                 filename: "",
             },
             ////////////////////////////////////////////////////////////////
+            moment: moment
         };
     },
     methods: {

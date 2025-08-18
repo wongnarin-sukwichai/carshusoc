@@ -105,6 +105,66 @@ class EnrollController extends Controller
         return response()->json($data);
     }
 
+    public function detailEnroll(string $id)
+    {
+        $data = DB::table('enrolls')
+            ->where('enrolls.id', $id)
+            ->where('enrolls.user_id', Auth::user()->id)
+            ->join('sections', 'enrolls.section_id', 'sections.id')
+            ->join('users', 'enrolls.user_id', 'users.id')
+            ->select(
+                'enrolls.*',
+                'sections.event_id',
+                'sections.title',
+                'sections.start',
+                'sections.end',
+                'sections.examdate',
+                'sections.examtime',
+                'sections.meet',
+                'sections.other AS section_other',
+                'sections.alert',
+                'sections.status AS section_status',
+                'users.name',
+                'users.surname'
+            )
+            ->get();
+
+        return response()->json($data);
+    }
+
+    public function showEnroll()
+    {
+        $data = DB::table('enrolls')
+            ->where('enrolls.user_id', Auth::user()->id)
+            ->join('contents', 'enrolls.content_id', 'contents.id')
+            ->join('sections', 'enrolls.section_id', 'sections.id')
+            ->join('users', 'enrolls.user_id', 'users.id')
+            ->select(
+                'enrolls.*',
+                'contents.title AS content_title',
+                'contents.short_name',
+                'sections.event_id',
+                'sections.title',
+                'sections.start',
+                'sections.end',
+                'sections.examdate',
+                'sections.examtime',
+                'sections.meet',
+                'sections.postage',
+                'sections.other AS section_other',
+                'sections.alert',
+                'sections.status AS section_status',
+                'users.email',
+                'users.pic',
+                'users.name',
+                'users.surname'
+            )
+            ->orderBy('id', 'DESC')
+            ->paginate(2);
+
+        return response()->json($data);
+    }
+
     /**
      * Show the form for editing the specified resource.
      */
@@ -112,6 +172,33 @@ class EnrollController extends Controller
     {
         $data = DB::table('enrolls')
             ->where('enrolls.id', $id)
+            ->join('sections', 'enrolls.section_id', 'sections.id')
+            ->join('users', 'enrolls.user_id', 'users.id')
+            ->select(
+                'enrolls.*',
+                'sections.event_id',
+                'sections.title',
+                'sections.start',
+                'sections.end',
+                'sections.examdate',
+                'sections.examtime',
+                'sections.meet',
+                'sections.other AS section_other',
+                'sections.alert',
+                'sections.status AS section_status',
+                'users.name',
+                'users.surname'
+            )
+            ->get();
+
+        return response()->json($data);
+    }
+
+    public function editEnroll(string $id)
+    {
+        $data = DB::table('enrolls')
+            ->where('enrolls.id', $id)
+            ->where('enrolls.user_id', Auth::user()->id)
             ->join('sections', 'enrolls.section_id', 'sections.id')
             ->join('users', 'enrolls.user_id', 'users.id')
             ->select(

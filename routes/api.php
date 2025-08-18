@@ -65,5 +65,9 @@ Route::middleware(['web'])->group(function () {
 
         Route::post('uploadComplete', [UploadController::class, 'uploadComplete']);
 
+        Route::get('showEnroll', [EnrollController::class, 'showEnroll']);
+        Route::get('detailEnroll/{id}', [EnrollController::class, 'detailEnroll']);
+        Route::get('editEnroll/{id}', [EnrollController::class, 'editEnroll']);
+
     });
 });

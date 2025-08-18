@@ -160,7 +160,7 @@ class EnrollController extends Controller
                 'users.surname'
             )
             ->orderBy('id', 'DESC')
-            ->paginate(2);
+            ->paginate(5);
 
         return response()->json($data);
     }

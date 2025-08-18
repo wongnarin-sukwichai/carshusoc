@@ -283,7 +283,7 @@
                                                             color="oklch(50% 0.134 242.749)"
                                                             class="cursor-pointer hover:scale-120"
                                                             v-if="
-                                                                enroll.payment !==
+                                                                enroll.total !==
                                                                 null
                                                             "
                                                             @click="
@@ -301,7 +301,7 @@
                                                             color="oklch(50% 0.134 242.749)"
                                                             class="cursor-pointer hover:scale-120"
                                                             v-if="
-                                                                enroll.payment !==
+                                                                enroll.total !==
                                                                 null
                                                             "
                                                             @click="
@@ -350,6 +350,19 @@
                                                             <span
                                                                 class="font-medium text-xs text-emerald-600"
                                                                 >Complete</span
+                                                            >
+                                                        </div>
+
+                                                        <div
+                                                            class="py-1.5 px-2.5 bg-gray-50 rounded-full flex justify-center w-20 items-center gap-1 hover:scale-105 cursor-pointer"
+                                                            v-else-if="
+                                                                enroll.status ===
+                                                                3
+                                                            "
+                                                        >
+                                                            <span
+                                                                class="font-medium text-xs text-gray-700"
+                                                                >Finished</span
                                                             >
                                                         </div>
 
@@ -446,6 +459,16 @@
 
             <div class="flex">
                 <span
+                    class="py-1.5 px-2.5 bg-gray-50 rounded-full flex items-center justify-center w-20 text-xs text-gray-600 mb-2"
+                    >Finished</span
+                >
+                <span class="py-1 ml-2 text-sm text-gray-700 font-semibold"
+                    >: เสร็จสิ้นการสอบ/อบรม/ส่งงาน</span
+                >
+            </div>
+
+            <div class="flex">
+                <span
                     class="py-1.5 px-2.5 bg-red-50 rounded-full flex items-center justify-center w-20 text-xs text-red-600 mb-2"
                     >Cancel</span
                 >
@@ -529,28 +552,13 @@
                                             <td
                                                 class="border border-gray-300 px-4 py-1 text-xs"
                                             >
-                                                <span
-                                                    v-if="
-                                                        detailList.start !==
-                                                            null &&
-                                                        detailList.end !== null
-                                                    "
+                                                {{
+                                                    setMoment(detailList.start)
+                                                }}
+                                                <span class="px-1 font-semibold"
+                                                    >-</span
                                                 >
-                                                    {{
-                                                        setMoment(
-                                                            detailList.start
-                                                        )
-                                                    }}
-                                                    <span
-                                                        class="px-1 font-semibold"
-                                                        >-</span
-                                                    >
-                                                    {{
-                                                        setMoment(
-                                                            detailList.end
-                                                        )
-                                                    }}
-                                                </span>
+                                                {{ setMoment(detailList.end) }}
                                             </td>
                                         </tr>
                                         <tr>
@@ -617,15 +625,12 @@
                                         <td
                                             class="border border-gray-300 px-4 py-1"
                                         >
-                                            <span
-                                                v-if="detailList.pay !== null"
-                                            >
-                                                {{
-                                                    Number(
-                                                        detailList.pay
-                                                    ).toLocaleString()
-                                                }}
-                                            </span>
+                                            {{
+                                                Number(
+                                                    detailList.pay +
+                                                        detailList.tag
+                                                ).toLocaleString()
+                                            }}
                                         </td>
                                     </tr>
                                     <tr>
@@ -654,22 +659,15 @@
                                         <td
                                             class="border border-gray-300 px-4 py-1"
                                         >
-                                            <span
-                                                v-if="
-                                                    detailList.pay !== null ||
-                                                    detailList.tag !== null
-                                                "
-                                            >
-                                                {{
-                                                    Number(
-                                                        detailList.pay +
-                                                            detailList.tag
-                                                    ).toLocaleString()
-                                                }}
-                                            </span>
+                                            {{
+                                                Number(
+                                                    detailList.pay +
+                                                        detailList.tag
+                                                ).toLocaleString()
+                                            }}
                                         </td>
                                     </tr>
-                                    <template v-if="detailList.event_id === 3">
+                                    <template v-if="detailList.event_id !== 3">
                                         <tr>
                                             <td
                                                 class="border border-gray-300 px-2 py-1 text-center"
@@ -716,7 +714,7 @@
                                             class="px-2 py-1 bg-gray-100"
                                         ></td>
                                     </tr>
-                                    <template v-if="detailList.event_id === 3">
+                                    <template v-if="detailList.event_id !== 3">
                                         <tr>
                                             <td
                                                 class="border border-gray-300 px-2 py-1 text-center"
@@ -766,7 +764,7 @@
                                                 name="paypal"
                                                 color="oklch(50% 0.134 242.749)"
                                                 class="cursor-pointer hover:scale-120"
-                                                v-if="detailList.payment !== null"
+                                                v-if="detailList.total !== null"
                                                 @click="
                                                     showPayment(detailList.id)
                                                 "
@@ -796,7 +794,7 @@
                                 class="inline-flex w-full justify-center rounded-lg bg-red-300 px-3 py-1.5 text-sm text-white shadow-xs hover:bg-red-400 sm:ml-3 sm:w-auto"
                                 @click="close()"
                             >
-                                ปิด
+                                Close
                             </button>
                         </div>
                     </div>
@@ -876,28 +874,13 @@
                                             <td
                                                 class="border border-gray-300 px-4 py-1 text-xs"
                                             >
-                                                <span
-                                                    v-if="
-                                                        detailList.start !==
-                                                            null &&
-                                                        detailList.end !== null
-                                                    "
+                                                {{
+                                                    setMoment(detailList.start)
+                                                }}
+                                                <span class="px-1 font-semibold"
+                                                    >-</span
                                                 >
-                                                    {{
-                                                        setMoment(
-                                                            detailList.start
-                                                        )
-                                                    }}
-                                                    <span
-                                                        class="px-1 font-semibold"
-                                                        >-</span
-                                                    >
-                                                    {{
-                                                        setMoment(
-                                                            detailList.end
-                                                        )
-                                                    }}
-                                                </span>
+                                                {{ setMoment(detailList.end) }}
                                             </td>
                                         </tr>
                                         <tr>
@@ -996,21 +979,14 @@
                                         <td
                                             class="border border-gray-300 px-4 py-1"
                                         >
-                                            <span
-                                                v-if="
-                                                    data.pay !== null ||
-                                                    data.tag !== null
-                                                "
-                                            >
-                                                {{
-                                                    Number(
-                                                        data.pay + data.tag
-                                                    ).toLocaleString()
-                                                }}
-                                            </span>
+                                            {{
+                                                Number(
+                                                    data.pay + data.tag
+                                                ).toLocaleString()
+                                            }}
                                         </td>
                                     </tr>
-                                    <template v-if="detailList.event_id === 3">
+                                    <template v-if="detailList.event_id !== 3">
                                         <tr>
                                             <td
                                                 class="border border-gray-300 px-2 py-1 text-center"
@@ -1116,7 +1092,19 @@
                                                         >Complete</label
                                                     >
                                                 </div>
-
+                                                <div>
+                                                    <input
+                                                        class="peer/draft cursor-pointer"
+                                                        name="status"
+                                                        type="radio"
+                                                        :value="3"
+                                                        v-model="data.status"
+                                                    />
+                                                    <label
+                                                        class="peer-checked/draft:text-gray-400 pl-2 text-xs"
+                                                        >Finished</label
+                                                    >
+                                                </div>
                                                 <div>
                                                     <input
                                                         class="peer/draft cursor-pointer"
@@ -1139,7 +1127,7 @@
                                             class="px-2 py-1 bg-gray-100"
                                         ></td>
                                     </tr>
-                                    <template v-if="detailList.event_id === 3">
+                                    <template v-if="detailList.event_id !== 3">
                                         <tr>
                                             <td
                                                 class="border border-gray-300 px-2 py-1 text-center"
@@ -1166,7 +1154,7 @@
                                                     color="oklch(50% 0.134 242.749)"
                                                     class="cursor-pointer hover:scale-120"
                                                     v-if="
-                                                        detailList.payment !==
+                                                        detailList.total !==
                                                         null
                                                     "
                                                     @click="
@@ -1190,7 +1178,7 @@
                                                 name="paypal"
                                                 color="oklch(50% 0.134 242.749)"
                                                 class="cursor-pointer hover:scale-120"
-                                                v-if="detailList.payment !== null"
+                                                v-if="detailList.total !== null"
                                                 @click="
                                                     showPayment(detailList.id)
                                                 "
@@ -1283,7 +1271,7 @@
                                 class="inline-flex w-full justify-center rounded-lg bg-red-300 px-3 py-1.5 text-sm text-white shadow-xs hover:bg-red-400 sm:ml-3 sm:w-auto"
                                 @click="closeComplete()"
                             >
-                                ปิด
+                                Close
                             </button>
                         </div>
                     </div>

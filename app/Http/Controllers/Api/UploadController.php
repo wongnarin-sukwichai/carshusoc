@@ -106,6 +106,46 @@ class UploadController extends Controller
         return response()->json($file_name);
     }
 
+    public function uploadWork(Request $request)
+    {
+
+        $request->validate([
+            'file' => 'required|mimes:doc,docx,xls,xlsx,pdf'
+        ]);
+
+        $file = $request->file('file');                                                
+        $file_name = uniqid() . '.' . $file->getClientOriginalExtension();            
+
+        $date = Carbon::now()->format('Y/m/d');
+        $serv_path = "files/works/{$date}";                                                
+
+        $chkPath = public_path($serv_path);                                             
+
+        if (!File::exists($chkPath)) File::makeDirectory($chkPath, 0777, true);        
+
+        $file->move($chkPath, $file_name);                                           
+
+        return response()->json($file_name);
+    }
+
+    public function uploadPayment(Request $request)
+    {
+
+        $file = $request->file('file');                                                
+        $file_name = uniqid() . '.' . $file->getClientOriginalExtension();            
+
+        $date = Carbon::now()->format('Y/m/d');
+        $serv_path = "files/payments/{$date}";                                                
+
+        $chkPath = public_path($serv_path);                                             
+
+        if (!File::exists($chkPath)) File::makeDirectory($chkPath, 0777, true);        
+
+        $file->move($chkPath, $file_name);                                           
+
+        return response()->json($file_name);
+    }
+
     /**
      * Display the specified resource.
      */

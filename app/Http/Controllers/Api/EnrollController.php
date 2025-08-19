@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 use App\Models\Enroll;
-use App\Models\Section;
+use App\Models\Work;
+use App\Models\Payment;
 
 class EnrollController extends Controller
 {
@@ -226,8 +228,39 @@ class EnrollController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        if (!empty($request['filename'])) {
+            $res = new Work();
+
+            $res->enroll_id = $request['id'];
+            $res->title = $request['filename'];
+
+            $res->save();
+        }
+        ////////////////////////////////////////////////////////////
+        if (!empty($request['paymentname'])) {
+            $result = new Payment();
+
+            $result->enroll_id = $request['id'];
+            $result->title = $request['paymentname'];
+
+            $result->save();
+        }
+        ////////////////////////////////////////////////////////////
+        $data = Enroll::find($id);
+
+        $data->submit = Carbon::parse($request['submit'])->format('Y-m-d');
+        $data->payment = $request['payment'];
+        $data->work = $request['work'];
+        $data->comment = $request['comment'];
+
+        $data->save();
+
+        return response()->json([
+            'message' => 'Success!!'
+        ]);
     }
+
+    public function updateEnroll(Request $request, string $id) {}
 
     /**
      * Remove the specified resource from storage.

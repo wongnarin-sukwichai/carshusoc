@@ -305,7 +305,7 @@
                                                                 null
                                                             "
                                                             @click="
-                                                                showFile(
+                                                                showWork(
                                                                     enroll.id
                                                                 )
                                                             "
@@ -683,7 +683,7 @@
                                                     class="items-end justify-end"
                                                     ><box-icon
                                                         name="file"
-                                                        color="oklch(50% 0.134 242.749)"
+                                                        color="oklch(76.8% 0.233 130.85)"
                                                         class="cursor-pointer hover:scale-115"
                                                         v-for="n in +detailList.complete ||
                                                         0"
@@ -746,7 +746,7 @@
                                                         detailList.work !== null
                                                     "
                                                     @click="
-                                                        showFile(detailList.id)
+                                                        showWork(detailList.id)
                                                     "
                                                 ></box-icon>
                                             </td>
@@ -766,7 +766,9 @@
                                                 name="paypal"
                                                 color="oklch(50% 0.134 242.749)"
                                                 class="cursor-pointer hover:scale-120"
-                                                v-if="detailList.payment !== null"
+                                                v-if="
+                                                    detailList.payment !== null
+                                                "
                                                 @click="
                                                     showPayment(detailList.id)
                                                 "
@@ -1028,15 +1030,15 @@
                                                             class="w-48 cursor-pointer rounded border border-solid border-neutral-300 bg-clip-padding px-3 py-[0.32rem] text-xs font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:cursor-pointer file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:border-primary focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:file:bg-neutral-700 dark:file:text-neutral-100 dark:focus:border-primary mr-2"
                                                             ref="fileInput"
                                                             type="file"
-                                                            @input="pickFile()"
+                                                            @change="pickFile()"
                                                         />
                                                     </span>
                                                 </span>
                                                 <span
-                                                    class="items-end justify-end"
+                                                    class="flex items-end justify-end"
                                                     ><box-icon
                                                         name="file"
-                                                        color="oklch(50% 0.134 242.749)"
+                                                        color="oklch(76.8% 0.233 130.85)"
                                                         class="cursor-pointer hover:scale-115"
                                                         v-for="n in +data.complete ||
                                                         0"
@@ -1170,7 +1172,7 @@
                                                         null
                                                     "
                                                     @click="
-                                                        showFile(detailList.id)
+                                                        showWork(detailList.id)
                                                     "
                                                 ></box-icon>
                                             </td>
@@ -1190,7 +1192,9 @@
                                                 name="paypal"
                                                 color="oklch(50% 0.134 242.749)"
                                                 class="cursor-pointer hover:scale-120"
-                                                v-if="detailList.payment !== null"
+                                                v-if="
+                                                    detailList.payment !== null
+                                                "
                                                 @click="
                                                     showPayment(detailList.id)
                                                 "
@@ -1236,6 +1240,122 @@
         </div>
     </transition>
 
+    <!-- Modal Payment -->
+    <transition name="fade" mode="out-in">
+        <div class="relative z-10" v-show="this.modalPayment">
+            <div
+                class="fixed inset-0 bg-gray-500/50 bg-opacity-90 transition-opacity"
+            ></div>
+            <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+                <div
+                    class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
+                >
+                    <div
+                        class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"
+                    >
+                        <div class="bg-white p-4 rounded-2xl mt-4">
+                            <div
+                                class="font-semibold text-xl text-gray-400 mb-2"
+                            >
+                                ** กรุณาเลือกไฟล์
+                            </div>
+                            <div
+                                class="relative border-2 border-dashed rounded-xl cursor-pointer hover:border-sky-400 hover:border-3 p-4 group mb-2"
+                                v-for="(payment, index) in paymentList"
+                                :key="index"
+                                @click="
+                                    linkPayment(
+                                        payment.title,
+                                        payment.created_at
+                                    )
+                                "
+                            >
+                                <span
+                                    class="flex items-center jusitfy-center font-semibold text-lg text-[#85c1e9]"
+                                >
+                                    <box-icon
+                                        name="paypal"
+                                        type="logo"
+                                        color="oklch(50% 0.134 242.749)"
+                                        class="cursor-pointer hover:scale-115"
+                                    ></box-icon>
+                                    : {{ payment.title }}
+                                </span>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-gray-50 px-4 py-2 sm:flex sm:flex-row-reverse sm:px-6"
+                        >
+                            <button
+                                type="button"
+                                class="inline-flex w-full justify-center rounded-lg bg-red-300 px-3 py-1.5 text-sm text-white shadow-xs hover:bg-red-400 sm:ml-3 sm:w-auto"
+                                @click="close()"
+                            >
+                                ปิด
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </transition>
+
+    <!-- Modal Work -->
+    <transition name="fade" mode="out-in">
+        <div class="relative z-10" v-show="this.modalWork">
+            <div
+                class="fixed inset-0 bg-gray-500/50 bg-opacity-90 transition-opacity"
+            ></div>
+            <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+                <div
+                    class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
+                >
+                    <div
+                        class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"
+                    >
+                        <div class="bg-white p-4 rounded-2xl mt-4">
+                            <div
+                                class="font-semibold text-xl text-gray-400 mb-2"
+                            >
+                                ** กรุณาเลือกไฟล์
+                            </div>
+                            <div
+                                class="relative border-2 border-dashed rounded-xl cursor-pointer hover:border-sky-400 hover:border-3 p-4 group mb-2"
+                                v-for="(work, index) in workList"
+                                :key="index"
+                                @click="
+                                    linkWork(work.title, payment.created_at)
+                                "
+                            >
+                                <span
+                                    class="flex items-center jusitfy-center font-semibold text-lg text-[#85c1e9]"
+                                >
+                                    <box-icon
+                                        name="file"
+                                        color="oklch(50% 0.134 242.749)"
+                                        class="cursor-pointer hover:scale-115"
+                                    ></box-icon>
+                                    : {{ work.title }}
+                                </span>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-gray-50 px-4 py-2 sm:flex sm:flex-row-reverse sm:px-6"
+                        >
+                            <button
+                                type="button"
+                                class="inline-flex w-full justify-center rounded-lg bg-red-300 px-3 py-1.5 text-sm text-white shadow-xs hover:bg-red-400 sm:ml-3 sm:w-auto"
+                                @click="close()"
+                            >
+                                ปิด
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </transition>
+
     <!-- Modal Complete -->
     <transition name="fade" mode="out-in">
         <div class="relative z-10" v-show="this.modalComplete">
@@ -1256,11 +1376,11 @@
                                 ** กรุณาเลือกไฟล์
                             </div>
                             <div
-                                class="relative border-2 border-dashed rounded-xl cursor-pointer hover:border-sky-400 hover:border-3 p-4 group mb-2"
+                                class="relative border-2 border-dashed rounded-xl cursor-pointer hover:border-lime-400 hover:border-3 p-4 group mb-2"
                                 v-for="(complete, index) in completeList"
                                 :key="index"
                                 @click="
-                                    link(complete.title, complete.created_at)
+                                    linkComplete(complete.title, complete.created_at)
                                 "
                             >
                                 <span
@@ -1268,7 +1388,7 @@
                                 >
                                     <box-icon
                                         name="file"
-                                        color="oklch(50% 0.134 242.749)"
+                                        color="oklch(84.1% 0.238 128.85)"
                                         class="cursor-pointer hover:scale-115"
                                     ></box-icon>
                                     : {{ complete.title }}
@@ -1281,7 +1401,7 @@
                             <button
                                 type="button"
                                 class="inline-flex w-full justify-center rounded-lg bg-red-300 px-3 py-1.5 text-sm text-white shadow-xs hover:bg-red-400 sm:ml-3 sm:w-auto"
-                                @click="closeComplete()"
+                                @click="close()"
                             >
                                 ปิด
                             </button>
@@ -1312,12 +1432,16 @@ export default {
             modalDetail: false,
             modalEdit: false,
             modalComplete: false,
+            modalPayment: false,
+            modalWork: false,
             ////////////////////////////////////////////////////////////////
             eventList: [],
             enrollList: [],
             detailList: [],
             file: null,
             completeList: [],
+            paymentList: [],
+            workList: [],
             ////////////////////////////////////////////////////////////////
             searchData: {
                 search: "",
@@ -1398,11 +1522,14 @@ export default {
             });
         },
         close() {
+            if (this.$refs.fileInput) this.$refs.fileInput.value = "";
+            this.file = null;
+
             this.modalDetail = false;
             this.modalEdit = false;
-
-            this.$refs.fileInput.value = null; //clear ช่อง choose
-            this.file = null;
+            this.modalComplete = false;
+            this.modalPayment = false;
+            this.modalWork = false;
         },
         pickFile() {
             let input = this.$refs.fileInput;
@@ -1434,6 +1561,7 @@ export default {
             }).then(async (result) => {
                 if (result.isConfirmed) {
                     try {
+                        ////////////////////////// Upload Work //////////////////////////////////
                         if (this.file != null) {
                             let formData = new FormData(); //สร้าง FromData เพื่อรองรับข้อมูลประเภท File
                             formData.append("file", this.file[0]);
@@ -1565,16 +1693,33 @@ export default {
                                 });
                         }
                         this.getEnroll();
-                        this.modalEdit = false;
+                        this.close();
                     } catch (err) {
                         throw err;
                     }
                 }
             });
         },
+        showPayment(id) {
+            this.close();
+
+            axios.get("/api/payment/" + id).then((response) => {
+                this.paymentList = response.data;
+
+                this.modalPayment = true;
+            });
+        },
+        showWork(id) {
+            this.close();
+
+            axios.get("/api/work/" + id).then((response) => {
+                this.workList = response.data;
+
+                this.modalWork = true;
+            });
+        },
         showComplete(id) {
-            this.modalEdit = false;
-            this.modalDetail = false;
+            this.close();
 
             axios.get("/api/complete/" + id).then((response) => {
                 this.completeList = response.data;
@@ -1582,12 +1727,16 @@ export default {
                 this.modalComplete = true;
             });
         },
-        closeComplete() {
-            this.modalComplete = false;
-        },
-        link(id, code) {
+        linkPayment(id, code) {
             const url = moment(code).format("YYYY/MM/DD");
-
+            window.open("files/payments/" + url + "/" + id, "_blank");
+        },
+        linkWork(id, code) {
+            const url = moment(code).format("YYYY/MM/DD");
+            window.open("files/works/" + url + "/" + id, "_blank");
+        },
+        linkComplete(id, code) {
+            const url = moment(code).format("YYYY/MM/DD");
             window.open("files/completes/" + url + "/" + id, "_blank");
         },
     },

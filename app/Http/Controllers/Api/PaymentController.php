@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Work;
+use App\Models\Payment;
 
-class WorkController extends Controller
+class PaymentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -37,7 +37,7 @@ class WorkController extends Controller
      */
     public function show(string $id)
     {
-        $data = Work::where('enroll_id', $id)->get();
+        $data = Payment::where('enroll_id', $id)->get();
 
         return response()->json($data);
     }

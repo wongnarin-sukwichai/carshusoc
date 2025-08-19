@@ -18,16 +18,18 @@ use App\Http\Controllers\Api\UploadController;
 use App\Http\Controllers\Api\CourseController;
 use App\Http\Controllers\Api\CompleteController;
 use App\Http\Controllers\Api\WorkController;
+use App\Http\Controllers\Api\PaymentController;
 
 Route::middleware(['web'])->group(function () {
 
     Route::post('logout', [AuthController::class, 'logout']);
-    //Guest
+
+    ////////////////////////// Guest //////////////////////////////////
     Route::middleware('guest')->group(function () {
         Route::post('login', [AuthController::class, 'login']);
     });
 
-    //Auth
+    ////////////////////////// Authen //////////////////////////////////
     Route::middleware('auth:sanctum')->group(function () {
 
         Route::get('user', UserController::class);
@@ -65,9 +67,13 @@ Route::middleware(['web'])->group(function () {
 
         Route::post('uploadComplete', [UploadController::class, 'uploadComplete']);
 
+        Route::resource('payment', PaymentController::class);
+
+        ////////////////////////// Member //////////////////////////////////
         Route::get('showEnroll', [EnrollController::class, 'showEnroll']);
         Route::get('detailEnroll/{id}', [EnrollController::class, 'detailEnroll']);
         Route::get('editEnroll/{id}', [EnrollController::class, 'editEnroll']);
-
+        Route::post('uploadWork', [UploadController::class, 'uploadWork']);
+        Route::post('uploadPayment', [UploadController::class, 'uploadPayment']);
     });
 });

@@ -252,6 +252,7 @@
                                                             name="cloud-upload"
                                                             color="oklch(82.8% 0.111 230.318)"
                                                             class="cursor-pointer hover:scale-120"
+                                                            animation='burst-hover'
                                                             v-else
                                                             @click="
                                                                 showEdit(

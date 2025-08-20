@@ -281,6 +281,7 @@
                                                             name="caret-up-circle"
                                                             class="cursor-pointer hover:scale-120"
                                                             color="oklch(76.8% 0.233 130.85)"
+                                                            animation="flashing-hover"
                                                             @click="
                                                                 level(member.id)
                                                             "

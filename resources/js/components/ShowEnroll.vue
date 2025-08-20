@@ -535,7 +535,13 @@
                                             <td
                                                 class="border border-gray-300 px-4 py-1"
                                             >
-                                                {{ detailList.meet }}
+                                                <span
+                                                    v-if="
+                                                        detailList.status === 2
+                                                    "
+                                                >
+                                                    {{ detailList.meet }}
+                                                </span>
                                             </td>
                                         </tr>
                                     </template>
@@ -548,7 +554,11 @@
                                         <td
                                             class="border border-gray-300 px-4 py-1"
                                         >
-                                            {{ detailList.section_other }}
+                                            <span
+                                                v-if="detailList.status === 2"
+                                            >
+                                                {{ detailList.section_other }}
+                                            </span>
                                         </td>
                                     </tr>
                                     <tr>
@@ -885,7 +895,13 @@
                                             <td
                                                 class="border border-gray-300 px-4 py-1"
                                             >
-                                                {{ detailList.meet }}
+                                                <span
+                                                    v-if="
+                                                        detailList.status === 2
+                                                    "
+                                                >
+                                                    {{ detailList.meet }}
+                                                </span>
                                             </td>
                                         </tr>
                                     </template>
@@ -898,7 +914,11 @@
                                         <td
                                             class="border border-gray-300 px-4 py-1"
                                         >
-                                            {{ detailList.section_other }}
+                                            <span
+                                                v-if="detailList.status === 2"
+                                            >
+                                                {{ detailList.section_other }}
+                                            </span>
                                         </td>
                                     </tr>
                                     <tr>
@@ -979,7 +999,9 @@
                                                         null
                                                     "
                                                     @click="
-                                                        showComplete(detailList.id)
+                                                        showComplete(
+                                                            detailList.id
+                                                        )
                                                     "
                                                 ></box-icon>
                                             </td>

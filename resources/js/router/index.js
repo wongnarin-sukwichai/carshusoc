@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import Login from "../components/Login.vue";
 import Register from "../components/Register.vue";
+import Forgot from "../components/Forgot.vue";
+import ResetPassword from "../components/ResetPassword.vue";
 
 // Authen
 import Home from "../components/Home.vue";
@@ -28,7 +30,6 @@ import Enroll from "../components/Enroll.vue";
 
 import store from "../store";
 
-
 const routes = [
     {
         path: "/login",
@@ -48,6 +49,25 @@ const routes = [
             guard: "guest", // เพิ่ม guard ด้วยก็ได้
         },
     },
+    {
+        path: "/forgot",
+        name: "forgot",
+        component: Forgot,
+        meta: {
+            layout: "guest",
+            guard: "guest", // เพิ่ม guard ด้วยก็ได้
+        },
+    },
+    {
+        path: "/resetPassword",
+        name: "resetPassword",
+        component: ResetPassword,
+        meta: {
+            layout: "guest",
+            guard: "guest", // เพิ่ม guard ด้วยก็ได้
+        },
+    },
+    ////////////////////////////////////////////////////////////////////////////////
     {
         path: "/home",
         name: "home",
@@ -111,7 +131,7 @@ const routes = [
             guard: "auth",
         },
     },
-        {
+    {
         path: "/showSection/:id",
         name: "showSection",
         component: ShowSection,
@@ -120,7 +140,7 @@ const routes = [
             guard: "auth",
         },
     },
-///////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////
     {
         path: "/enroll",
         name: "enroll",

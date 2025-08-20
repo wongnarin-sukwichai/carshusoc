@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
+use Illuminate\Auth\Notifications\ResetPassword;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -24,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-         RateLimiter::for('api', function (Request $request) {
+        RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
         });
 
@@ -38,5 +40,10 @@ class AppServiceProvider extends ServiceProvider
         });
 
         app()->setLocale(session('locale', config('app.locale')));
+
+        ResetPassword::createUrlUsing(function ($user, string $token) {
+            $frontend = config('app.frontend_url', env('FRONTEND_URL'));
+            return $frontend . "/resetPassword?token={$token}&email=" . urlencode($user->email);
+        });
     }
 }

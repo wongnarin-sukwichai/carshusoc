@@ -19,6 +19,8 @@ use App\Http\Controllers\Api\CourseController;
 use App\Http\Controllers\Api\CompleteController;
 use App\Http\Controllers\Api\WorkController;
 use App\Http\Controllers\Api\PaymentController;
+use App\Http\Controllers\Api\RegisterController;
+use App\Http\Controllers\Api\PasswordResetController;
 
 Route::middleware(['web'])->group(function () {
 
@@ -27,6 +29,9 @@ Route::middleware(['web'])->group(function () {
     ////////////////////////// Guest //////////////////////////////////
     Route::middleware('guest')->group(function () {
         Route::post('login', [AuthController::class, 'login']);
+        Route::resource('register', RegisterController::class);
+        Route::post('forgot-password', [PasswordResetController::class, 'sendLink']);
+        Route::post('reset-password',   [PasswordResetController::class, 'reset']);
     });
 
     ////////////////////////// Authen //////////////////////////////////
@@ -41,7 +46,7 @@ Route::middleware(['web'])->group(function () {
         Route::resource('member', MemberController::class);
 
         Route::post('chkSearch', [SearchController::class, 'chkSearch']);
-        Route::post('search', [SearchController::class, 'Search']);   
+        Route::post('search', [SearchController::class, 'Search']);
         Route::post('searchEnroll', [SearchController::class, 'SearchEnroll']);
 
         Route::resource('gender', GenderController::class);

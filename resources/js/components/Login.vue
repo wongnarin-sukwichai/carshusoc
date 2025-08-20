@@ -11,17 +11,23 @@
                         class="w-40 mx-auto hover:scale-105"
                     />
                 </a>
-                <form class="mt-4 space-y-6" @submit.prevent="login()">
+                <div class="mt-4 space-y-6">
                     <div>
                         <label
                             class="text-slate-800 text-sm font-medium mb-2 block"
-                            >{{ $t("login.email") }} :</label
+                            >{{ $t("login.email") }} :
+                            <transition name="fade" mode="out-in">
+                                <span
+                                    v-if="errors.email"
+                                    class="text-rose-300 text-sm"
+                                    >{{ errors.email }}</span
+                                ></transition
+                            ></label
                         >
                         <div class="relative flex items-center">
                             <input
                                 name="username"
                                 type="text"
-                                required
                                 class="w-full text-slate-800 text-sm border border-slate-300 px-4 py-3 rounded-md outline-blue-600"
                                 placeholder="Enter Email"
                                 v-model="auth.email"
@@ -38,13 +44,19 @@
                     <div>
                         <label
                             class="text-slate-800 text-sm font-medium mb-2 block"
-                            >{{ $t("login.pass") }} :</label
+                            >{{ $t("login.pass") }} :
+                            <transition name="fade" mode="out-in">
+                                <span
+                                    v-if="errors.password"
+                                    class="text-rose-300 text-sm"
+                                    >{{ errors.password }}</span
+                                ></transition
+                            ></label
                         >
                         <div class="relative flex items-center">
                             <input
                                 name="password"
                                 :type="showPassword ? 'text' : 'password'"
-                                required
                                 class="w-full text-slate-800 text-sm border border-slate-300 px-4 py-3 rounded-md outline-blue-600"
                                 placeholder="Enter password"
                                 v-model="auth.password"
@@ -77,18 +89,19 @@
                             </label> -->
                         </div>
                         <div class="text-sm">
-                            <a
-                                href="jajvascript:void(0);"
+                            <router-link
+                                to="/forgot"
                                 class="text-blue-600 hover:underline font-semibold"
                             >
                                 {{ $t("login.forget") }}
-                            </a>
+                            </router-link>
                         </div>
                     </div>
 
                     <div class="!mt-12">
                         <button
                             class="w-full py-2 px-4 text-[15px] font-medium tracking-wide rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none cursor-pointer"
+                            @click="login()"
                         >
                             {{ $t("login.signin") }}
                         </button>
@@ -101,7 +114,7 @@
                             >{{ $t("login.regis") }}</router-link
                         >
                     </p>
-                </form>
+                </div>
                 <div
                     class="flex justify-center text-sm border-t-2 border-dashed mt-2"
                 >
@@ -143,26 +156,59 @@ export default {
                 email: "",
                 password: "",
             },
+            errors: {
+                email: "",
+                password: "",
+            },
         };
     },
     methods: {
         async login() {
             try {
-                await this.$store.dispatch("login", this.auth); //dispatch ส่งค่าไปยัง store ของ vuex
-                Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "Login Success",
-                    showConfirmButton: false,
-                    timer: 1500,
-                });
-                this.$router.push({ name: "home" }); //หากสำเร็จให้เปิด router ชื่อ home แบบ SPA
+                if (!this.validateData()) {
+                    // SweetAlert Error
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: "Check required fields please.",
+                        customClass: {
+                            popup: "rounded-xl shadow-lg bg-white font-poppins",
+                            title: "text-2xl font-bold text-gray-800",
+                            confirmButton:
+                                "bg-rose-300 hover:bg-rose-400 text-white font-medium px-4 py-2",
+                        },
+                        didOpen: () => {
+                            Swal.getPopup().style.fontFamily =
+                                "Poppins, sans-serif";
+                        },
+                    });
+                    return;
+                } else {
+                    await this.$store.dispatch("login", this.auth); //dispatch ส่งค่าไปยัง store ของ vuex
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Login Success",
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+                    this.$router.push({ name: "home" }); //หากสำเร็จให้เปิด router ชื่อ home แบบ SPA
+                }
             } catch (err) {
                 Swal.fire({
+                    title: "Fail!",
+                    text: "Email or Password went wrong.",
                     icon: "error",
-                    title: "Fail",
-                    text: "Email or Password went wrong",
-                    timer: 1500,
+                    customClass: {
+                        popup: "rounded-xl shadow-lg bg-white font-poppins",
+                        title: "text-2xl font-bold text-gray-800",
+                        confirmButton:
+                            "bg-rose-300 hover:bg-rose-400 text-white font-medium px-4 py-2",
+                    },
+                    didOpen: () => {
+                        Swal.getPopup().style.fontFamily =
+                            "Poppins, sans-serif";
+                    },
                 });
             }
         },
@@ -173,6 +219,28 @@ export default {
             this.$i18n.locale = id;
             localStorage.setItem("locale", id);
             window.location.reload();
+        },
+        validateData() {
+            let isValid = true;
+
+            const req = ["email", "password"];
+
+            for (let key of req) {
+                const value = this.auth[key];
+
+                if (
+                    value === null ||
+                    value === undefined ||
+                    value.toString().trim() === ""
+                ) {
+                    this.errors[key] = "** Required field.";
+                    isValid = false;
+                } else {
+                    this.errors[key] = ""; // เคลียร์ข้อความถ้ามีค่า
+                }
+            }
+
+            return isValid;
         },
     },
 };

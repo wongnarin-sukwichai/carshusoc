@@ -19,6 +19,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/temp-code', function () {
+    return view('emails/temp-code');
+});
+
+
+//////////////////////////// ไว้ล่างสุด ///////////////////////////////////////////
 Route::get('{any}', function () {
     return view('home');
 })->where('any', '.*');
+

@@ -11,7 +11,7 @@
                         class="w-40 mx-auto hover:scale-105"
                     />
                 </a>
-                <div class="mt-4 space-y-6">
+                <form class="mt-4 space-y-6" @submit.prevent="login()">
                     <div>
                         <label
                             class="text-slate-800 text-sm font-medium mb-2 block"
@@ -101,7 +101,7 @@
                     <div class="!mt-12">
                         <button
                             class="w-full py-2 px-4 text-[15px] font-medium tracking-wide rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none cursor-pointer"
-                            @click="login()"
+                            type="submit"
                         >
                             {{ $t("login.signin") }}
                         </button>
@@ -114,7 +114,7 @@
                             >{{ $t("login.regis") }}</router-link
                         >
                     </p>
-                </div>
+                </form>
                 <div
                     class="flex justify-center text-sm border-t-2 border-dashed mt-2"
                 >

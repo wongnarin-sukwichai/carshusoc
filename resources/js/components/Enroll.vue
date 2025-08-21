@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white p-8 rounded-2xl md:ml-8">
+    <div class="bg-white p-4 rounded-2xl">
         <div class="mb-6 flex items-center">
             <box-icon
                 name="spreadsheet"
@@ -134,7 +134,8 @@
                                                         class="p-4.5 text-left whitespace-nowrap text-sm leading-6 font-semibold text-gray-900 capitalize"
                                                     >
                                                         Actions
-                                                    </th>
+                                                    </th>    
+                                                                                                 
                                                 </tr>
                                             </thead>
                                             <transition-group
@@ -301,7 +302,7 @@
                                                             color="oklch(50% 0.134 242.749)"
                                                             class="cursor-pointer hover:scale-120"
                                                             v-if="
-                                                                enroll.payment !==
+                                                                enroll.work !==
                                                                 null
                                                             "
                                                             @click="
@@ -393,6 +394,7 @@
                                                             "
                                                         ></box-icon>
                                                     </td>
+                                              
                                                 </tr>
                                             </transition-group>
                                         </table>
@@ -726,7 +728,11 @@
                                             <td
                                                 class="border border-gray-300 px-4 py-1"
                                             >
-                                                {{ detailList.submit }}
+                                                {{
+                                                    moment(
+                                                        detailList.submit
+                                                    ).format("D/MM/Y")
+                                                }}
                                             </td>
                                         </tr>
                                         <tr>
@@ -1151,7 +1157,11 @@
                                             <td
                                                 class="border border-gray-300 px-4 py-1"
                                             >
-                                                {{ detailList.submit }}
+                                                {{
+                                                    moment(
+                                                        detailList.submit
+                                                    ).format("D/MM/Y")
+                                                }}
                                             </td>
                                         </tr>
                                         <tr>
@@ -1380,7 +1390,10 @@
                                 v-for="(complete, index) in completeList"
                                 :key="index"
                                 @click="
-                                    linkComplete(complete.title, complete.created_at)
+                                    linkComplete(
+                                        complete.title,
+                                        complete.created_at
+                                    )
                                 "
                             >
                                 <span

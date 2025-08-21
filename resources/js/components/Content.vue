@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white p-8 rounded-2xl md:ml-8">
+    <div class="bg-white p-4 rounded-2xl">
         <div class="grid grid-cols-4 gap-4">
             <div
                 class="border-2 border-dashed rounded-xl"

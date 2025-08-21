@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white p-8 rounded-2xl md:ml-8">
+    <div class="bg-white p-4 rounded-2xl">
         <div class="mb-6 flex items-center">
             <box-icon
                 name="spreadsheet"
@@ -22,12 +22,12 @@
                         <div
                             class="flex text-gray-500 focus-within:text-gray-900 mb-4 justify-end items-end"
                         >
-                            <input
+                            <!-- <input
                                 type="text"
                                 id="default-search"
                                 class="block w-80 h-11 pr-5 pl-12 py-2.5 text-base font-normal shadow-xs text-gray-900 bg-transparent border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none text-right"
                                 placeholder="Search..."
-                            />
+                            /> -->
                         </div>
                         <!-- End Search-->
 
@@ -104,6 +104,12 @@
                                                         class="p-4.5 text-left whitespace-nowrap text-sm leading-6 font-semibold text-gray-900 capitalize"
                                                     >
                                                         Actions
+                                                    </th>
+                                                    <th
+                                                        scope="col"
+                                                        class="p-4.5 text-left whitespace-nowrap text-sm leading-6 font-semibold text-gray-900 capitalize"
+                                                    >
+                                                        
                                                     </th>
                                                 </tr>
                                             </thead>
@@ -686,7 +692,7 @@
                                             <td
                                                 class="border border-gray-300 px-4 py-1"
                                             >
-                                                {{ detailList.submit }}
+                                                {{ moment(detailList.submit).format('D/MM/Y') }}
                                             </td>
                                         </tr>
                                         <tr>

@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white p-8 rounded-2xl md:ml-8">
+    <div class="bg-white p-4 rounded-2xl">
         <div class="mb-6 flex items-center">
             <box-icon
                 name="layer-plus"
@@ -12,7 +12,7 @@
             </span>
         </div>
 
-        <div class="grid grid-cols-5 gap-4">
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
             <div
                 class="relative border-2 border-dashed rounded-xl cursor-pointer hover:border-gray-300 flex flex-col items-center justify-center text-center overflow-hidden"
                 v-for="(section, index) in sectionList"

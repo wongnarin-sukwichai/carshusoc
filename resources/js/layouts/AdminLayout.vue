@@ -3,7 +3,7 @@
         <!-- Sidebar -->
         <transition name="slide-fade">
             <aside
-                class="fixed lg:static top-0 left-0 z-50 w-[220px] h-full bg-#85c1e9 border-r shadow transition-transform"
+                class="fixed lg:static top-0 left-0 z-50 w-[220px] h-full bg-white border-r shadow transition-transform"
                 v-if="isSidebarOpen"
             >
                 <nav
@@ -197,17 +197,17 @@
         </transition>
         <!-- End Sidebar -->
 
-        <!-- Hamberger -->
+        <!-- menu -->
         <transition name="slide-fade">
             <div
                 v-if="isSidebarOpen"
                 @click="toggleSidebar"
-                class="fixed left-51 top-1/2 -translate-y-1/2 z-50 h-24 w-4 rounded-l-md shadow-md cursor-pointer flex items-center justify-center lg:hidden bg-blue-950"
+                class="fixed opacity-50 top-4 left-3.5 z-50 flex items-center justify-center w-10 h-10 rounded-full bg-sky-500 text-white shadow-lg cursor-pointer hover:bg-sky-600 hover:opacity-100 transition duration-300"
             >
                 <box-icon
-                    name="chevrons-left"
+                    name="menu"
                     type="solid"
-                    color="#85c1e9"
+                    color="white"
                     class="w-4 h-4"
                 ></box-icon>
             </div>
@@ -216,28 +216,24 @@
         <div
             v-if="!isSidebarOpen"
             @click="toggleSidebar"
-            class="fixed left-0 top-1/2 -translate-y-1/2 z-50 h-24 w-4 bg-blue-900 rounded-r-md shadow-md cursor-pointer flex items-center justify-center lg:hidden"
+            class="fixed opacity-50 top-4 left-3.5 z-50 flex items-center justify-center w-10 h-10 rounded-full bg-sky-500 text-white shadow-lg cursor-pointer hover:bg-sky-600 hover:opacity-100 transition duration-300"
         >
             <!-- Optional: icon หรือแถบสี -->
             <box-icon
-                name="chevrons-right"
+                name="menu"
                 type="solid"
-                color="#85c1e9"
+                color="white"
                 class="w-4 h-4"
             ></box-icon>
         </div>
 
         <!-- Overlay สีดำ (เฉพาะ mobile) -->
-        <transition name="fade">
-            <div
-                v-if="isSidebarOpen"
-                class="fixed inset-0 bg-gray-100 bg-opacity-70 z-40 lg:hidden"
-                @click="toggleSidebar"
-            ></div>
-        </transition>
+
 
         <!-- Space -->
-        <main class="flex-1 p-6 bg-gray-100">
+        <main
+        :class="isSidebarOpen ? 'flex-1 p-6' : 'flex-1 ml-0'"
+        >
             <router-view v-slot="{ Component, route }">
                 <transition name="fade" mode="out-in">
                     <div :key="route.name">

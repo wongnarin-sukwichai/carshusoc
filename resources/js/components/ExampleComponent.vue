@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white p-8 rounded-2xl md:ml-8"></div>
+    <div class="bg-white p-4 rounded-2xl"></div>
 </template>
 
 <script>

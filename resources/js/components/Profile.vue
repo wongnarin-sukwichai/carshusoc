@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white p-8 rounded-2xl md:ml-8">
+    <div class="bg-white p-4 rounded-2xl">
         <div class="mb-6 flex items-center">
             <box-icon
                 name="user"

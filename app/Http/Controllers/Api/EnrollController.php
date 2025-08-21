@@ -244,6 +244,8 @@ class EnrollController extends Controller
             $result->title = $request['paymentname'];
 
             $result->save();
+
+            $check = true;
         }
         ////////////////////////////////////////////////////////////
         $data = Enroll::find($id);
@@ -252,6 +254,9 @@ class EnrollController extends Controller
         $data->payment = $request['payment'];
         $data->work = $request['work'];
         $data->comment = $request['comment'];
+        if ($check == true) {
+            $data->status = 1;
+        }
 
         $data->save();
 

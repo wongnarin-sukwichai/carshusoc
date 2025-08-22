@@ -22,12 +22,12 @@
                         <div
                             class="flex text-gray-500 focus-within:text-gray-900 mb-4 justify-end items-end"
                         >
-                            <input
+                            <!-- <input
                                 type="text"
                                 id="default-search"
                                 class="block w-80 h-11 pr-5 pl-12 py-2.5 text-base font-normal shadow-xs text-gray-900 bg-transparent border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none text-right"
                                 placeholder="Search..."
-                            />
+                            /> -->
                         </div>
                         <!-- End Search-->
 
@@ -85,60 +85,92 @@
                                                         scope="col"
                                                         class="p-4.5 text-left whitespace-nowrap text-sm leading-6 font-semibold text-gray-900 capitalize"
                                                     >
-                                                        Meet. Date
+                                                        Comp. Date
                                                     </th>
                                                     <th
                                                         scope="col"
                                                         class="p-4.5 text-left whitespace-nowrap text-sm leading-6 font-semibold text-gray-900 capitalize"
                                                     >
-                                                        Certificate
+                                                        Cert / File
                                                     </th>
                                                 </tr>
                                             </thead>
-                                            <tbody
+                                            <transition-group
+                                                tag="tbody"
+                                                name="fade"
+                                                mode="out-in"
                                                 class="divide-y divide-gray-300"
                                             >
                                                 <tr
                                                     class="bg-white transition-all duration-500"
+                                                    v-for="(
+                                                        enroll, index
+                                                    ) in enrollList.data"
+                                                    :key="index"
                                                 >
                                                     <td
                                                         class="p-4.5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900"
                                                     >
-                                                        1
+                                                        {{ index + 1 }}
                                                     </td>
                                                     <td
                                                         class="p-4.5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900"
                                                     >
                                                         <p
-                                                            class="font-normal text-sm text-gray-900"
+                                                            class="font-semibold text-sm text-gray-900 whitespace-normal break-words"
                                                         >
-                                                            ALCC
+                                                            {{ enroll.title }}
                                                         </p>
                                                         <p
                                                             class="font-normal text-xs leading-5 text-gray-400"
                                                         >
-                                                            ASEAN Language and
-                                                            Culture Centre
+                                                            {{
+                                                                enroll.content_title
+                                                            }}
+                                                            :
+                                                            {{
+                                                                enroll.short_name
+                                                            }}
                                                         </p>
                                                     </td>
                                                     <td class="px-5 py-3">
                                                         <div
                                                             class="w-48 flex items-center gap-3"
                                                         >
+                                                            <box-icon
+                                                                name="user"
+                                                                size="md"
+                                                                color="#6a7282"
+                                                                v-if="
+                                                                    enroll ===
+                                                                    null
+                                                                "
+                                                            ></box-icon>
                                                             <img
-                                                                src="https://pagedone.io/asset/uploads/1697536419.png"
-                                                                alt="Floyd image"
+                                                                v-else
+                                                                :src="
+                                                                    pic +
+                                                                    enroll.pic
+                                                                "
+                                                                class="w-10"
                                                             />
                                                             <div class="data">
                                                                 <p
                                                                     class="font-normal text-sm text-gray-900"
                                                                 >
-                                                                    Floyd Miles
+                                                                    {{
+                                                                        enroll.name
+                                                                    }}
+                                                                    {{
+                                                                        enroll.surname
+                                                                    }}
                                                                 </p>
                                                                 <p
                                                                     class="font-normal text-xs leading-5 text-gray-400"
                                                                 >
-                                                                    floydmiles@pagedone.io
+                                                                    {{
+                                                                        enroll.email
+                                                                    }}
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -146,406 +178,94 @@
                                                     <td
                                                         class="p-4.5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900"
                                                     >
-                                                        Course
+                                                        {{
+                                                            setEvent(
+                                                                enroll.event_id
+                                                            )
+                                                        }}
                                                     </td>
                                                     <td
-                                                        class="p-4.5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900"
+                                                        class="p-4.5 whitespace-nowrap text-xs leading-6 font-medium text-gray-900"
                                                     >
-                                                        Jun. 24, 2025
+                                                        {{
+                                                            setMoment(
+                                                                enroll.created_at
+                                                            )
+                                                        }}
                                                     </td>
                                                     <td
-                                                        class="p-4.5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900"
+                                                        class="p-4.5 whitespace-nowrap text-sm leading-6 font-semibold text-gray-900"
                                                     >
-                                                        $18,500
-                                                    </td>
-                                                    <td
-                                                        class="p-4.5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900"
-                                                    >
-                                                        Jun. 28, 2025
-                                                    </td>                                               
-                                                    <td
-                                                        class="flex p-4.5 items-center gap-0.5"
-                                                    >
-                                                        <button
-                                                            class="p-2 rounded-full flex item-center cursor-pointer hover:scale-110"
+                                                        <span
+                                                            v-if="
+                                                                enroll.pay !==
+                                                                    null ||
+                                                                enroll.tag !==
+                                                                    null
+                                                            "
                                                         >
-                                                            <box-icon name="certification" color="#ad65d9"></box-icon>
-                                                        </button>                                                    
+                                                            {{
+                                                                Number(
+                                                                    enroll.pay +
+                                                                        enroll.tag
+                                                                ).toLocaleString()
+                                                            }}
+                                                        </span>
+                                                    </td>
+                                                    <td
+                                                        class="p-4.5 whitespace-nowrap text-xs leading-6 font-medium text-gray-900"
+                                                    >
+                                                        {{
+                                                            setMoment(
+                                                                enroll.update_at
+                                                            )
+                                                        }}
+                                                    </td>
+                                                    <td
+                                                        class="p-4.5 whitespace-nowrap text-xs leading-6 font-medium text-gray-900"
+                                                    >
+                                                        <box-icon
+                                                            name="certification"
+                                                            color="#ad65d9"
+                                                            class="cursor-pointer hover:scale-120"
+                                                            v-if="
+                                                                enroll.event_id ===
+                                                                2
+                                                            "
+                                                            @click="
+                                                                showCert(
+                                                                    enroll.id
+                                                                )
+                                                            "
+                                                        ></box-icon>
+
+                                                        <box-icon
+                                                            name="file"
+                                                            color="oklch(76.8% 0.233 130.85)"
+                                                            class="cursor-pointer hover:scale-120"
+                                                            v-if="
+                                                                enroll.event_id ===
+                                                                3
+                                                            "
+                                                            @click="
+                                                                showComplete(
+                                                                    enroll.id
+                                                                )
+                                                            "
+                                                        ></box-icon>
                                                     </td>
                                                 </tr>
-                                                <tr
-                                                    class="bg-white transition-all duration-500"
-                                                >
-                                                    <td
-                                                        class="p-4.5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900"
-                                                    >
-                                                        2
-                                                    </td>
-                                                    <td
-                                                        class="p-4.5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900"
-                                                    >
-                                                        <p
-                                                            class="font-normal text-sm text-gray-900"
-                                                        >
-                                                            CTFL
-                                                        </p>
-                                                        <p
-                                                            class="font-normal text-xs leading-5 text-gray-400"
-                                                        >
-                                                            Centre for Thai as a
-                                                            Foreign Language
-                                                        </p>
-                                                    </td>
-                                                    <td class="w-48 px-5 py-3">
-                                                        <div
-                                                            class="flex items-center gap-3"
-                                                        >
-                                                            <img
-                                                                src="https://pagedone.io/asset/uploads/1697536435.png"
-                                                                alt="Savannah image"
-                                                            />
-                                                            <div class="data">
-                                                                <p
-                                                                    class="font-normal text-sm text-gray-900"
-                                                                >
-                                                                    Savannah
-                                                                    Nguyen
-                                                                </p>
-                                                                <p
-                                                                    class="font-normal text-xs leading-5 text-gray-400"
-                                                                >
-                                                                    savannahng@pagedone.io
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td
-                                                        class="p-4.5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900"
-                                                    >
-                                                        Support
-                                                    </td>
-                                                    <td
-                                                        class="p-4.5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900"
-                                                    >
-                                                        Feb. 23, 2025
-                                                    </td>
-                                                    <td
-                                                        class="p-4.5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900"
-                                                    >
-                                                        $50,00
-                                                    </td>
-                                                    <td
-                                                        class="p-4.5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900"
-                                                    >
-                                                        Mar. 15, 2025
-                                                    </td>
-                                                    <td
-                                                        class="flex p-4.5 items-center gap-0.5"
-                                                    >
-                                                        <button
-                                                            class="p-2 rounded-full flex item-center cursor-pointer hover:scale-110"
-                                                        >
-                                                            <box-icon name="certification" color="#ad65d9"></box-icon>
-                                                        </button>                                                    
-                                                    </td>
-                                                </tr>
-                                                <tr
-                                                    class="bg-white transition-all duration-500"
-                                                >
-                                                    <td
-                                                        class="p-4.5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900"
-                                                    >
-                                                        3
-                                                    </td>
-                                                    <td
-                                                        class="p-4.5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900"
-                                                    >
-                                                        <p
-                                                            class="font-normal text-sm text-gray-900"
-                                                        >
-                                                            TIC
-                                                        </p>
-                                                        <p
-                                                            class="font-normal text-xs leading-5 text-gray-400"
-                                                        >
-                                                            Translation and
-                                                            Interpretation
-                                                            Centre
-                                                        </p>
-                                                    </td>
-                                                    <td
-                                                        class="w-48 px-5 py-3 whitespace-nowrap"
-                                                    >
-                                                        <div
-                                                            class="flex items-center gap-3"
-                                                        >
-                                                            <img
-                                                                src="https://pagedone.io/asset/uploads/1697536451.png"
-                                                                alt="Cameron image"
-                                                            />
-                                                            <div
-                                                                class="data min-w-[150px]"
-                                                            >
-                                                                <p
-                                                                    class="font-normal text-sm text-gray-900 whitespace-nowrap"
-                                                                >
-                                                                    Cameron
-                                                                    Williamson
-                                                                </p>
-                                                                <p
-                                                                    class="font-normal text-xs leading-5 text-gray-400 whitespace-nowrap"
-                                                                >
-                                                                    cameron@pagedone.io
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td
-                                                        class="p-4.5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900"
-                                                    >
-                                                        Service
-                                                    </td>
-                                                    <td
-                                                        class="p-4.5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900"
-                                                    >
-                                                        Oct. 23, 2025
-                                                    </td>
-                                                    <td
-                                                        class="p-4.5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900"
-                                                    ></td>
-                                                    <td
-                                                        class="p-4.5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900"
-                                                    >
-                                                        Dec. 4, 2025
-                                                    </td>                                                
-                                                    <td
-                                                        class="flex p-4.5 items-center gap-0.5"
-                                                    >
-                                                        <button
-                                                            class="p-2 rounded-full flex item-center cursor-pointer hover:scale-110"
-                                                        >
-                                                            <box-icon name="file" color="#659dd9"></box-icon>
-                                                        </button>                                                    
-                                                    </td>
-                                                </tr>
-                                                <tr
-                                                    class="bg-white transition-all duration-500"
-                                                >
-                                                    <td
-                                                        class="p-4.5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900"
-                                                    >
-                                                        4
-                                                    </td>
-                                                    <td
-                                                        class="p-4.5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900"
-                                                    >
-                                                        <p
-                                                            class="font-normal text-sm text-gray-900"
-                                                        >
-                                                            ALCC
-                                                        </p>
-                                                        <p
-                                                            class="font-normal text-xs leading-5 text-gray-400"
-                                                        >
-                                                            ASEAN Language and
-                                                            Culture Centre
-                                                        </p>
-                                                    </td>
-                                                    <td class="w-48 px-5 py-3">
-                                                        <div
-                                                            class="flex items-center gap-3"
-                                                        >
-                                                            <img
-                                                                src="https://pagedone.io/asset/uploads/1697536419.png"
-                                                                alt="Floyd image"
-                                                            />
-                                                            <div class="data">
-                                                                <p
-                                                                    class="font-normal text-sm text-gray-900"
-                                                                >
-                                                                    Floyd Miles
-                                                                </p>
-                                                                <p
-                                                                    class="font-normal text-xs leading-5 text-gray-400"
-                                                                >
-                                                                    floydmiles@pagedone.io
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td
-                                                        class="p-4.5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900"
-                                                    >
-                                                        Course
-                                                    </td>
-                                                    <td
-                                                        class="p-4.5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900"
-                                                    >
-                                                        Jul. 12, 2025
-                                                    </td>
-                                                    <td
-                                                        class="p-4.5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900"
-                                                    ></td>
-                                                    <td
-                                                        class="p-4.5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900"
-                                                    >
-                                                        Jul. 16, 2025
-                                                    </td>                                                  
-                                                    <td
-                                                        class="flex p-4.5 items-center gap-0.5"
-                                                    >
-                                                        <button
-                                                            class="p-2 rounded-full flex item-center cursor-pointer hover:scale-110"
-                                                        >
-                                                            <box-icon name="certification" color="#ad65d9"></box-icon>
-                                                        </button>                                                    
-                                                    </td>
-                                                </tr>
-                                                <tr
-                                                    class="bg-white transition-all duration-500"
-                                                >
-                                                    <td
-                                                        class="p-4.5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900"
-                                                    >
-                                                        5
-                                                    </td>
-                                                    <td
-                                                        class="p-4.5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900"
-                                                    >
-                                                        <p
-                                                            class="font-normal text-sm text-gray-900"
-                                                        >
-                                                            ETC
-                                                        </p>
-                                                        <p
-                                                            class="font-normal text-xs leading-5 text-gray-400"
-                                                        >
-                                                            English Testing
-                                                            Centre
-                                                        </p>
-                                                    </td>
-                                                    <td class="w-48 px-5 py-3">
-                                                        <div
-                                                            class="flex items-center gap-3"
-                                                        >
-                                                            <img
-                                                                src="https://pagedone.io/asset/uploads/1697536479.png"
-                                                                alt="Laura image"
-                                                            />
-                                                            <div class="data">
-                                                                <p
-                                                                    class="font-normal text-sm text-gray-900"
-                                                                >
-                                                                    Laura Bran
-                                                                </p>
-                                                                <p
-                                                                    class="font-normal text-xs leading-5 text-gray-400"
-                                                                >
-                                                                    laurabran@pagedone.io
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td
-                                                        class="p-4.5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900"
-                                                    >
-                                                        Course
-                                                    </td>
-                                                    <td
-                                                        class="p-4.5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900"
-                                                    >
-                                                        Sep. 29, 2025
-                                                    </td>
-                                                    <td
-                                                        class="p-4.5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900"
-                                                    >
-                                                        $1,500
-                                                    </td>
-                                                    <td
-                                                        class="p-4.5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900"
-                                                    >
-                                                        Nov. 12, 2025
-                                                    </td>                                                   
-                                                    <td
-                                                        class="flex p-4.5 items-center gap-0.5"
-                                                    >
-                                                        <button
-                                                            class="p-2 rounded-full flex item-center cursor-pointer hover:scale-110"
-                                                        >
-                                                            <box-icon name="certification" color="#ad65d9"></box-icon>
-                                                        </button>                                                    
-                                                    </td>
-                                                </tr>
-                                            </tbody>
+                                            </transition-group>
                                         </table>
                                     </div>
-                                    <ul
-                                        class="flex space-x-5 justify-center mt-8"
-                                    >
-                                        <li
-                                            class="flex items-center justify-center shrink-0 bg-gray-100 w-9 h-9 rounded-md"
+
+                                    <div class="flex justify-end m-5">
+                                        <TailwindPagination
+                                            :data="enrollList"
+                                            @pagination-change-page="getEnroll"
                                         >
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                class="w-3 fill-gray-300"
-                                                viewBox="0 0 55.753 55.753"
-                                            >
-                                                <path
-                                                    d="M12.745 23.915c.283-.282.59-.52.913-.727L35.266 1.581a5.4 5.4 0 0 1 7.637 7.638L24.294 27.828l18.705 18.706a5.4 5.4 0 0 1-7.636 7.637L13.658 32.464a5.367 5.367 0 0 1-.913-.727 5.367 5.367 0 0 1-1.572-3.911 5.369 5.369 0 0 1 1.572-3.911z"
-                                                    data-original="#000000"
-                                                />
-                                            </svg>
-                                        </li>
-                                        <li
-                                            class="flex items-center justify-center shrink-0 cursor-pointer text-base font-medium text-slate-900 px-[13px] h-9 rounded-md bg-blue-100"
-                                        >
-                                            1
-                                        </li>
-                                        <li
-                                            class="flex items-center justify-center shrink-0 cursor-pointer text-base font-medium text-slate-900 px-[13px] h-9 rounded-md"
-                                        >
-                                            2
-                                        </li>
-                                        <li
-                                            class="flex items-center justify-center shrink-0 cursor-pointer text-base font-medium text-slate-900 px-[13px] h-9 rounded-md"
-                                        >
-                                            3
-                                        </li>
-                                        <li
-                                            class="flex items-center justify-center shrink-0 cursor-pointer text-base font-medium text-slate-900 px-[13px] h-9 rounded-md"
-                                        >
-                                            4
-                                        </li>
-                                        <li
-                                            class="flex items-center justify-center shrink-0 cursor-pointer text-base font-medium text-slate-900 px-[13px] h-9 rounded-md"
-                                        >
-                                            5
-                                        </li>
-                                        <li
-                                            class="flex items-center justify-center shrink-0 cursor-pointer text-base font-medium text-slate-900 px-[13px] h-9 rounded-md"
-                                        >
-                                            ...
-                                        </li>
-                                        <li
-                                            class="flex items-center justify-center shrink-0 cursor-pointer text-base font-medium text-slate-900 px-[13px] h-9 rounded-md"
-                                        >
-                                            30
-                                        </li>
-                                        <li
-                                            class="flex items-center justify-center shrink-0 cursor-pointer bg-gray-200 w-9 h-9 rounded-md"
-                                        >
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                class="w-3 fill-gray-500 rotate-180"
-                                                viewBox="0 0 55.753 55.753"
-                                            >
-                                                <path
-                                                    d="M12.745 23.915c.283-.282.59-.52.913-.727L35.266 1.581a5.4 5.4 0 0 1 7.637 7.638L24.294 27.828l18.705 18.706a5.4 5.4 0 0 1-7.636 7.637L13.658 32.464a5.367 5.367 0 0 1-.913-.727 5.367 5.367 0 0 1-1.572-3.911 5.369 5.369 0 0 1 1.572-3.911z"
-                                                    data-original="#000000"
-                                                />
-                                            </svg>
-                                        </li>
-                                    </ul>
+                                        </TailwindPagination>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -554,12 +274,207 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal Complete -->
+    <transition name="fade" mode="out-in">
+        <div class="relative z-10" v-show="this.modalComplete">
+            <div
+                class="fixed inset-0 bg-gray-500/50 bg-opacity-90 transition-opacity"
+            ></div>
+            <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+                <div
+                    class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
+                >
+                    <div
+                        class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"
+                    >
+                        <div class="bg-white p-4 rounded-2xl mt-4">
+                            <div
+                                class="font-semibold text-xl text-gray-400 mb-2"
+                            >
+                                ** กรุณาเลือกไฟล์
+                            </div>
+                            <div
+                                class="relative border-2 border-dashed rounded-xl cursor-pointer hover:border-lime-400 hover:border-3 p-4 group mb-2"
+                                v-for="(complete, index) in completeList"
+                                :key="index"
+                                @click="
+                                    linkComplete(
+                                        complete.title,
+                                        complete.created_at
+                                    )
+                                "
+                            >
+                                <span
+                                    class="flex items-center jusitfy-center font-semibold text-lg text-[#85c1e9]"
+                                >
+                                    <box-icon
+                                        name="file"
+                                        color="oklch(76.8% 0.233 130.85)"
+                                        class="cursor-pointer hover:scale-115"
+                                    ></box-icon>
+                                    : {{ complete.title }}
+                                </span>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-gray-50 px-4 py-2 sm:flex sm:flex-row-reverse sm:px-6"
+                        >
+                            <button
+                                type="button"
+                                class="inline-flex w-full justify-center rounded-lg bg-red-300 px-3 py-1.5 text-sm text-white shadow-xs hover:bg-red-400 sm:ml-3 sm:w-auto"
+                                @click="close()"
+                            >
+                                ปิด
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </transition>
+
+    <!-- Modal Cert -->
+    <transition name="fade" mode="out-in">
+        <div class="relative z-10" v-show="this.modalCert">
+            <div
+                class="fixed inset-0 bg-gray-500/50 bg-opacity-90 transition-opacity"
+            ></div>
+            <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+                <div
+                    class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
+                >
+                    <div
+                        class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"
+                    >
+                        <div class="bg-white p-4 rounded-2xl mt-4">
+                            <div
+                                class="font-semibold text-xl text-gray-400 mb-2"
+                            >
+                                ** กรุณาเลือกไฟล์
+                            </div>
+                            <div
+                                class="relative border-2 border-dashed rounded-xl cursor-pointer hover:border-lime-400 hover:border-3 p-4 group mb-2"
+                                v-for="(cert, index) in certList"
+                                :key="index"
+                                @click="linkCert(cert.title, cert.created_at)"
+                            >
+                                <span
+                                    class="flex items-center jusitfy-center font-semibold text-lg text-[#85c1e9]"
+                                >
+                                    <box-icon
+                                        name="certification"
+                                        color="#ad65d9"
+                                        class="cursor-pointer hover:scale-115"
+                                    ></box-icon>
+                                    : {{ cert.title }}
+                                </span>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-gray-50 px-4 py-2 sm:flex sm:flex-row-reverse sm:px-6"
+                        >
+                            <button
+                                type="button"
+                                class="inline-flex w-full justify-center rounded-lg bg-red-300 px-3 py-1.5 text-sm text-white shadow-xs hover:bg-red-400 sm:ml-3 sm:w-auto"
+                                @click="close()"
+                            >
+                                ปิด
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </transition>
 </template>
 
 <script>
+import axios from "axios";
+import { TailwindPagination } from "laravel-vue-pagination";
+import moment from "moment";
+import Swal from "sweetalert2";
+
 export default {
-    mounted() {
-        console.log("Component mounted.");
+    async mounted() {
+        await this.getEvent();
+        await this.getEnroll();
+    },
+    data() {
+        return {
+            pic: "img/profiles/thumbnails/",
+            ////////////////////////////////////////////////////////////////
+            enrollList: "",
+            ////////////////////////////////////////////////////////////////
+            modalComplete: false,
+            modalCert: false,
+            ////////////////////////////////////////////////////////////////
+            completeList: [],
+            certList: [],
+            ////////////////////////////////////////////////////////////////
+            moment: moment,
+        };
+    },
+    methods: {
+        getEvent() {
+            axios.get("/api/event").then((response) => {
+                this.eventList = response.data;
+            });
+        },
+        getEnroll(page = 1) {
+            axios.get("/api/showCert?page=" + page).then((response) => {
+                this.enrollList = response.data;
+            });
+        },
+        ////////////////////////////////////////////////////////////////
+        setEvent(id) {
+            if (id != null) {
+                const arr = Array.from(this.eventList); // หรือ this.nationList.slice()
+                const res = arr.find((selection) => selection.id == id);
+                return res ? res.title : null;
+            }
+
+            return null;
+        },
+        setMoment(id) {
+            return moment(id).format("L");
+        },
+        ////////////////////////////////////////////////////////////////
+        close() {
+            this.modalComplete = false;
+            this.modalCert = false;
+        },
+        ////////////////////////////////////////////////////////////////
+        showComplete(id) {
+            this.close();
+
+            axios.get("/api/complete/" + id).then((response) => {
+                this.completeList = response.data;
+
+                this.modalComplete = true;
+            });
+        },
+        showCert(id) {
+            this.close();
+
+            axios.get("/api/cert/" + id).then((response) => {
+                this.certList = response.data;
+
+                this.modalCert = true;
+            });
+        },
+        ////////////////////////////////////////////////////////////////
+        linkComplete(id, code) {
+            const url = moment(code).format("YYYY/MM/DD");
+            window.open("files/completes/" + url + "/" + id, "_blank");
+        },
+        linkCert(id, code) {
+            const url = moment(code).format("YYYY/MM/DD");
+            window.open("files/certs/" + url + "/" + id, "_blank");
+        },
+    },
+    components: {
+        TailwindPagination,
     },
 };
 </script>

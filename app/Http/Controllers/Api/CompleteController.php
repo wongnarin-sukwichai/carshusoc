@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Models\Complete;
 use App\Models\Enroll;
+use App\Models\Cert;
 
 class CompleteController extends Controller
 {
@@ -32,18 +33,29 @@ class CompleteController extends Controller
      */
     public function store(Request $request)
     {
-        if (!empty($request['filename'])) {
-            $res = new Complete();
+        if (!empty($request['certname'])) {
+            $res = new Cert();
 
             $res->enroll_id = $request['id'];
-            $res->title = $request['filename'];
+            $res->title = $request['certname'];
             $res->owner = Auth::user()->id;
 
             $res->save();
         }
         ////////////////////////////////////////////////////////////
+        if (!empty($request['filename'])) {
+            $result = new Complete();
+
+            $result->enroll_id = $request['id'];
+            $result->title = $request['filename'];
+            $result->owner = Auth::user()->id;
+
+            $result->save();
+        }
+        ////////////////////////////////////////////////////////////
         $data = Enroll::find($request['id']);
 
+        $data->cert = $request['cert'];
         $data->pay = $request['pay'];
         $data->tag = $request['tag'];
         $data->complete = $request['complete'];

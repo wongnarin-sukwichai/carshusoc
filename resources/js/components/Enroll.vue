@@ -134,8 +134,7 @@
                                                         class="p-4.5 text-left whitespace-nowrap text-sm leading-6 font-semibold text-gray-900 capitalize"
                                                     >
                                                         Actions
-                                                    </th>    
-                                                                                                 
+                                                    </th>
                                                 </tr>
                                             </thead>
                                             <transition-group
@@ -393,8 +392,18 @@
                                                                 )
                                                             "
                                                         ></box-icon>
+
+                                                        <!-- <box-icon
+                                                            name="dots-vertical-rounded"
+                                                            color="oklch(86.9% 0.022 252.894)"
+                                                        ></box-icon>
+
+                                                        <box-icon
+                                                            name="message-square-error"
+                                                            class="cursor-pointer hover:scale-120 animate-bounce"
+                                                            color="oklch(70.4% 0.191 22.216)"
+                                                        ></box-icon> -->
                                                     </td>
-                                              
                                                 </tr>
                                             </transition-group>
                                         </table>
@@ -671,6 +680,35 @@
                                             </span>
                                         </td>
                                     </tr>
+                                    <template v-if="detailList.event_id === 2">
+                                        <tr>
+                                            <td
+                                                class="border border-gray-300 px-2 py-1 text-center"
+                                            >
+                                                ใบ Certificate
+                                            </td>
+                                            <td
+                                                class="border border-gray-300 px-4 py-1"
+                                            >
+                                                <span
+                                                    class="items-end justify-end"
+                                                    ><box-icon
+                                                        name="certification"
+                                                        color="#ad65d9"
+                                                        class="cursor-pointer hover:scale-115"
+                                                        v-for="n in +detailList.cert ||
+                                                        0"
+                                                        :key="`complete-${n}`"
+                                                        @click="
+                                                            showCert(
+                                                                detailList.id
+                                                            )
+                                                        "
+                                                    ></box-icon
+                                                ></span>
+                                            </td>
+                                        </tr>
+                                    </template>
                                     <template v-if="detailList.event_id === 3">
                                         <tr>
                                             <td
@@ -1018,6 +1056,45 @@
                                             </span>
                                         </td>
                                     </tr>
+                                    <template v-if="detailList.event_id === 2">
+                                        <tr>
+                                            <td
+                                                class="border border-gray-300 px-2 py-1 text-center"
+                                            >
+                                                ใบ Certificate
+                                            </td>
+                                            <td class="flex px-4 py-1">
+                                                <span
+                                                    class="items-center justify-between w-full"
+                                                >
+                                                    <span
+                                                        class="border-r-2 mr-2"
+                                                    >
+                                                        <input
+                                                            class="w-48 cursor-pointer rounded border border-solid border-neutral-300 bg-clip-padding px-3 py-[0.32rem] text-xs font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:cursor-pointer file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:border-primary focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:file:bg-neutral-700 dark:file:text-neutral-100 dark:focus:border-primary mr-2"
+                                                            ref="certInput"
+                                                            type="file"
+                                                            @change="pickCert"
+                                                        />
+                                                    </span>
+                                                </span>
+                                                <span
+                                                    class="flex items-end justify-end"
+                                                    ><box-icon
+                                                        name="certification"
+                                                        color="#ad65d9"
+                                                        class="cursor-pointer hover:scale-115"
+                                                        v-for="n in +data.cert ||
+                                                        0"
+                                                        :key="`complete-${n}`"
+                                                        @click="
+                                                            showCert(data.id)
+                                                        "
+                                                    ></box-icon
+                                                ></span>
+                                            </td>
+                                        </tr>
+                                    </template>
                                     <template v-if="detailList.event_id === 3">
                                         <tr>
                                             <td
@@ -1036,7 +1113,7 @@
                                                             class="w-48 cursor-pointer rounded border border-solid border-neutral-300 bg-clip-padding px-3 py-[0.32rem] text-xs font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:cursor-pointer file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:border-primary focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:file:bg-neutral-700 dark:file:text-neutral-100 dark:focus:border-primary mr-2"
                                                             ref="fileInput"
                                                             type="file"
-                                                            @change="pickFile()"
+                                                            @change="pickFile"
                                                         />
                                                     </span>
                                                 </span>
@@ -1424,6 +1501,65 @@
             </div>
         </div>
     </transition>
+
+    <!-- Modal Cert -->
+    <transition name="fade" mode="out-in">
+        <div class="relative z-10" v-show="this.modalCert">
+            <div
+                class="fixed inset-0 bg-gray-500/50 bg-opacity-90 transition-opacity"
+            ></div>
+            <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+                <div
+                    class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
+                >
+                    <div
+                        class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"
+                    >
+                        <div class="bg-white p-4 rounded-2xl mt-4">
+                            <div
+                                class="font-semibold text-xl text-gray-400 mb-2"
+                            >
+                                ** กรุณาเลือกไฟล์
+                            </div>
+                            <div
+                                class="relative border-2 border-dashed rounded-xl cursor-pointer hover:border-lime-400 hover:border-3 p-4 group mb-2"
+                                v-for="(cert, index) in certList"
+                                :key="index"
+                                @click="
+                                    linkCert(
+                                        cert.title,
+                                        cert.created_at
+                                    )
+                                "
+                            >
+                                <span
+                                    class="flex items-center jusitfy-center font-semibold text-lg text-[#85c1e9]"
+                                >
+                                    <box-icon
+                                        name="certification"
+                                        color="#ad65d9"
+                                        class="cursor-pointer hover:scale-115"
+                                    ></box-icon>
+                                    : {{ cert.title }}
+                                </span>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-gray-50 px-4 py-2 sm:flex sm:flex-row-reverse sm:px-6"
+                        >
+                            <button
+                                type="button"
+                                class="inline-flex w-full justify-center rounded-lg bg-red-300 px-3 py-1.5 text-sm text-white shadow-xs hover:bg-red-400 sm:ml-3 sm:w-auto"
+                                @click="close()"
+                            >
+                                ปิด
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </transition>
 </template>
 
 <script>
@@ -1447,20 +1583,25 @@ export default {
             modalComplete: false,
             modalPayment: false,
             modalWork: false,
+            modalCert: false,
             ////////////////////////////////////////////////////////////////
             eventList: [],
             enrollList: [],
             detailList: [],
-            file: null,
             completeList: [],
             paymentList: [],
             workList: [],
+            certList: [],
+            ////////////////////////////////////////////////////////////////
+            file: null,
+            cert: null,
             ////////////////////////////////////////////////////////////////
             searchData: {
                 search: "",
             },
             data: {
                 id: "",
+                cert: "",
                 pay: "",
                 tag: "",
                 complete: "",
@@ -1468,6 +1609,7 @@ export default {
                 status: "",
                 alert: "",
                 filename: "",
+                certname: "",
             },
             ////////////////////////////////////////////////////////////////
             moment: moment,
@@ -1513,7 +1655,6 @@ export default {
                     });
             }
         },
-        showPayment(id) {},
         showDetail(id) {
             this.modalDetail = true;
             axios.get("/api/enroll/" + id).then((response) => {
@@ -1535,20 +1676,28 @@ export default {
             });
         },
         close() {
+            // ล้างค่าก่อน (ขณะ element ยังอยู่)
             if (this.$refs.fileInput) this.$refs.fileInput.value = "";
+            if (this.$refs.certInput) this.$refs.certInput.value = "";
+
             this.file = null;
+            this.cert = null;
 
             this.modalDetail = false;
             this.modalEdit = false;
             this.modalComplete = false;
             this.modalPayment = false;
             this.modalWork = false;
+            this.modalCert = false;
         },
-        pickFile() {
-            let input = this.$refs.fileInput;
-            this.file = input.files; //เอาไฟล์รูปเข้าตัวแปร file
-            ////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////
+        pickFile(event) {
+            this.file = event.target.files; // เก็บไฟล์ลงตัวแปร
         },
+        pickCert(event) {
+            this.cert = event.target.files; // เก็บไฟล์ลงตัวแปร
+        },
+        ////////////////////////////////////////////////////////////
         async sendData() {
             // SweetAlert Confirm
             Swal.fire({
@@ -1573,12 +1722,55 @@ export default {
                 },
             }).then(async (result) => {
                 if (result.isConfirmed) {
-                    try {
-                        ////////////////////////// Upload Work //////////////////////////////////
-                        if (this.file != null) {
-                            let formData = new FormData(); //สร้าง FromData เพื่อรองรับข้อมูลประเภท File
-                            formData.append("file", this.file[0]);
+                    ////////////////////////// Upload Certificate //////////////////////////////////
+                    if (this.cert != null) {
+                        let formData = new FormData(); //สร้าง FromData เพื่อรองรับข้อมูลประเภท File
+                        formData.append("file", this.cert[0]);
 
+                        try {
+                            const config = {
+                                headers: {
+                                    "content-type": "multipart/form-data",
+                                },
+                            };
+
+                            await axios
+                                .post("/api/uploadCert", formData, config)
+                                .then((response) => {
+                                    this.data.certname = response.data;
+                                    this.data.cert = (this.data.cert || 0) + 1;
+                                });
+                        } catch (error) {
+                            if (
+                                error.response &&
+                                error.response.status === 422
+                            ) {
+                                // SweetAlert Error
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Error",
+                                    text: "Please upload files of the allowed types: JPG, JPEG, PNG, PDF only.",
+                                    customClass: {
+                                        popup: "rounded-xl shadow-lg bg-white font-poppins",
+                                        title: "text-2xl font-bold text-gray-800",
+                                        confirmButton:
+                                            "bg-rose-300 hover:bg-rose-400 text-white font-medium px-4 py-2",
+                                    },
+                                    didOpen: () => {
+                                        Swal.getPopup().style.fontFamily =
+                                            "Poppins, sans-serif";
+                                    },
+                                });
+                            }
+                            return; // ⛔ หยุด
+                        }
+                    }
+                    ////////////////////////// Upload Work //////////////////////////////////
+                    if (this.file != null) {
+                        let formData = new FormData(); //สร้าง FromData เพื่อรองรับข้อมูลประเภท File
+                        formData.append("file", this.file[0]);
+
+                        try {
                             const config = {
                                 headers: {
                                     "content-type": "multipart/form-data",
@@ -1589,126 +1781,78 @@ export default {
                                 .post("/api/uploadComplete", formData, config)
                                 .then((response) => {
                                     this.data.filename = response.data;
-                                    this.data.complete = +1;
-
-                                    Swal.fire({
-                                        title: "Upload File Success!!",
-                                        icon: "success",
-                                        timer: 3000,
-                                        showConfirmButton: false,
-                                        customClass: {
-                                            popup: "rounded-xl shadow-lg bg-white font-poppins",
-                                            title: "text-2xl text-gray-800",
-                                            htmlContainer:
-                                                "text-base text-gray-600",
-                                            confirmButton:
-                                                "bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2",
-                                            cancelButton:
-                                                "bg-gray-300 hover:bg-gray-400 text-black font-medium px-4 py-2 ml-2",
-                                        },
-                                        didOpen: () => {
-                                            Swal.getPopup().style.fontFamily =
-                                                "Poppins, sans-serif";
-                                        },
-                                    });
-                                })
-                                .catch((error) => {
-                                    if (
-                                        error.response &&
-                                        error.response.status === 422
-                                    ) {
-                                        // SweetAlert Error
-                                        Swal.fire({
-                                            icon: "error",
-                                            title: "Error",
-                                            text: "Please upload files of the allowed types: DOC, DOCX, XLS, XLSX, PDF only.",
-                                            customClass: {
-                                                popup: "rounded-xl shadow-lg bg-white font-poppins",
-                                                title: "text-2xl font-bold text-gray-800",
-                                                confirmButton:
-                                                    "bg-rose-300 hover:bg-rose-400 text-white font-medium px-4 py-2",
-                                            },
-                                            didOpen: () => {
-                                                Swal.getPopup().style.fontFamily =
-                                                    "Poppins, sans-serif";
-                                            },
-                                        });
-                                    } else {
-                                        // SweetAlert Error
-                                        Swal.fire({
-                                            icon: "error",
-                                            title: "Error",
-                                            text: "Can't to Upload File. Contact to Staff Please.",
-                                            customClass: {
-                                                popup: "rounded-xl shadow-lg bg-white font-poppins",
-                                                title: "text-2xl font-bold text-gray-800",
-                                                confirmButton:
-                                                    "bg-rose-300 hover:bg-rose-400 text-white font-medium px-4 py-2",
-                                            },
-                                            didOpen: () => {
-                                                Swal.getPopup().style.fontFamily =
-                                                    "Poppins, sans-serif";
-                                            },
-                                        });
-                                    }
+                                    this.data.complete =
+                                        (this.data.complete || 0) + 1;
                                 });
+                        } catch (error) {
                             if (
-                                this.data.filename !== null ||
-                                this.data.filename !== ""
+                                error.response &&
+                                error.response.status === 422
                             ) {
-                                await axios
-                                    .post("/api/complete", this.data)
-                                    .then((response) => {
-                                        Swal.fire({
-                                            title: response.data.message,
-                                            icon: "success",
-                                            draggable: true,
-                                            customClass: {
-                                                popup: "rounded-xl shadow-lg bg-white font-poppins",
-                                                title: "text-2xl text-gray-800",
-                                                htmlContainer:
-                                                    "text-base text-gray-600",
-                                                confirmButton:
-                                                    "bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2",
-                                                cancelButton:
-                                                    "bg-gray-300 hover:bg-gray-400 text-black font-medium px-4 py-2 ml-2",
-                                            },
-                                            didOpen: () => {
-                                                Swal.getPopup().style.fontFamily =
-                                                    "Poppins, sans-serif";
-                                            },
-                                        });
-                                    });
-                            }
-                        } else {
-                            await axios
-                                .post("/api/complete", this.data)
-                                .then((response) => {
-                                    Swal.fire({
-                                        title: response.data.message,
-                                        icon: "success",
-                                        draggable: true,
-                                        customClass: {
-                                            popup: "rounded-xl shadow-lg bg-white font-poppins",
-                                            title: "text-2xl text-gray-800",
-                                            htmlContainer:
-                                                "text-base text-gray-600",
-                                            confirmButton:
-                                                "bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2",
-                                            cancelButton:
-                                                "bg-gray-300 hover:bg-gray-400 text-black font-medium px-4 py-2 ml-2",
-                                        },
-                                        didOpen: () => {
-                                            Swal.getPopup().style.fontFamily =
-                                                "Poppins, sans-serif";
-                                        },
-                                    });
+                                // SweetAlert Error
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Error",
+                                    text: "Please upload files of the allowed types: DOC, DOCX, XLS, XLSX, PDF only.",
+                                    customClass: {
+                                        popup: "rounded-xl shadow-lg bg-white font-poppins",
+                                        title: "text-2xl font-bold text-gray-800",
+                                        confirmButton:
+                                            "bg-rose-300 hover:bg-rose-400 text-white font-medium px-4 py-2",
+                                    },
+                                    didOpen: () => {
+                                        Swal.getPopup().style.fontFamily =
+                                            "Poppins, sans-serif";
+                                    },
                                 });
+                            }
+                            return; // ⛔ หยุด
                         }
+                    }
+                    ////////////////////////// Upload Data //////////////////////////////////
+                    try {
+                        await axios
+                            .post("/api/complete", this.data)
+                            .then((response) => {
+                                Swal.fire({
+                                    title: response.data.message,
+                                    icon: "success",
+                                    draggable: true,
+                                    customClass: {
+                                        popup: "rounded-xl shadow-lg bg-white font-poppins",
+                                        title: "text-2xl text-gray-800",
+                                        htmlContainer:
+                                            "text-base text-gray-600",
+                                        confirmButton:
+                                            "bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2",
+                                        cancelButton:
+                                            "bg-gray-300 hover:bg-gray-400 text-black font-medium px-4 py-2 ml-2",
+                                    },
+                                    didOpen: () => {
+                                        Swal.getPopup().style.fontFamily =
+                                            "Poppins, sans-serif";
+                                    },
+                                });
+                            });
                         this.getEnroll();
                         this.close();
-                    } catch (err) {
-                        throw err;
+                    } catch (error) {
+                        // SweetAlert Error
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: "Fail!!. Please Contact to Staff.",
+                            customClass: {
+                                popup: "rounded-xl shadow-lg bg-white font-poppins",
+                                title: "text-2xl font-bold text-gray-800",
+                                confirmButton:
+                                    "bg-rose-300 hover:bg-rose-400 text-white font-medium px-4 py-2",
+                            },
+                            didOpen: () => {
+                                Swal.getPopup().style.fontFamily =
+                                    "Poppins, sans-serif";
+                            },
+                        });
                     }
                 }
             });
@@ -1740,6 +1884,15 @@ export default {
                 this.modalComplete = true;
             });
         },
+        showCert(id) {
+            this.close();
+
+            axios.get("/api/cert/" + id).then((response) => {
+                this.certList = response.data;
+
+                this.modalCert = true;
+            });
+        },
         linkPayment(id, code) {
             const url = moment(code).format("YYYY/MM/DD");
             window.open("files/payments/" + url + "/" + id, "_blank");
@@ -1751,6 +1904,10 @@ export default {
         linkComplete(id, code) {
             const url = moment(code).format("YYYY/MM/DD");
             window.open("files/completes/" + url + "/" + id, "_blank");
+        },
+         linkCert(id, code) {
+            const url = moment(code).format("YYYY/MM/DD");
+            window.open("files/certs/" + url + "/" + id, "_blank");
         },
     },
     components: {

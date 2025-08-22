@@ -99,6 +99,20 @@
                                 เจ้าหน้าที่ดูแลระบบ
                             </router-link>
                         </li>
+                         <li>
+                            <router-link
+                                to="/report"
+                                class="text-gray-50 font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all"
+                            >
+                                <box-icon
+                                    name="report"
+                                    type="solid"
+                                    class="mr-2"
+                                    color="#85c1e9"
+                                ></box-icon>
+                                รายงาน (Excel)
+                            </router-link>
+                        </li>
                         <li>
                             <router-link
                                 to="/stat"

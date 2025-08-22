@@ -108,9 +108,7 @@
                                                     <th
                                                         scope="col"
                                                         class="p-4.5 text-left whitespace-nowrap text-sm leading-6 font-semibold text-gray-900 capitalize"
-                                                    >
-                                                        
-                                                    </th>
+                                                    ></th>
                                                 </tr>
                                             </thead>
                                             <transition-group
@@ -258,7 +256,7 @@
                                                             name="cloud-upload"
                                                             color="oklch(82.8% 0.111 230.318)"
                                                             class="cursor-pointer hover:scale-120"
-                                                            animation='burst-hover'
+                                                            animation="burst-hover"
                                                             v-else
                                                             @click="
                                                                 showEdit(
@@ -635,6 +633,35 @@
                                             </span>
                                         </td>
                                     </tr>
+                                    <template v-if="detailList.event_id === 2">
+                                        <tr>
+                                            <td
+                                                class="border border-gray-300 px-2 py-1 text-center"
+                                            >
+                                                ใบ Certificate
+                                            </td>
+                                            <td
+                                                class="border border-gray-300 px-4 py-1"
+                                            >
+                                                <span
+                                                    class="items-end justify-end"
+                                                    ><box-icon
+                                                        name="certification"
+                                                        color="#ad65d9"
+                                                        class="cursor-pointer hover:scale-115"
+                                                        v-for="n in +detailList.cert ||
+                                                        0"
+                                                        :key="`complete-${n}`"
+                                                        @click="
+                                                            showCert(
+                                                                detailList.id
+                                                            )
+                                                        "
+                                                    ></box-icon
+                                                ></span>
+                                            </td>
+                                        </tr>
+                                    </template>
                                     <template v-if="detailList.event_id === 3">
                                         <tr>
                                             <td
@@ -692,7 +719,11 @@
                                             <td
                                                 class="border border-gray-300 px-4 py-1"
                                             >
-                                                {{ moment(detailList.submit).format('D/MM/Y') }}
+                                                {{
+                                                    moment(
+                                                        detailList.submit
+                                                    ).format("D/MM/Y")
+                                                }}
                                             </td>
                                         </tr>
                                         <tr>
@@ -989,6 +1020,31 @@
                                             </span>
                                         </td>
                                     </tr>
+                                    <template v-if="detailList.event_id === 2">
+                                        <tr>
+                                            <td
+                                                class="border border-gray-300 px-2 py-1 text-center"
+                                            >
+                                                ใบ Certificate
+                                            </td>
+                                            <td class="px-4 py-1">
+                                                <box-icon
+                                                    name="certification"
+                                                    color="#ad65d9"
+                                                    class="cursor-pointer hover:scale-120"
+                                                    v-if="
+                                                        detailList.cert !==
+                                                        null
+                                                    "
+                                                    @click="
+                                                        showCert(
+                                                            detailList.id
+                                                        )
+                                                    "
+                                                ></box-icon>
+                                            </td>
+                                        </tr>
+                                    </template>
                                     <template v-if="detailList.event_id === 3">
                                         <tr>
                                             <td
@@ -1389,6 +1445,60 @@
             </div>
         </div>
     </transition>
+
+    <!-- Modal Cert -->
+    <transition name="fade" mode="out-in">
+        <div class="relative z-10" v-show="this.modalCert">
+            <div
+                class="fixed inset-0 bg-gray-500/50 bg-opacity-90 transition-opacity"
+            ></div>
+            <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+                <div
+                    class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
+                >
+                    <div
+                        class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"
+                    >
+                        <div class="bg-white p-4 rounded-2xl mt-4">
+                            <div
+                                class="font-semibold text-xl text-gray-400 mb-2"
+                            >
+                                ** กรุณาเลือกไฟล์
+                            </div>
+                            <div
+                                class="relative border-2 border-dashed rounded-xl cursor-pointer hover:border-lime-400 hover:border-3 p-4 group mb-2"
+                                v-for="(cert, index) in certList"
+                                :key="index"
+                                @click="linkCert(cert.title, cert.created_at)"
+                            >
+                                <span
+                                    class="flex items-center jusitfy-center font-semibold text-lg text-[#85c1e9]"
+                                >
+                                    <box-icon
+                                        name="certification"
+                                        color="#ad65d9"
+                                        class="cursor-pointer hover:scale-115"
+                                    ></box-icon>
+                                    : {{ cert.title }}
+                                </span>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-gray-50 px-4 py-2 sm:flex sm:flex-row-reverse sm:px-6"
+                        >
+                            <button
+                                type="button"
+                                class="inline-flex w-full justify-center rounded-lg bg-red-300 px-3 py-1.5 text-sm text-white shadow-xs hover:bg-red-400 sm:ml-3 sm:w-auto"
+                                @click="close()"
+                            >
+                                ปิด
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </transition>
 </template>
 
 <script>
@@ -1413,6 +1523,7 @@ export default {
             modalComplete: false,
             modalPayment: false,
             modalWork: false,
+            modalCert: false,
             ////////////////////////////////////////////////////////////////
             eventList: [],
             enrollList: [],
@@ -1420,6 +1531,7 @@ export default {
             completeList: [],
             paymentList: [],
             workList: [],
+            certList: [],
             ////////////////////////////////////////////////////////////////
             moment: moment,
             file: null,
@@ -1504,6 +1616,7 @@ export default {
             this.modalComplete = false;
             this.modalPayment = false;
             this.modalWork = false;
+            this.modalCert = false;
         },
         ////////////////////////////////////////////////////////////
         pickFile(event) {
@@ -1537,12 +1650,12 @@ export default {
                 },
             }).then(async (result) => {
                 if (result.isConfirmed) {
-                    try {
-                        ////////////////////////// Upload Work //////////////////////////////////
-                        if (this.file !== null) {
-                            let formData = new FormData(); //สร้าง FromData เพื่อรองรับข้อมูลประเภท File
-                            formData.append("file", this.file[0]);
+                    ////////////////////////// Upload Work //////////////////////////////////
+                    if (this.file !== null) {
+                        let formData = new FormData(); //สร้าง FromData เพื่อรองรับข้อมูลประเภท File
+                        formData.append("file", this.file[0]);
 
+                        try {
                             const config = {
                                 headers: {
                                     "content-type": "multipart/form-data",
@@ -1554,36 +1667,38 @@ export default {
                                 .then((response) => {
                                     this.data.filename = response.data;
                                     this.data.work = (this.data.work || 0) + 1;
-                                })
-                                .catch((error) => {
-                                    if (
-                                        error.response &&
-                                        error.response.status === 422
-                                    ) {
-                                        // SweetAlert Error
-                                        Swal.fire({
-                                            icon: "error",
-                                            title: "Error",
-                                            text: "Please upload files of the allowed types: DOC, DOCX, XLS, XLSX, PDF only.",
-                                            customClass: {
-                                                popup: "rounded-xl shadow-lg bg-white font-poppins",
-                                                title: "text-2xl font-bold text-gray-800",
-                                                confirmButton:
-                                                    "bg-rose-300 hover:bg-rose-400 text-white font-medium px-4 py-2",
-                                            },
-                                            didOpen: () => {
-                                                Swal.getPopup().style.fontFamily =
-                                                    "Poppins, sans-serif";
-                                            },
-                                        });
-                                    }
                                 });
+                        } catch (error) {
+                            if (
+                                error.response &&
+                                error.response.status === 422
+                            ) {
+                                // SweetAlert Error
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Error",
+                                    text: "Please upload files of the allowed types: DOC, DOCX, XLS, XLSX, PDF only.",
+                                    customClass: {
+                                        popup: "rounded-xl shadow-lg bg-white font-poppins",
+                                        title: "text-2xl font-bold text-gray-800",
+                                        confirmButton:
+                                            "bg-rose-300 hover:bg-rose-400 text-white font-medium px-4 py-2",
+                                    },
+                                    didOpen: () => {
+                                        Swal.getPopup().style.fontFamily =
+                                            "Poppins, sans-serif";
+                                    },
+                                });
+                            }
+                            return; // ⛔ หยุด
                         }
-                        ////////////////////////// Upload Payment //////////////////////////////////
-                        if (this.payment !== null) {
-                            let formData = new FormData(); //สร้าง FromData เพื่อรองรับข้อมูลประเภท File
-                            formData.append("file", this.payment[0]);
+                    }
+                    ////////////////////////// Upload Payment //////////////////////////////////
+                    if (this.payment !== null) {
+                        let formData = new FormData(); //สร้าง FromData เพื่อรองรับข้อมูลประเภท File
+                        formData.append("file", this.payment[0]);
 
+                        try {
                             const config = {
                                 headers: {
                                     "content-type": "multipart/form-data",
@@ -1596,33 +1711,35 @@ export default {
                                     this.data.paymentname = response.data;
                                     this.data.payment =
                                         (this.data.payment || 0) + 1;
-                                })
-                                .catch((error) => {
-                                    if (
-                                        error.response &&
-                                        error.response.status === 422
-                                    ) {
-                                        // SweetAlert Error
-                                        Swal.fire({
-                                            icon: "error",
-                                            title: "Error",
-                                            text: "Please upload files of the allowed types: JPG, JPEG, PNG only.",
-                                            customClass: {
-                                                popup: "rounded-xl shadow-lg bg-white font-poppins",
-                                                title: "text-2xl font-bold text-gray-800",
-                                                confirmButton:
-                                                    "bg-rose-300 hover:bg-rose-400 text-white font-medium px-4 py-2",
-                                            },
-                                            didOpen: () => {
-                                                Swal.getPopup().style.fontFamily =
-                                                    "Poppins, sans-serif";
-                                            },
-                                        });
-                                    }
                                 });
+                        } catch (error) {
+                            if (
+                                error.response &&
+                                error.response.status === 422
+                            ) {
+                                // SweetAlert Error
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Error",
+                                    text: "Please upload files of the allowed types: JPG, JPEG, PNG only.",
+                                    customClass: {
+                                        popup: "rounded-xl shadow-lg bg-white font-poppins",
+                                        title: "text-2xl font-bold text-gray-800",
+                                        confirmButton:
+                                            "bg-rose-300 hover:bg-rose-400 text-white font-medium px-4 py-2",
+                                    },
+                                    didOpen: () => {
+                                        Swal.getPopup().style.fontFamily =
+                                            "Poppins, sans-serif";
+                                    },
+                                });
+                            }
+                            return; // ⛔ หยุด
                         }
-                        ////////////////////////// Upload Data //////////////////////////////////
-                        axios
+                    }
+                    ////////////////////////// Upload Data //////////////////////////////////
+                    try {
+                        await axios
                             .put("/api/enroll/" + this.data.id, this.data)
                             .then((response) => {
                                 Swal.fire({
@@ -1648,8 +1765,23 @@ export default {
 
                         this.getEnroll();
                         this.close();
-                    } catch (err) {
-                        throw err;
+                    } catch (error) {
+                        // SweetAlert Error
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: "Fail!!. Please Contact to Staff.",
+                            customClass: {
+                                popup: "rounded-xl shadow-lg bg-white font-poppins",
+                                title: "text-2xl font-bold text-gray-800",
+                                confirmButton:
+                                    "bg-rose-300 hover:bg-rose-400 text-white font-medium px-4 py-2",
+                            },
+                            didOpen: () => {
+                                Swal.getPopup().style.fontFamily =
+                                    "Poppins, sans-serif";
+                            },
+                        });
                     }
                 }
             });
@@ -1681,6 +1813,15 @@ export default {
                 this.modalComplete = true;
             });
         },
+        showCert(id) {
+            this.close();
+
+            axios.get("/api/cert/" + id).then((response) => {
+                this.certList = response.data;
+
+                this.modalCert = true;
+            });
+        },
         linkPayment(id, code) {
             const url = moment(code).format("YYYY/MM/DD");
             window.open("files/payments/" + url + "/" + id, "_blank");
@@ -1692,6 +1833,10 @@ export default {
         linkComplete(id, code) {
             const url = moment(code).format("YYYY/MM/DD");
             window.open("files/completes/" + url + "/" + id, "_blank");
+        },
+        linkCert(id, code) {
+            const url = moment(code).format("YYYY/MM/DD");
+            window.open("files/certs/" + url + "/" + id, "_blank");
         },
     },
     components: {

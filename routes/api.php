@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CertController;
 use App\Http\Controllers\Api\ContentController;
 use App\Http\Controllers\Api\DegreeController;
 use App\Http\Controllers\Api\EnrollController;
@@ -21,6 +22,7 @@ use App\Http\Controllers\Api\WorkController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\RegisterController;
 use App\Http\Controllers\Api\PasswordResetController;
+use App\Http\Controllers\Api\ReportController;
 
 Route::middleware(['web'])->group(function () {
 
@@ -74,11 +76,18 @@ Route::middleware(['web'])->group(function () {
 
         Route::resource('payment', PaymentController::class);
 
+        Route::post('uploadCert', [UploadController::class, 'uploadCert']);
+
+        Route::resource('cert', CertController::class);
+
+        Route::resource('report', ReportController::class);
+
         ////////////////////////// Member //////////////////////////////////
         Route::get('showEnroll', [EnrollController::class, 'showEnroll']);
         Route::get('detailEnroll/{id}', [EnrollController::class, 'detailEnroll']);
         Route::get('editEnroll/{id}', [EnrollController::class, 'editEnroll']);
         Route::post('uploadWork', [UploadController::class, 'uploadWork']);
         Route::post('uploadPayment', [UploadController::class, 'uploadPayment']);
+        Route::get('showCert', [CertController::class, 'showCert']);
     });
 });

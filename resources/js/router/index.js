@@ -27,6 +27,7 @@ import Section from "../components/Section.vue";
 import AddSection from "../components/AddSection.vue";
 import EditSection from "../components/EditSection.vue";
 import Enroll from "../components/Enroll.vue";
+import Report from "../components/Report.vue";
 
 import store from "../store";
 
@@ -235,6 +236,15 @@ const routes = [
         path: "/mail",
         name: "mail",
         component: Mail,
+        meta: {
+            layout: "admin",
+            guard: "admin",
+        },
+    },
+        {
+        path: "/report",
+        name: "report",
+        component: Report,
         meta: {
             layout: "admin",
             guard: "admin",

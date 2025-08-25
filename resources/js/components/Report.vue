@@ -212,13 +212,100 @@ export default {
 
             return isValid;
         },
-        sendData() {
-            if (!this.validateData()) {
-                // SweetAlert Error
+        async sendData() {
+            try {
+                if (!this.validateData()) {
+                    // SweetAlert Error
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: "Check required fields please.",
+                        customClass: {
+                            popup: "rounded-xl shadow-lg bg-white font-poppins",
+                            title: "text-2xl font-bold text-gray-800",
+                            confirmButton:
+                                "bg-rose-300 hover:bg-rose-400 text-white font-medium px-4 py-2",
+                        },
+                        didOpen: () => {
+                            Swal.getPopup().style.fontFamily =
+                                "Poppins, sans-serif";
+                        },
+                    });
+                    return;
+                } else {
+                    const res = await axios.post("/api/export", this.data, {
+                        responseType: "blob",
+                    });
+
+                    const contentType = res.headers["content-type"];
+
+                    // ถ้า response เป็น JSON (กรณีไม่พบข้อมูล)
+                    if (
+                        contentType &&
+                        contentType.includes("application/json")
+                    ) {
+                        const reader = new FileReader();
+                        reader.onload = () => {
+                            const result = JSON.parse(reader.result);
+                            Swal.fire({
+                                title: "Error!",
+                                text: "ไม่พบข้อมูล ในช่วงเวลาดังกล่าว",
+                                icon: "warning",
+                                customClass: {
+                                    popup: "rounded-xl shadow-lg bg-white font-poppins",
+                                    title: "text-2xl font-bold text-gray-800",
+                                    confirmButton:
+                                        "bg-rose-300 hover:bg-rose-400 text-white font-medium px-4 py-2",
+                                },
+                                didOpen: () => {
+                                    Swal.getPopup().style.fontFamily =
+                                        "Anuphan, sans-serif";
+                                },
+                            });
+                        };
+                        reader.readAsText(res.data);
+                        return; // ⛔ หยุด ไม่ต้องดาวน์โหลด
+                    }
+
+                    // ถ้าเป็น Excel → ดาวน์โหลด
+                    const blob = new Blob([res.data], {
+                        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    });
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement("a");
+                    a.href = url;
+                    a.download = `Report_${new Date()
+                        .toISOString()
+                        .slice(0, 10)}.xlsx`;
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                    window.URL.revokeObjectURL(url);
+
+                    Swal.fire({
+                        title: "Success!!",
+                        text: "สำเร็จ! กรุณาตรวจสอบที่ไฟล์ดาวน์โหลดบนเครื่องของท่าน",
+                        icon: "success",
+                        customClass: {
+                            popup: "rounded-xl shadow-lg bg-white font-poppins",
+                            title: "text-2xl font-bold text-gray-800",
+                            htmlContainer: "text-base text-gray-600",
+                            confirmButton:
+                                "bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2",
+                            cancelButton:
+                                "bg-gray-300 hover:bg-gray-400 text-black font-medium px-4 py-2 ml-2",
+                        },
+                        didOpen: () => {
+                            Swal.getPopup().style.fontFamily =
+                                "Anuphan, sans-serif";
+                        },
+                    });
+                }
+            } catch (err) {
                 Swal.fire({
+                    title: "Error!",
+                    text: "ไม่สามารถดาวน์โหลด กรุณาลองใหม่อีกครั้ง",
                     icon: "error",
-                    title: "Error",
-                    text: "Check required fields please.",
                     customClass: {
                         popup: "rounded-xl shadow-lg bg-white font-poppins",
                         title: "text-2xl font-bold text-gray-800",
@@ -227,12 +314,9 @@ export default {
                     },
                     didOpen: () => {
                         Swal.getPopup().style.fontFamily =
-                            "Poppins, sans-serif";
+                            "Anuphan, sans-serif";
                     },
                 });
-                return;
-            } else {
-                
             }
         },
     },

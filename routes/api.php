@@ -18,6 +18,7 @@ use App\Http\Controllers\Api\TypeController;
 use App\Http\Controllers\Api\UploadController;
 use App\Http\Controllers\Api\CourseController;
 use App\Http\Controllers\Api\CompleteController;
+use App\Http\Controllers\Api\ExportController;
 use App\Http\Controllers\Api\WorkController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\RegisterController;
@@ -81,6 +82,8 @@ Route::middleware(['web'])->group(function () {
         Route::resource('cert', CertController::class);
 
         Route::resource('report', ReportController::class);
+
+        Route::resource('export', ExportController::class);
 
         ////////////////////////// Member //////////////////////////////////
         Route::get('showEnroll', [EnrollController::class, 'showEnroll']);

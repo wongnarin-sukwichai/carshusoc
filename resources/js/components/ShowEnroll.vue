@@ -367,6 +367,21 @@
             </div>
         </div>
 
+        <div
+            class="border-2 border-dashed border-gray-200 text-sm p-4 rounded-xl mb-2"
+        >
+            สามารถชำระเงินค่าบริการผ่านช่องทางออนไลน์ โดยใช้แอปพิเคชัน มาที่ :
+
+            <div class="flex px-1 items-center">
+                <img :src="logo" class="w-8 h-8 rounded-lg mr-2" />
+                ธนาคารไทยพาณิชย์ เลขบัญชี :
+                <span class="font-semibold px-2 text-purple-800"
+                    >408-931-6919</span
+                > |
+                <span class="font-semibold px-2">ชื่อบัญชี</span> : มหาวิทยาลัยมหาสารคาม (เงินรับฝาก)
+            </div>   
+        </div>
+
         <div class="mt-4">
             <div class="flex">
                 <span
@@ -1033,13 +1048,10 @@
                                                     color="#ad65d9"
                                                     class="cursor-pointer hover:scale-120"
                                                     v-if="
-                                                        detailList.cert !==
-                                                        null
+                                                        detailList.cert !== null
                                                     "
                                                     @click="
-                                                        showCert(
-                                                            detailList.id
-                                                        )
+                                                        showCert(detailList.id)
                                                     "
                                                 ></box-icon>
                                             </td>
@@ -1515,6 +1527,7 @@ export default {
     },
     data() {
         return {
+            logo: "/img/logo/scb.png",
             pic: "img/profiles/thumbnails/",
             ////////////////////////////////////////////////////////////////
             modalPayment: false,

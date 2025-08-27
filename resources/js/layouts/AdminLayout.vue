@@ -126,6 +126,20 @@
                                 {{ $t("admin.stat") }}
                             </router-link>
                         </li>
+                        <li>
+                            <div
+                                class="text-gray-50 font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all cursor-pointer"
+                                @click="link()"
+                            >
+                                <box-icon
+                                    name="file-pdf"
+                                    type="solid"
+                                    class="mr-2"
+                                    color="#85c1e9"
+                                ></box-icon>
+                                คู่มือระบบ
+                            </div>
+                        </li>
                     </ul>
 
                     <ul class="space-y-6 pl-3 mt-8">
@@ -280,6 +294,9 @@ export default {
         toggleSidebar() {
             this.isSidebarOpen = !this.isSidebarOpen;
         },
+        link(){
+            window.open("files/tools/tools.pdf" , "_blank");
+        }
     },
     computed: {
         user() {

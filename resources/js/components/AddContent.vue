@@ -392,7 +392,6 @@ export default {
                 title: "",
                 short_name: "",
                 file: "",
-                event_id: "",
                 detail: "",
                 mission: "",
                 scope: "",
@@ -408,7 +407,6 @@ export default {
                 pic: "",
                 title: "",
                 short_name: "",
-                event_id: "",
                 owner: "",
             },
         };
@@ -421,19 +419,6 @@ export default {
             });
         },
         ////////////////////////////////////////////////////////////////
-        setEvent(id) {
-            this.eventShow = false;
-
-            this.data.event_id = id;
-
-            if (id != null) {
-                const arr = Array.from(this.eventList); // หรือ this.nationList.slice()
-                const res = arr.find((selection) => selection.id == id);
-                return res ? res.title : null;
-            }
-
-            return null;
-        },
         setAdmin(id) {
             this.adminShow = false;
 
@@ -519,6 +504,7 @@ export default {
                             });
                         } else {
                             if (!this.validateData()) {
+                                console.log(this.data)
                                 // SweetAlert Error
                                 Swal.fire({
                                     icon: "error",
@@ -595,7 +581,7 @@ export default {
         validateData() {
             let isValid = true;
 
-            const req = ["title", "short_name", "event_id", "owner"];
+            const req = ["title", "short_name", "owner"];
 
             for (let key of req) {
                 const value = this.data[key];

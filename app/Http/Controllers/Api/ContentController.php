@@ -38,7 +38,6 @@ class ContentController extends Controller
         $data->pic = $request['pic'];
         $data->title = $request['title'];
         $data->short_name = $request['short_name'];
-        $data->event_id = $request['event_id'];
         $data->detail = $request['detail'];
         $data->mission = $request['mission'];
         $data->scope = $request['scopr'];

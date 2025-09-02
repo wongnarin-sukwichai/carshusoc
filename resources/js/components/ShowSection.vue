@@ -128,8 +128,11 @@
                                 </span>
                                 <div
                                     class="border-1 border-dashed w-2/3 my-3"
+                                    v-if="course.price !== null"
                                 ></div>
-                                <div class="text-md">
+                                <div class="text-md"
+                                v-if="course.price !== null"
+                                >
                                     <span class="font-semibold pr-2"
                                         >ค่าบริการ :</span
                                     >

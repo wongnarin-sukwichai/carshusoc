@@ -85,7 +85,7 @@
                                                         scope="col"
                                                         class="p-4.5 text-left whitespace-nowrap text-sm leading-6 font-semibold text-gray-900 capitalize"
                                                     >
-                                                        Budget
+                                                        Price
                                                     </th>
                                                     <th
                                                         scope="col"
@@ -377,9 +377,10 @@
                 ธนาคารไทยพาณิชย์ เลขบัญชี :
                 <span class="font-semibold px-2 text-purple-800"
                     >408-931-6919</span
-                > |
-                <span class="font-semibold px-2">ชื่อบัญชี</span> : มหาวิทยาลัยมหาสารคาม (เงินรับฝาก)
-            </div>   
+                >
+                | <span class="font-semibold px-2">ชื่อบัญชี</span> :
+                มหาวิทยาลัยมหาสารคาม (เงินรับฝาก)
+            </div>
         </div>
 
         <div class="mt-4">
@@ -734,11 +735,18 @@
                                             <td
                                                 class="border border-gray-300 px-4 py-1"
                                             >
-                                                {{
-                                                    moment(
-                                                        detailList.submit
-                                                    ).format("D/MM/Y")
-                                                }}
+                                                <span
+                                                    v-if="
+                                                        detailList.submit !==
+                                                        null
+                                                    "
+                                                >
+                                                    {{
+                                                        moment(
+                                                            detailList.submit
+                                                        ).format("D/MM/Y")
+                                                    }}
+                                                </span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -798,6 +806,27 @@
                                             class="border border-gray-300 px-4 py-1"
                                         >
                                             {{ detailList.comment }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            class="border border-gray-300 px-2 py-1 text-center"
+                                        >
+                                            ใบเสร็จรับเงิน
+                                        </td>
+                                        <td
+                                            class="border border-gray-300 px-4 py-1"
+                                        >
+                                            <span
+                                                v-if="detailList.slip !== null"
+                                            >
+                                                <box-icon
+                                                    name="dollar-circle"
+                                                    color="oklch(87.9% 0.169 91.605)"
+                                                    class="hover:scale-120 cursor-pointer"
+                                                    @click="showSlip(detailList.id)"
+                                                ></box-icon>
+                                            </span>
                                         </td>
                                     </tr>
                                 </tbody>

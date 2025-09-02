@@ -103,7 +103,7 @@
                                                         scope="col"
                                                         class="p-4.5 text-left whitespace-nowrap text-sm leading-6 font-semibold text-gray-900 capitalize"
                                                     >
-                                                        Budget
+                                                        Price
                                                     </th>
                                                     <th
                                                         scope="col"
@@ -121,7 +121,7 @@
                                                         scope="col"
                                                         class="p-4.5 text-left whitespace-nowrap text-sm leading-6 font-semibold text-gray-900 capitalize"
                                                     >
-                                                        File
+                                                        Upload
                                                     </th>
                                                     <th
                                                         scope="col"
@@ -766,11 +766,18 @@
                                             <td
                                                 class="border border-gray-300 px-4 py-1"
                                             >
-                                                {{
-                                                    moment(
-                                                        detailList.submit
-                                                    ).format("D/MM/Y")
-                                                }}
+                                                <span
+                                                    v-if="
+                                                        detailList.submit !==
+                                                        null
+                                                    "
+                                                >
+                                                    {{
+                                                        moment(
+                                                            detailList.submit
+                                                        ).format("D/MM/Y")
+                                                    }}
+                                                </span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -829,6 +836,27 @@
                                             class="border border-gray-300 px-4 py-1"
                                         >
                                             {{ detailList.comment }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            class="border border-gray-300 px-2 py-1 text-center"
+                                        >
+                                            ใบเสร็จรับเงิน
+                                        </td>
+                                        <td
+                                            class="border border-gray-300 px-4 py-1"
+                                        >
+                                            <span
+                                                v-if="detailList.slip !== null"
+                                            >
+                                                <box-icon
+                                                    name="dollar-circle"
+                                                    color="oklch(87.9% 0.169 91.605)"
+                                                    class="hover:scale-120 cursor-pointer"
+                                                    @click="showSlip(detailList.id)"
+                                                ></box-icon>
+                                            </span>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -1234,11 +1262,18 @@
                                             <td
                                                 class="border border-gray-300 px-4 py-1"
                                             >
-                                                {{
-                                                    moment(
-                                                        detailList.submit
-                                                    ).format("D/MM/Y")
-                                                }}
+                                                <span
+                                                    v-if="
+                                                        detailList.submit !==
+                                                        null
+                                                    "
+                                                >
+                                                    {{
+                                                        moment(
+                                                            detailList.submit
+                                                        ).format("D/MM/Y")
+                                                    }}
+                                                </span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -1525,12 +1560,7 @@
                                 class="relative border-2 border-dashed rounded-xl cursor-pointer hover:border-lime-400 hover:border-3 p-4 group mb-2"
                                 v-for="(cert, index) in certList"
                                 :key="index"
-                                @click="
-                                    linkCert(
-                                        cert.title,
-                                        cert.created_at
-                                    )
-                                "
+                                @click="linkCert(cert.title, cert.created_at)"
                             >
                                 <span
                                     class="flex items-center jusitfy-center font-semibold text-lg text-[#85c1e9]"
@@ -1905,7 +1935,7 @@ export default {
             const url = moment(code).format("YYYY/MM/DD");
             window.open("files/completes/" + url + "/" + id, "_blank");
         },
-         linkCert(id, code) {
+        linkCert(id, code) {
             const url = moment(code).format("YYYY/MM/DD");
             window.open("files/certs/" + url + "/" + id, "_blank");
         },

@@ -15,7 +15,7 @@
                     />
                     <!-- พื้นหลังจาง -->
                     <div
-                        class="absolute inset-0 bg-white/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        class="absolute inset-0 bg-white/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                     ></div>
 
                     <!-- ปุ่มอยู่ชัดเจน -->

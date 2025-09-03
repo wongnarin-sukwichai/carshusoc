@@ -719,6 +719,32 @@
                                             {{ detailList.other }}
                                         </td>
                                     </tr>
+                                    <tr v-if="detailList.slip !== null">
+                                        <td
+                                            class="border border-gray-300 px-2 py-1 text-center"
+                                        >
+                                            ใบเสร็จ
+                                        </td>
+                                        <td
+                                            class="border border-gray-300 px-4 py-1"
+                                        >
+                                            <span
+                                                v-if="
+                                                    detailList.slip !== null &&
+                                                    detailList.slip > 0
+                                                "
+                                            >
+                                                <box-icon
+                                                    name="dollar-circle"
+                                                    color="oklch(87.9% 0.169 91.605)"
+                                                    class="hover:scale-120 cursor-pointer"
+                                                    @click="
+                                                        showSlip(detailList.id)
+                                                    "
+                                                ></box-icon>
+                                            </span>
+                                        </td>
+                                    </tr>
                                     <tr>
                                         <td
                                             colspan="2"
@@ -812,21 +838,22 @@
                                         <td
                                             class="border border-gray-300 px-2 py-1 text-center"
                                         >
-                                            ใบเสร็จรับเงิน
+                                            ต้องการใบเสร็จ
                                         </td>
                                         <td
                                             class="border border-gray-300 px-4 py-1"
                                         >
-                                            <span
-                                                v-if="detailList.slip !== null"
-                                            >
-                                                <box-icon
-                                                    name="dollar-circle"
-                                                    color="oklch(87.9% 0.169 91.605)"
-                                                    class="hover:scale-120 cursor-pointer"
-                                                    @click="showSlip(detailList.id)"
-                                                ></box-icon>
-                                            </span>
+                                            <div class="flex items-center">
+                                                <input
+                                                    type="checkbox"
+                                                    id="myCheckbox"
+                                                    class="form-checkbox h-4 w-4 text-blue-600"
+                                                    disabled
+                                                    :checked="
+                                                        chkSlip(detailList.slip)
+                                                    "
+                                                />
+                                            </div>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -1123,6 +1150,20 @@
                                             {{ data.other }}
                                         </td>
                                     </tr>
+                                    <transition name="fade" mode="out-in">
+                                        <tr v-if="chkSlip(data.slip) === true">
+                                            <td
+                                                class="border border-gray-300 px-2 py-1 text-center"
+                                            >
+                                                ใบเสร็จ
+                                            </td>
+                                            <td
+                                                class="border border-gray-300 px-4 py-1"
+                                            >
+                                                {{ showSlip(data.id) }}
+                                            </td>
+                                        </tr>
+                                    </transition>
                                     <tr>
                                         <td
                                             class="border border-gray-300 px-2 py-1 text-center"
@@ -1283,6 +1324,26 @@
                                                 v-model="data.comment"
                                             >
                                             </textarea>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            class="border border-gray-300 px-2 py-1 text-center"
+                                        >
+                                            ต้องการใบเสร็จ
+                                        </td>
+                                        <td
+                                            class="border border-gray-300 px-4 py-1"
+                                        >
+                                            <div class="flex items-center">
+                                                <input
+                                                    type="checkbox"
+                                                    id="myCheckbox"
+                                                    class="form-checkbox h-4 w-4 text-blue-600 cursor-pointer"
+                                                    :checked="slipChk"
+                                                    v-model="data.slip"
+                                                />
+                                            </div>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -1593,7 +1654,9 @@ export default {
                 alert: "",
                 filename: "",
                 paymentname: "",
+                slip: "",
             },
+            slipChk: false
         };
     },
     methods: {
@@ -1621,29 +1684,43 @@ export default {
             return moment(id).format("L");
         },
         ////////////////////////////////////////////////////////////////
-        showDetail(id) {
-            this.modalDetail = true;
-            axios.get("/api/detailEnroll/" + id).then((response) => {
-                this.detailList = response.data[0];
-            });
+        async showDetail(id) {
+            try {
+                this.modalDetail = true;
+                axios.get("/api/detailEnroll/" + id).then((response) => {
+                    this.detailList = response.data[0];
+                });
+            } catch (error) {}
         },
-        showEdit(id) {
-            this.modalEdit = true;
-            axios.get("/api/editEnroll/" + id).then((response) => {
-                this.detailList = response.data[0];
+        async showEdit(id) {
+            try {
+                this.modalEdit = true;
+                axios.get("/api/editEnroll/" + id).then((response) => {
+                    this.detailList = response.data[0];
 
-                this.data.id = id;
-                this.data.pay = response.data[0].pay;
-                this.data.tag = response.data[0].tag;
-                this.data.complete = response.data[0].complete;
-                this.data.other = response.data[0].other;
-                this.data.status = response.data[0].status;
-                this.data.alert = response.data[0].alert;
-                this.data.submit = response.data[0].submit;
-                this.data.payment = response.data[0].payment;
-                this.data.work = response.data[0].work;
-                this.data.comment = response.data[0].comment;
-            });
+                    this.data.id = id;
+                    this.data.pay = response.data[0].pay;
+                    this.data.tag = response.data[0].tag;
+                    this.data.complete = response.data[0].complete;
+                    this.data.other = response.data[0].other;
+                    this.data.status = response.data[0].status;
+                    this.data.alert = response.data[0].alert;
+                    this.data.submit = response.data[0].submit;
+                    this.data.payment = response.data[0].payment;
+                    this.data.work = response.data[0].work;
+                    this.data.comment = response.data[0].comment;
+                    this.data.slip = response.data[0].slip;
+
+                    this.slipChk = this.chkSlip(response.data[0].slip)
+                });
+            } catch (error) {}
+        },
+        chkSlip(id) {
+            if (id !== null && id >= 0) {
+                return true;
+            } else {
+                return false;
+            }
         },
         close() {
             // ล้างค่าก่อน (ขณะ element ยังอยู่)
@@ -1864,6 +1941,7 @@ export default {
                 this.modalCert = true;
             });
         },
+        showSlip() {},
         linkPayment(id, code) {
             const url = moment(code).format("YYYY/MM/DD");
             window.open("files/payments/" + url + "/" + id, "_blank");

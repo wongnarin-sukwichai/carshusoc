@@ -752,6 +752,27 @@
                                     </tr>
                                     <tr>
                                         <td
+                                            class="border border-gray-300 px-2 py-1 text-center"
+                                        >
+                                            ใบเสร็จรับเงิน
+                                        </td>
+                                        <td
+                                            class="border border-gray-300 px-4 py-1"
+                                        >
+                                            <span
+                                                v-if="detailList.slip !== null"
+                                            >
+                                                <box-icon
+                                                    name="dollar-circle"
+                                                    color="oklch(87.9% 0.169 91.605)"
+                                                    class="hover:scale-120 cursor-pointer"
+                                                    @click="showSlip(detailList.id)"
+                                                ></box-icon>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
                                             colspan="2"
                                             class="px-2 py-1 bg-gray-100"
                                         ></td>

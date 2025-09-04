@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\Slip;
+use App\Models\Receipt;
 
-class SlipController extends Controller
+class ReceiptController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -38,7 +38,7 @@ class SlipController extends Controller
      */
     public function show(string $id)
     {
-        $data = Slip::where('enroll_id', $id)->get();
+        $data = Receipt::where('enroll_id', $id)->get();
 
         return response()->json($data);
     }

@@ -27,7 +27,8 @@ return new class extends Migration
             $table->longText('comment')->nullable()->comment('ข้อความจากผู้ใช้');
             $table->integer('status')->nullable()->comment('null=pending,,0=cancel,1=active,2=complete');
             $table->integer('alert')->nullable()->comment('1=แสดง Alert');
-            $table->integer('slip')->nullable()->comment('ผู้ใช้ต้องการใบเสร็จ');
+            $table->integer('slip')->nullable()->comment('1=ผู้ใช้ต้องการใบเสร็จ');
+            $table->integer('receipt')->nullable()->comment('ใบเสร็จ');
             $table->timestamps();
         });
     }

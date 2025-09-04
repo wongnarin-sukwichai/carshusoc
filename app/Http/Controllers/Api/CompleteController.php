@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Complete;
 use App\Models\Enroll;
 use App\Models\Cert;
+use App\Models\Receipt;
 
 class CompleteController extends Controller
 {
@@ -53,6 +54,16 @@ class CompleteController extends Controller
             $result->save();
         }
         ////////////////////////////////////////////////////////////
+        if (!empty($request['receiptname'])) {
+            $result = new Receipt();
+
+            $result->enroll_id = $request['id'];
+            $result->title = $request['receiptname'];
+            $result->owner = Auth::user()->id;
+
+            $result->save();
+        }
+        ////////////////////////////////////////////////////////////
         $data = Enroll::find($request['id']);
 
         $data->cert = $request['cert'];
@@ -62,6 +73,7 @@ class CompleteController extends Controller
         $data->other = $request['other'];
         $data->status = $request['status'];
         $data->alert = $request['alert'];
+        $data->receipt = $request['receipt'];
 
         $data->save();
 

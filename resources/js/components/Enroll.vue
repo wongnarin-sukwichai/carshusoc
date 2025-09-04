@@ -127,6 +127,12 @@
                                                         scope="col"
                                                         class="p-4.5 text-left whitespace-nowrap text-sm leading-6 font-semibold text-gray-900 capitalize"
                                                     >
+                                                        Receipt
+                                                    </th>
+                                                    <th
+                                                        scope="col"
+                                                        class="p-4.5 text-left whitespace-nowrap text-sm leading-6 font-semibold text-gray-900 capitalize"
+                                                    >
                                                         Status
                                                     </th>
                                                     <th
@@ -310,6 +316,44 @@
                                                                 )
                                                             "
                                                         ></box-icon>
+                                                    </td>
+                                                    <td
+                                                        class="p-4.5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900"
+                                                    >
+                                                        <div
+                                                            v-if="
+                                                                enroll.slip ===
+                                                                    null &&
+                                                                enroll.receipt ===
+                                                                    null
+                                                            "
+                                                        ></div>
+                                                        <div
+                                                            class="p-1 bg-amber-50 rounded-full flex items-center justify-center w-20 gap-1 hover:scale-105 cursor-pointer"
+                                                            v-else-if="
+                                                                enroll.slip ===
+                                                                    1 &&
+                                                                enroll.receipt ===
+                                                                    null
+                                                            "
+                                                        >
+                                                            <span
+                                                                class="font-medium text-xs text-amber-600"
+                                                                >Request</span
+                                                            >
+                                                        </div>
+                                                        <div v-else>
+                                                            <box-icon
+                                                                name="money-withdraw"
+                                                                color="oklch(50% 0.134 242.749)"
+                                                                class="hover:scale-120 cursor-pointer"
+                                                                @click="
+                                                                    showReceipt(
+                                                                        enroll.id
+                                                                    )
+                                                                "
+                                                            ></box-icon>
+                                                        </div>
                                                     </td>
                                                     <td
                                                         class="p-4.5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900"
@@ -750,23 +794,29 @@
                                             {{ detailList.other }}
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr v-if="detailList.slip !== null">
                                         <td
                                             class="border border-gray-300 px-2 py-1 text-center"
                                         >
-                                            ใบเสร็จรับเงิน
+                                            ใบเสร็จ
                                         </td>
                                         <td
                                             class="border border-gray-300 px-4 py-1"
                                         >
                                             <span
-                                                v-if="detailList.slip !== null"
+                                                v-if="
+                                                    detailList.receipt !== null
+                                                "
                                             >
                                                 <box-icon
-                                                    name="dollar-circle"
-                                                    color="oklch(87.9% 0.169 91.605)"
+                                                    name="money-withdraw"
+                                                    color="oklch(50% 0.134 242.749)"
                                                     class="hover:scale-120 cursor-pointer"
-                                                    @click="showSlip(detailList.id)"
+                                                    @click="
+                                                        showReceipt(
+                                                            detailList.id
+                                                        )
+                                                    "
                                                 ></box-icon>
                                             </span>
                                         </td>
@@ -863,21 +913,22 @@
                                         <td
                                             class="border border-gray-300 px-2 py-1 text-center"
                                         >
-                                            ใบเสร็จรับเงิน
+                                            ต้องการใบเสร็จ
                                         </td>
                                         <td
                                             class="border border-gray-300 px-4 py-1"
                                         >
-                                            <span
-                                                v-if="detailList.slip !== null"
-                                            >
-                                                <box-icon
-                                                    name="dollar-circle"
-                                                    color="oklch(87.9% 0.169 91.605)"
-                                                    class="hover:scale-120 cursor-pointer"
-                                                    @click="showSlip(detailList.id)"
-                                                ></box-icon>
-                                            </span>
+                                            <div class="flex items-center">
+                                                <input
+                                                    type="checkbox"
+                                                    id="myCheckbox"
+                                                    class="form-checkbox h-4 w-4 text-blue-600"
+                                                    disabled
+                                                    :checked="
+                                                        chkSlip(detailList.slip)
+                                                    "
+                                                />
+                                            </div>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -1267,6 +1318,47 @@
                                             </fieldset>
                                         </td>
                                     </tr>
+                                    <template v-if="detailList.slip === 1">
+                                        <tr class="border border-gray-300">
+                                            <td
+                                                class="px-2 py-1 text-center border border-gray-300"
+                                            >
+                                                ใบเสร็จ
+                                            </td>
+                                            <td class="flex px-4 py-1">
+                                                <span
+                                                    class="items-center justify-between w-full"
+                                                >
+                                                    <span
+                                                        class="border-r-2 mr-2"
+                                                    >
+                                                        <input
+                                                            class="w-48 cursor-pointer rounded border border-solid border-neutral-300 bg-clip-padding px-3 py-[0.32rem] text-xs font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:cursor-pointer file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:border-primary focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:file:bg-neutral-700 dark:file:text-neutral-100 dark:focus:border-primary mr-2"
+                                                            ref="receiptInput"
+                                                            type="file"
+                                                            @change="
+                                                                pickReceipt
+                                                            "
+                                                        />
+                                                    </span>
+                                                </span>
+                                                <span
+                                                    class="flex items-end justify-end"
+                                                    ><box-icon
+                                                        name="money-withdraw"
+                                                        color="oklch(50% 0.134 242.749)"
+                                                        class="cursor-pointer hover:scale-115"
+                                                        v-for="n in +data.receipt ||
+                                                        0"
+                                                        :key="`receipt-${n}`"
+                                                        @click="
+                                                            showReceipt(data.id)
+                                                        "
+                                                    ></box-icon
+                                                ></span>
+                                            </td>
+                                        </tr>
+                                    </template>
                                     <tr>
                                         <td
                                             colspan="2"
@@ -1354,6 +1446,28 @@
                                             class="border border-gray-300 px-4 py-1"
                                         >
                                             {{ detailList.comment }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            class="border border-gray-300 px-2 py-1 text-center"
+                                        >
+                                            ต้องการใบเสร็จ
+                                        </td>
+                                        <td
+                                            class="border border-gray-300 px-4 py-1"
+                                        >
+                                            <div class="flex items-center">
+                                                <input
+                                                    type="checkbox"
+                                                    id="myCheckbox"
+                                                    class="form-checkbox h-4 w-4 text-blue-600"
+                                                    disabled
+                                                    :checked="
+                                                        chkSlip(detailList.slip)
+                                                    "
+                                                />
+                                            </div>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -1611,6 +1725,65 @@
             </div>
         </div>
     </transition>
+
+    <!-- Modal Receipt -->
+    <transition name="fade" mode="out-in">
+        <div class="relative z-10" v-show="this.modalReceipt">
+            <div
+                class="fixed inset-0 bg-gray-500/50 bg-opacity-90 transition-opacity"
+            ></div>
+            <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+                <div
+                    class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
+                >
+                    <div
+                        class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"
+                    >
+                        <div class="bg-white p-4 rounded-2xl mt-4">
+                            <div
+                                class="font-semibold text-xl text-gray-400 mb-2"
+                            >
+                                ** กรุณาเลือกไฟล์
+                            </div>
+                            <div
+                                class="relative border-2 border-dashed rounded-xl cursor-pointer hover:border-lime-400 hover:border-3 p-4 group mb-2"
+                                v-for="(receipt, index) in receiptList"
+                                :key="index"
+                                @click="
+                                    linkReceipt(
+                                        receipt.title,
+                                        receipt.created_at
+                                    )
+                                "
+                            >
+                                <span
+                                    class="flex items-center jusitfy-center font-semibold text-lg text-[#85c1e9]"
+                                >
+                                    <box-icon
+                                        name="money-withdraw"
+                                        color="oklch(50% 0.134 242.749)"
+                                        class="cursor-pointer hover:scale-115"
+                                    ></box-icon>
+                                    : {{ receipt.title }}
+                                </span>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-gray-50 px-4 py-2 sm:flex sm:flex-row-reverse sm:px-6"
+                        >
+                            <button
+                                type="button"
+                                class="inline-flex w-full justify-center rounded-lg bg-red-300 px-3 py-1.5 text-sm text-white shadow-xs hover:bg-red-400 sm:ml-3 sm:w-auto"
+                                @click="close()"
+                            >
+                                ปิด
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </transition>
 </template>
 
 <script>
@@ -1635,6 +1808,7 @@ export default {
             modalPayment: false,
             modalWork: false,
             modalCert: false,
+            modalReceipt: false,
             ////////////////////////////////////////////////////////////////
             eventList: [],
             enrollList: [],
@@ -1643,9 +1817,11 @@ export default {
             paymentList: [],
             workList: [],
             certList: [],
+            receiptList: [],
             ////////////////////////////////////////////////////////////////
             file: null,
             cert: null,
+            receipt: null,
             ////////////////////////////////////////////////////////////////
             searchData: {
                 search: "",
@@ -1659,8 +1835,11 @@ export default {
                 other: "",
                 status: "",
                 alert: "",
+                slip: "",
+                receipt: "",
                 filename: "",
                 certname: "",
+                receiptname: "",
             },
             ////////////////////////////////////////////////////////////////
             moment: moment,
@@ -1690,6 +1869,13 @@ export default {
         },
         setMoment(id) {
             return moment(id).format("L");
+        },
+        chkSlip(id) {
+            if (id !== null && id >= 0) {
+                return true;
+            } else {
+                return false;
+            }
         },
         ////////////////////////////////////////////////////////////////
         search(page = 1) {
@@ -1724,15 +1910,19 @@ export default {
                 this.data.other = response.data[0].other;
                 this.data.status = response.data[0].status;
                 this.data.alert = response.data[0].alert;
+                this.data.slip = response.data[0].slip;
+                this.data.receipt = response.data[0].receipt;
             });
         },
         close() {
             // ล้างค่าก่อน (ขณะ element ยังอยู่)
             if (this.$refs.fileInput) this.$refs.fileInput.value = "";
             if (this.$refs.certInput) this.$refs.certInput.value = "";
+            if (this.$refs.receiptInput) this.$refs.receiptInput.value = "";
 
             this.file = null;
             this.cert = null;
+            this.receipt = null;
 
             this.modalDetail = false;
             this.modalEdit = false;
@@ -1740,6 +1930,7 @@ export default {
             this.modalPayment = false;
             this.modalWork = false;
             this.modalCert = false;
+            this.modalReceipt = false;
         },
         ////////////////////////////////////////////////////////////
         pickFile(event) {
@@ -1747,6 +1938,9 @@ export default {
         },
         pickCert(event) {
             this.cert = event.target.files; // เก็บไฟล์ลงตัวแปร
+        },
+        pickReceipt(event) {
+            this.receipt = event.target.files; // เก็บไฟล์ลงตัวแปร
         },
         ////////////////////////////////////////////////////////////
         async sendData() {
@@ -1860,6 +2054,50 @@ export default {
                             return; // ⛔ หยุด
                         }
                     }
+                    ////////////////////////// Upload Receipt //////////////////////////////////
+                    if (this.receipt != null) {
+                        let formData = new FormData(); //สร้าง FromData เพื่อรองรับข้อมูลประเภท File
+                        formData.append("file", this.receipt[0]);
+
+                        try {
+                            const config = {
+                                headers: {
+                                    "content-type": "multipart/form-data",
+                                },
+                            };
+
+                            await axios
+                                .post("/api/uploadReceipt", formData, config)
+                                .then((response) => {
+                                    this.data.receiptname = response.data;
+                                    this.data.receipt =
+                                        (this.data.receipt || 0) + 1;
+                                });
+                        } catch (error) {
+                            if (
+                                error.response &&
+                                error.response.status === 422
+                            ) {
+                                // SweetAlert Error
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Error",
+                                    text: "Please upload files of the allowed types: jpg, jpeg, JPG, JPEG, png, PNG, PDF only.",
+                                    customClass: {
+                                        popup: "rounded-xl shadow-lg bg-white font-poppins",
+                                        title: "text-2xl font-bold text-gray-800",
+                                        confirmButton:
+                                            "bg-rose-300 hover:bg-rose-400 text-white font-medium px-4 py-2",
+                                    },
+                                    didOpen: () => {
+                                        Swal.getPopup().style.fontFamily =
+                                            "Poppins, sans-serif";
+                                    },
+                                });
+                            }
+                            return; // ⛔ หยุด
+                        }
+                    }
                     ////////////////////////// Upload Data //////////////////////////////////
                     try {
                         await axios
@@ -1944,6 +2182,15 @@ export default {
                 this.modalCert = true;
             });
         },
+        showReceipt(id) {
+            this.close();
+
+            axios.get("/api/receipt/" + id).then((response) => {
+                this.receiptList = response.data;
+
+                this.modalReceipt = true;
+            });
+        },
         linkPayment(id, code) {
             const url = moment(code).format("YYYY/MM/DD");
             window.open("files/payments/" + url + "/" + id, "_blank");
@@ -1959,6 +2206,10 @@ export default {
         linkCert(id, code) {
             const url = moment(code).format("YYYY/MM/DD");
             window.open("files/certs/" + url + "/" + id, "_blank");
+        },
+        linkReceipt(id, code) {
+            const url = moment(code).format("YYYY/MM/DD");
+            window.open("files/receipts/" + url + "/" + id, "_blank");
         },
     },
     components: {

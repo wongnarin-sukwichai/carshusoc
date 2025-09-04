@@ -24,6 +24,7 @@ use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\RegisterController;
 use App\Http\Controllers\Api\PasswordResetController;
 use App\Http\Controllers\Api\ReportController;
+use App\Http\Controllers\Api\ReceiptController;
 
 Route::middleware(['web'])->group(function () {
 
@@ -84,6 +85,10 @@ Route::middleware(['web'])->group(function () {
         Route::resource('report', ReportController::class);
 
         Route::resource('export', ExportController::class);
+
+        Route::post('uploadReceipt', [UploadController::class, 'uploadReceipt']);
+
+        Route::resource('receipt', ReceiptController::class);
 
         ////////////////////////// Member //////////////////////////////////
         Route::get('showEnroll', [EnrollController::class, 'showEnroll']);

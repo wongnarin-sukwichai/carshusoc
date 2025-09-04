@@ -229,7 +229,7 @@ class EnrollController extends Controller
     public function update(Request $request, string $id)
     {
         $check = false;
-        
+
         if (!empty($request['filename'])) {
             $res = new Work();
 
@@ -256,8 +256,10 @@ class EnrollController extends Controller
         $data->payment = $request['payment'];
         $data->work = $request['work'];
         $data->comment = $request['comment'];
-        if ($request['slip'] == true && $data->slip == null) {
-            $data->slip = 0;
+        if ($request['slip'] == true) {
+            $data->slip = 1;
+        } else {
+            $data->slip = null;
         }
         if ($check == true) {
             $data->status = 1;

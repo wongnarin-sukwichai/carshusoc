@@ -730,16 +730,17 @@
                                         >
                                             <span
                                                 v-if="
-                                                    detailList.slip !== null &&
-                                                    detailList.slip > 0
+                                                    detailList.receipt !== null
                                                 "
                                             >
                                                 <box-icon
-                                                    name="dollar-circle"
-                                                    color="oklch(87.9% 0.169 91.605)"
+                                                    name="money-withdraw"
+                                                    color="oklch(50% 0.134 242.749)"
                                                     class="hover:scale-120 cursor-pointer"
                                                     @click="
-                                                        showSlip(detailList.id)
+                                                        showReceipt(
+                                                            detailList.id
+                                                        )
                                                     "
                                                 ></box-icon>
                                             </span>
@@ -1151,7 +1152,7 @@
                                         </td>
                                     </tr>
                                     <transition name="fade" mode="out-in">
-                                        <tr v-if="chkSlip(data.slip) === true">
+                                        <tr v-if="data.receipt !== null">
                                             <td
                                                 class="border border-gray-300 px-2 py-1 text-center"
                                             >
@@ -1160,7 +1161,16 @@
                                             <td
                                                 class="border border-gray-300 px-4 py-1"
                                             >
-                                                {{ showSlip(data.id) }}
+                                                <box-icon
+                                                    name="money-withdraw"
+                                                    color="oklch(50% 0.134 242.749)"
+                                                    class="hover:scale-120 cursor-pointer"
+                                                    @click="
+                                                        showReceipt(
+                                                            detailList.id
+                                                        )
+                                                    "
+                                                ></box-icon>
                                             </td>
                                         </tr>
                                     </transition>
@@ -1601,6 +1611,65 @@
             </div>
         </div>
     </transition>
+
+    <!-- Modal Cert -->
+    <transition name="fade" mode="out-in">
+        <div class="relative z-10" v-show="this.modalReceipt">
+            <div
+                class="fixed inset-0 bg-gray-500/50 bg-opacity-90 transition-opacity"
+            ></div>
+            <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+                <div
+                    class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
+                >
+                    <div
+                        class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"
+                    >
+                        <div class="bg-white p-4 rounded-2xl mt-4">
+                            <div
+                                class="font-semibold text-xl text-gray-400 mb-2"
+                            >
+                                ** กรุณาเลือกไฟล์
+                            </div>
+                            <div
+                                class="relative border-2 border-dashed rounded-xl cursor-pointer hover:border-lime-400 hover:border-3 p-4 group mb-2"
+                                v-for="(receipt, index) in receiptList"
+                                :key="index"
+                                @click="
+                                    linkReceipt(
+                                        receipt.title,
+                                        receipt.created_at
+                                    )
+                                "
+                            >
+                                <span
+                                    class="flex items-center jusitfy-center font-semibold text-lg text-[#85c1e9]"
+                                >
+                                    <box-icon
+                                        name="certification"
+                                        color="#ad65d9"
+                                        class="cursor-pointer hover:scale-115"
+                                    ></box-icon>
+                                    : {{ receipt.title }}
+                                </span>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-gray-50 px-4 py-2 sm:flex sm:flex-row-reverse sm:px-6"
+                        >
+                            <button
+                                type="button"
+                                class="inline-flex w-full justify-center rounded-lg bg-red-300 px-3 py-1.5 text-sm text-white shadow-xs hover:bg-red-400 sm:ml-3 sm:w-auto"
+                                @click="close()"
+                            >
+                                ปิด
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </transition>
 </template>
 
 <script>
@@ -1627,6 +1696,7 @@ export default {
             modalPayment: false,
             modalWork: false,
             modalCert: false,
+            modalReceipt: false,
             ////////////////////////////////////////////////////////////////
             eventList: [],
             enrollList: [],
@@ -1635,6 +1705,7 @@ export default {
             paymentList: [],
             workList: [],
             certList: [],
+            receiptList: [],
             ////////////////////////////////////////////////////////////////
             moment: moment,
             file: null,
@@ -1652,11 +1723,11 @@ export default {
                 other: "",
                 status: "",
                 alert: "",
+                slip: "",
+                receipt: "",
                 filename: "",
                 paymentname: "",
-                slip: "",
             },
-            slipChk: false
         };
     },
     methods: {
@@ -1710,13 +1781,14 @@ export default {
                     this.data.work = response.data[0].work;
                     this.data.comment = response.data[0].comment;
                     this.data.slip = response.data[0].slip;
+                    this.data.receipt = response.data[0].receipt;
 
-                    this.slipChk = this.chkSlip(response.data[0].slip)
+                    this.slipChk = this.chkSlip(this.data.slip);
                 });
             } catch (error) {}
         },
         chkSlip(id) {
-            if (id !== null && id >= 0) {
+            if (id == 1) {
                 return true;
             } else {
                 return false;
@@ -1736,6 +1808,7 @@ export default {
             this.modalPayment = false;
             this.modalWork = false;
             this.modalCert = false;
+            this.modalReceipt = false;
         },
         ////////////////////////////////////////////////////////////
         pickFile(event) {
@@ -1941,7 +2014,15 @@ export default {
                 this.modalCert = true;
             });
         },
-        showSlip() {},
+        showReceipt(id) {
+            this.close();
+
+            axios.get("/api/receipt/" + id).then((response) => {
+                this.receiptList = response.data;
+
+                this.modalReceipt = true;
+            });
+        },
         linkPayment(id, code) {
             const url = moment(code).format("YYYY/MM/DD");
             window.open("files/payments/" + url + "/" + id, "_blank");
@@ -1957,6 +2038,10 @@ export default {
         linkCert(id, code) {
             const url = moment(code).format("YYYY/MM/DD");
             window.open("files/certs/" + url + "/" + id, "_blank");
+        },
+        linkReceipt(id, code) {
+            const url = moment(code).format("YYYY/MM/DD");
+            window.open("files/receipts/" + url + "/" + id, "_blank");
         },
     },
     components: {

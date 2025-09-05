@@ -22,7 +22,21 @@ Route::get('/', function () {
 Route::get('/temp-code', function () {
     return view('emails/temp-code');
 });
-
+Route::get('/completeMail', function () {
+    return view('emails/completeMail');
+});
+Route::get('/finishMail', function () {
+    return view('emails/finishMail');
+});
+Route::get('/paymentMail', function () {
+    return view('emails/paymentMail');
+});
+Route::get('/receiptMail', function () {
+    return view('emails/receiptMail');
+});
+Route::get('/workMail', function () {
+    return view('emails/workMail');
+});
 
 //////////////////////////// ไว้ล่างสุด ///////////////////////////////////////////
 Route::get('{any}', function () {

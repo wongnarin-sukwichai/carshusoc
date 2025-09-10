@@ -21,6 +21,9 @@
         <!-- ข้อความต้อนรับ -->
         <h2 style="text-align:center; color:#333; margin-top:0%">Welcome to CARS-HUSOC</h2>
         <p style="text-align:center; font-size:15px; color:#555;">
+            ขอขอบคุณที่ลงทะเบียนกับเรา กรุณาใช้รหัสผ่านชั่วคราวด้านล่างเพื่อเข้าสู่ระบบ
+        </p>
+        <p style="text-align:center; font-size:15px; color:#555;">
             Thank you for registering with us.<br>
             Please use the temporary password below to log in.
         </p>
@@ -33,6 +36,9 @@
         </div>
 
         <p style="text-align:center; font-size:14px; color:#666;">
+            หลังจากเข้าสู่ระบบแล้ว กรุณาเปลี่ยนรหัสผ่านของท่านทันทีเพื่อความปลอดภัย
+        </p>
+        <p style="text-align:center; font-size:14px; color:#666;">
             After logging in, please change your password immediately for security.
         </p>
 
@@ -42,16 +48,23 @@
         <!-- ข้อความติดต่อ -->
         <div style="text-align:center; margin-top:20px; font-size:13px; color:#777;">
 
-            <p>If you have any questions, please contact us at :</p>
+            <p>หากท่านมีคำถามหรือต้องการสอบถามเพิ่มเติม กรุณาติดต่อเราได้ที่ </p>
+        </div>
+        <div style="text-align:center; margin-bottom:20px; font-size:13px; color:#777;">
+
+            <p>If you have any questions, please contact us at</p>
         </div>
 
         <div style="text-align:left; margin-top:20px; font-size:13px; color:#777;">
 
             <ul>
-                <li><span style="font-weight:bold;">Email : </span><a href="mailto:carhusocmsu@gmail.com">carhusocmsu@gmail.com</a></li>
-                <li><span style="font-weight:bold;">Facebook : </span><a href="https://www.facebook.com/profile.php?id=100074729420796">
+                <li><span style="font-weight:bold;">Email : </span><a
+                        href="mailto:carhusocmsu@gmail.com">carhusocmsu@gmail.com</a></li>
+                <li><span style="font-weight:bold;">Facebook : </span><a
+                        href="https://www.facebook.com/profile.php?id=100074729420796">
                         https://www.facebook.com/profile.php?id=100074729420796</a></li>
-                <li><span style="font-weight:bold;">Website : </span><a href="https://human.msu.ac.th/">https://human.msu.ac.th/</a>
+                <li><span style="font-weight:bold;">Website : </span><a
+                        href="https://human.msu.ac.th/">https://human.msu.ac.th/</a>
                 </li>
                 <li><span style="font-weight:bold;">Tel : </span>043-754-369 ต่อ 4734, 4703</li>
             </ul>

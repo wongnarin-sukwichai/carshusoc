@@ -20,12 +20,13 @@
 
         <!-- ข้อความต้อนรับ -->
         <h2 style="text-align:center; color:#333; margin-top:0%">Received your payment file</h2>
-        <p style="text-align:center; font-size:15px; color:#555;">
-            We have successfully received your proof of payment file. Please wait for verification by our staff. Thank you.
+        <h3 style="text-align:center; color:oklch(92.9% 0.013 255.508); margin-top:0%">[ ID : 10 ]</h3>
+        <p style="text-align:center; font-size:14px; color:#555;">
+            ได้รับไฟล์หลักฐานการโอนเงินเป็นที่เรียบร้อย กรุณารอการตรวจสอบจากทางเจ้าหน้าที่ ขอบคุณค่ะ/ครับ
         </p>
-
-        <p style="text-align:center; font-size:14px; color:#666;">
-            After logging in, please change your password immediately for security.
+        <p style="text-align:center; font-size:14px; color:#555;">
+            Successfully received your proof of payment file. Please wait for verification by our staff. Thank
+            you.
         </p>
 
         <br>
@@ -34,7 +35,11 @@
         <!-- ข้อความติดต่อ -->
         <div style="text-align:center; margin-top:20px; font-size:13px; color:#777;">
 
-            <p>If you have any questions, please contact us at :</p>
+            <p>หากท่านมีคำถามหรือต้องการสอบถามเพิ่มเติม กรุณาติดต่อเราได้ที่ </p>
+        </div>
+        <div style="text-align:center; margin-bottom:20px; font-size:13px; color:#777;">
+
+            <p>If you have any questions, please contact us at</p>
         </div>
 
         <div style="text-align:left; margin-top:20px; font-size:13px; color:#777;">

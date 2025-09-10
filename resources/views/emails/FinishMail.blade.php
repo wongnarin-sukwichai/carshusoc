@@ -19,22 +19,27 @@
         </div>
 
         <!-- ข้อความต้อนรับ -->
-        <h2 style="text-align:center; color:#333; margin-top:0%">Thank You</h2>
+        <h2 style="text-align:center; color:#333; margin-top:0%">THANK YOU</h2>
+        <h3 style="text-align:center; color:oklch(92.9% 0.013 255.508); margin-top:0%">[ ID : 10 ]</h3>
+         <p style="text-align:center; font-size:15px; color:#555;">
+            ขั้นตอนการดำเนินการของท่านเสร็จสิ้นเป็นที่เรียบร้อย ขอบคุณที่ใช้บริการจากทางเราค่ะ/ครับ
+        </p>
         <p style="text-align:center; font-size:15px; color:#555;">
             Your process has been successfully completed. Thank you for using our service.
         </p>
 
-        <p style="text-align:center; font-size:14px; color:#666;">
-            After logging in, please change your password immediately for security.
-        </p>
-
         <br>
+
         <hr style="border:2px dashed oklch(92.9% 0.013 255.508)">
 
         <!-- ข้อความติดต่อ -->
         <div style="text-align:center; margin-top:20px; font-size:13px; color:#777;">
 
-            <p>If you have any questions, please contact us at :</p>
+            <p>หากท่านมีคำถามหรือต้องการสอบถามเพิ่มเติม กรุณาติดต่อเราได้ที่ </p>
+        </div>
+        <div style="text-align:center; margin-bottom:20px; font-size:13px; color:#777;">
+
+            <p>If you have any questions, please contact us at</p>
         </div>
 
         <div style="text-align:left; margin-top:20px; font-size:13px; color:#777;">

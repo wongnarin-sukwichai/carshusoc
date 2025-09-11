@@ -13,7 +13,7 @@
         </div>
 
         <div class="grid grid-cols-3 gap-2">
-            <!-- MNain 1 -->
+            <!-- Main 1 -->
             <div
                 class="border-2 border-dashed rounded-xl p-8 h-64 flex items-center justify-center"
             >

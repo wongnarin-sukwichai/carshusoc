@@ -1713,6 +1713,7 @@ export default {
             ////////////////////////////////////////////////////////////////
             data: {
                 id: "",
+                user_id: "",
                 pay: "",
                 tag: "",
                 payment: "",
@@ -1770,6 +1771,7 @@ export default {
                     this.detailList = response.data[0];
 
                     this.data.id = id;
+                    this.data.user_id = response.data[0].user_id;
                     this.data.pay = response.data[0].pay;
                     this.data.tag = response.data[0].tag;
                     this.data.complete = response.data[0].complete;
@@ -1801,6 +1803,9 @@ export default {
 
             this.file = null;
             this.payment = null;
+
+            this.data.filename = null;
+            this.data.paymentname = null;
 
             this.modalDetail = false;
             this.modalEdit = false;
@@ -1842,6 +1847,19 @@ export default {
                 },
             }).then(async (result) => {
                 if (result.isConfirmed) {
+                    ////////////////////////// Loading //////////////////////////////////
+                    // เปิด loading ค้างไว้
+                    Swal.fire({
+                        title: "Processing...",
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        didOpen: () => Swal.showLoading(),
+                        customClass: {
+                            popup: "rounded-xl shadow-lg bg-white font-poppins",
+                            title: "text-2xl font-bold text-gray-800",
+                        },
+                    });
+
                     ////////////////////////// Upload Work //////////////////////////////////
                     if (this.file !== null) {
                         let formData = new FormData(); //สร้าง FromData เพื่อรองรับข้อมูลประเภท File
@@ -1934,6 +1952,7 @@ export default {
                         await axios
                             .put("/api/enroll/" + this.data.id, this.data)
                             .then((response) => {
+                                Swal.close();
                                 Swal.fire({
                                     title: response.data.message,
                                     icon: "success",
@@ -1954,7 +1973,6 @@ export default {
                                     },
                                 });
                             });
-
                         this.getEnroll();
                         this.close();
                     } catch (error) {

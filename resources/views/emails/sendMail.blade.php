@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Work Mail</title>
+    <title>Complete Mail</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
@@ -15,17 +15,17 @@
 
         <!-- โลโก้ตรงกลาง -->
         <div style="text-align:center;">
-            <img src="{{ asset('img/logo/logo.png') }}" alt="Logo" width="30%">
+            <img src="https://carshusoc.com/img/logo/logo.png" alt="Logo" width="30%">
         </div>
 
         <!-- ข้อความต้อนรับ -->
-        <h2 style="text-align:center; color:#333; margin-top:0%">Successfully Received File.</h2>
-        <h3 style="text-align:center; color:oklch(92.9% 0.013 255.508); margin-top:0%">[ ID : 10 ]</h3>
+        <h2 style="text-align:center; color:#333; margin-top:0%">{{ $topic }}</h2>
+        <h3 style="text-align:center;margin:6px 0 0; font-size:15px; color:#2c3e50;">[ Order ID : {{ $enroll_id }} ]</h3>
         <p style="text-align:center; font-size:15px; color:#555;">
-            ได้รับไฟล์ข้อมูลจากท่านเป็นที่เรียบร้อย กรุณารอการตรวจสอบจากทางเจ้าหน้าที่ ขอบคุณค่ะ/ครับ
+            {{ $th }}
         </p>
-        <p style="text-align:center; font-size:14px; color:#555;">
-            We have successfully received your file. Please wait for verification by our staff. Thank you.
+        <p style="text-align:center; font-size:15px; color:#555;">
+            {{ $eng }}
         </p>
 
         <br>

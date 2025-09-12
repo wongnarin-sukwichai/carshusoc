@@ -7,10 +7,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 
 use App\Models\Enroll;
 use App\Models\Work;
 use App\Models\Payment;
+use App\Models\Email;
+use App\Models\User;
+
+use App\Mail\SendMail;
 
 class EnrollController extends Controller
 {
@@ -228,6 +233,7 @@ class EnrollController extends Controller
      */
     public function update(Request $request, string $id)
     {
+
         $check = false;
 
         if (!empty($request['filename'])) {
@@ -237,6 +243,13 @@ class EnrollController extends Controller
             $res->title = $request['filename'];
 
             $res->save();
+           
+            $email = User::where('id', $request->user_id)->value('email');
+            $code = Email::find(1);
+            $code->enroll_id = $request['id'];
+
+            Mail::to($email)->send(new SendMail($code));
+
         }
         ////////////////////////////////////////////////////////////
         if (!empty($request['paymentname'])) {
@@ -248,8 +261,14 @@ class EnrollController extends Controller
             $result->save();
 
             $check = true;
+
+            $email = User::where('id', $request->user_id)->value('email');
+            $code = Email::find(3);
+            $code->enroll_id = $request['id'];
+
+            Mail::to($email)->send(new SendMail($code));
         }
-        ////////////////////////////////////////////////////////////
+       
         $data = Enroll::find($id);
 
         $data->submit = Carbon::parse($request['submit'])->format('Y-m-d');

@@ -882,6 +882,7 @@ export default {
         ////////////////////////////////////////////////////////////////
         setNation(id) {
             this.nationShow = false;
+            this.data.nation = id;
             if (id != null) {
                 const arr = Array.from(this.nationList); // หรือ this.nationList.slice()
                 const res = arr.find((selection) => selection.id == id);
@@ -891,6 +892,7 @@ export default {
         },
         setGender(id) {
             this.genderShow = false;
+            this.data.gender = id;
             if (id != null) {
                 const arr = Array.from(this.genderList); // หรือ this.nationList.slice()
                 const res = arr.find((selection) => selection.id == id);
@@ -900,6 +902,7 @@ export default {
         },
         setType(id) {
             this.typeShow = false;
+            this.data.type = id;
             if (id != null) {
                 const arr = Array.from(this.typeList); // หรือ this.nationList.slice()
                 const res = arr.find((selection) => selection.id == id);
@@ -909,6 +912,7 @@ export default {
         },
         setDegree(id) {
             this.degreeShow = false;
+            this.data.degree = id;
             if (id != null) {
                 const arr = Array.from(this.degreeList); // หรือ this.nationList.slice()
                 const res = arr.find((selection) => selection.id == id);

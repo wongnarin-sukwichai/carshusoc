@@ -15,7 +15,7 @@
 
         <!-- โลโก้ตรงกลาง -->
         <div style="text-align:center;">
-            <img src="{{ url('img/logo/logo.png') }}" alt="Logo" width="30%">
+            <img src="https://carshusoc.com/img/logo/logo.png" alt="Logo" width="30%">
         </div>
 
         <!-- ข้อความต้อนรับ -->

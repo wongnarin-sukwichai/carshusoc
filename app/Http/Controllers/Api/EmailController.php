@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 use App\Models\Email;
 
@@ -40,9 +41,7 @@ class EmailController extends Controller
      */
     public function show(string $id)
     {
-        $data = Email::find($id);
-
-        return response()->json($data);
+        //
     }
 
     /**
@@ -50,7 +49,9 @@ class EmailController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $data = Email::find($id);
+
+        return response()->json($data);
     }
 
     /**
@@ -58,7 +59,18 @@ class EmailController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+         $data = Email::find($id);
+
+        $data->topic = $request['topic'];
+        $data->th = $request['th'];
+        $data->eng = $request['eng'];
+        $data->owner = Auth::user()->name ." " . Auth::user()->surname;
+
+        $data->save();
+
+        return response()->json([
+            'message' => 'Success!!'
+        ]);
     }
 
     /**

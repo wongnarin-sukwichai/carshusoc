@@ -123,7 +123,7 @@ class UploadController extends Controller
 
         if (!File::exists($chkPath)) File::makeDirectory($chkPath, 0777, true);        
 
-        $file->move($chkPath, $file_name);                                           
+        $file->move($chkPath, $file_name);
 
         return response()->json($file_name);
     }

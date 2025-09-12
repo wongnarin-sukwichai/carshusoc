@@ -9,16 +9,16 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class FinishMail extends Mailable
+class SendMail extends Mailable
 {
     use Queueable, SerializesModels;
 
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct(public object $code)
     {
-        //
+        $this->code = $code;
     }
 
     /**
@@ -27,7 +27,7 @@ class FinishMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Finish Mail',
+            subject: 'CARS-HUSOC Mail',
         );
     }
 
@@ -37,7 +37,13 @@ class FinishMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'emails.sendMail',
+            with: [
+                'topic'     => $this->code->topic      ?? '',
+                'enroll_id' => $this->code->enroll_id  ?? '',
+                'th'        => $this->code->th         ?? '',
+                'eng'       => $this->code->eng        ?? '',
+            ]
         );
     }
 

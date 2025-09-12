@@ -1924,6 +1924,10 @@ export default {
             this.cert = null;
             this.receipt = null;
 
+            this.data.filename = null;
+            this.data.certname = null;
+            this.data.receiptname = null;
+
             this.modalDetail = false;
             this.modalEdit = false;
             this.modalComplete = false;

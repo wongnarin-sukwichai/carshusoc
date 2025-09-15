@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('content_id');
             $table->integer('section_id');
             $table->integer('user_id');
+            $table->integer('course_id');
             $table->integer('cert')->nullable()->comment('path Certificate');
             $table->date('submit')->nullable()->comment('กำหนดวันรับงานคืน');
             $table->integer('pay')->nullable()->comment('ราคาที่ต้องจ่าย-งานแปลภาษา-เจ้าหน้าที่ประเมิน');

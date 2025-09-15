@@ -15,7 +15,9 @@ class CourseController extends Controller
      */
     public function index()
     {
-        //
+         $data = Courses::all();
+
+        return response()->json($data);
     }
 
     /**

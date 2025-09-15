@@ -5,11 +5,16 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 use App\Models\Complete;
 use App\Models\Enroll;
 use App\Models\Cert;
 use App\Models\Receipt;
+use App\Models\User;
+use App\Models\Email;
+
+use App\Mail\SendMail;
 
 class CompleteController extends Controller
 {
@@ -52,6 +57,12 @@ class CompleteController extends Controller
             $result->owner = Auth::user()->id;
 
             $result->save();
+
+            $email = User::where('id', $request->user_id)->value('email');
+            $code = Email::find(2);
+            $code->enroll_id = $request['id'];
+
+            Mail::to($email)->send(new SendMail($code));
         }
         ////////////////////////////////////////////////////////////
         if (!empty($request['receiptname'])) {
@@ -62,7 +73,24 @@ class CompleteController extends Controller
             $result->owner = Auth::user()->id;
 
             $result->save();
+
+            $email = User::where('id', $request->user_id)->value('email');
+            $code = Email::find(4);
+            $code->enroll_id = $request['id'];
+
+            Mail::to($email)->send(new SendMail($code));
         }
+        ////////////////////////////////////////////////////////////
+
+        if($request['status'] == 2) {
+
+            $email = User::where('id', $request->user_id)->value('email');
+            $code = Email::find(5);
+            $code->enroll_id = $request['id'];
+
+            Mail::to($email)->send(new SendMail($code));
+        }
+
         ////////////////////////////////////////////////////////////
         $data = Enroll::find($request['id']);
 

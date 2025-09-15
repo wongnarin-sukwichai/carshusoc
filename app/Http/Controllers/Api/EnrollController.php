@@ -72,6 +72,9 @@ class EnrollController extends Controller
 
         $data->content_id = $request['content_id'];
         $data->section_id = $request['section_id'];
+        if (!empty($request['course_id'])) {
+            $data->course_id = $request['course_id'];
+        }
         $data->pay = $request['price'];
         $data->tag = $request['postage'];
         $data->user_id = Auth::user()->id;
@@ -243,13 +246,12 @@ class EnrollController extends Controller
             $res->title = $request['filename'];
 
             $res->save();
-           
+
             $email = User::where('id', $request->user_id)->value('email');
             $code = Email::find(1);
             $code->enroll_id = $request['id'];
 
             Mail::to($email)->send(new SendMail($code));
-
         }
         ////////////////////////////////////////////////////////////
         if (!empty($request['paymentname'])) {
@@ -268,7 +270,7 @@ class EnrollController extends Controller
 
             Mail::to($email)->send(new SendMail($code));
         }
-       
+
         $data = Enroll::find($id);
 
         $data->submit = Carbon::parse($request['submit'])->format('Y-m-d');

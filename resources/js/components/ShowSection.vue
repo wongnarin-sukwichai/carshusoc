@@ -120,7 +120,7 @@
                                 class="relative border-2 border-dashed rounded-xl cursor-pointer hover:border-sky-400 hover:border-3 p-4 group mb-2"
                                 v-for="(course, index) in courseList"
                                 :key="index"
-                                @click="sendData(course.price, course.postage)"
+                                @click="sendData(course.id, course.price, course.postage)"
                             >
                                 <span
                                     class="font-semibold text-lg text-[#85c1e9]"
@@ -195,6 +195,7 @@ export default {
             data: {
                 content_id: this.$route.params.id,
                 section_id: "",
+                course_id: "",
                 price: "",
                 postage: "",
             },
@@ -233,7 +234,7 @@ export default {
         close() {
             this.modalCourse = false;
         },
-        sendData(id, code) {
+        sendData(id, res, code) {
             Swal.fire({
                 title: "Are you sure?",
                 text: "Do you want to confirm to Register",
@@ -275,7 +276,8 @@ export default {
                         this.$router.push("/profile");
                     } else {
 
-                        this.data.price = id;
+                        this.data.course_id = id;
+                        this.data.price = res;
                         this.data.postage = code;
 
                         axios

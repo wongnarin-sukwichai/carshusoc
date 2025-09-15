@@ -827,6 +827,20 @@
                                             class="px-2 py-1 bg-gray-100"
                                         ></td>
                                     </tr>
+                                    <tr v-if="detailList.course_id !== null">
+                                        <td
+                                            class="border border-gray-300 px-2 py-1 text-center"
+                                        >
+                                            รายการ
+                                        </td>
+                                        <td
+                                            class="border border-gray-300 px-4 py-1"
+                                        >
+                                            {{
+                                                setCourse(detailList.course_id)
+                                            }}
+                                        </td>
+                                    </tr>
                                     <template v-if="detailList.event_id === 3">
                                         <tr>
                                             <td
@@ -1365,6 +1379,20 @@
                                             class="px-2 py-1 bg-gray-100"
                                         ></td>
                                     </tr>
+                                    <tr v-if="detailList.course_id !== null">
+                                        <td
+                                            class="border border-gray-300 px-2 py-1 text-center"
+                                        >
+                                            รายการ
+                                        </td>
+                                        <td
+                                            class="border border-gray-300 px-4 py-1"
+                                        >
+                                            {{
+                                                setCourse(detailList.course_id)
+                                            }}
+                                        </td>
+                                    </tr>
                                     <template v-if="detailList.event_id === 3">
                                         <tr>
                                             <td
@@ -1796,6 +1824,7 @@ export default {
     async mounted() {
         await this.getEvent();
         await this.getEnroll();
+        await this.getCourse();
     },
     data() {
         return {
@@ -1818,6 +1847,7 @@ export default {
             workList: [],
             certList: [],
             receiptList: [],
+            courseList: [],
             ////////////////////////////////////////////////////////////////
             file: null,
             cert: null,
@@ -1828,6 +1858,7 @@ export default {
             },
             data: {
                 id: "",
+                user_id: "",
                 cert: "",
                 pay: "",
                 tag: "",
@@ -1857,6 +1888,11 @@ export default {
                 this.enrollList = response.data;
             });
         },
+         getCourse() {
+            axios.get("/api/course").then((response) => {
+                this.courseList = response.data;
+            });
+        },
         ////////////////////////////////////////////////////////////////
         setEvent(id) {
             if (id != null) {
@@ -1869,6 +1905,15 @@ export default {
         },
         setMoment(id) {
             return moment(id).format("L");
+        },
+         setCourse(id) {
+            if (id != null) {
+                const arr = Array.from(this.courseList); // หรือ this.nationList.slice()
+                const res = arr.find((selection) => selection.id == id);
+                return res ? res.title : null;
+            }
+
+            return null;
         },
         chkSlip(id) {
             if (id !== null && id >= 0) {
@@ -1904,6 +1949,7 @@ export default {
                 this.detailList = response.data[0];
 
                 this.data.id = id;
+                this.data.user_id = response.data[0].user_id;
                 this.data.pay = response.data[0].pay;
                 this.data.tag = response.data[0].tag;
                 this.data.complete = response.data[0].complete;
@@ -1971,6 +2017,19 @@ export default {
                 },
             }).then(async (result) => {
                 if (result.isConfirmed) {
+                    ////////////////////////// Loading //////////////////////////////////
+                    // เปิด loading ค้างไว้
+                    Swal.fire({
+                        title: "Processing...",
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        didOpen: () => Swal.showLoading(),
+                        customClass: {
+                            popup: "rounded-xl shadow-lg bg-white font-poppins",
+                            title: "text-2xl font-bold text-gray-800",
+                        },
+                    });
+
                     ////////////////////////// Upload Certificate //////////////////////////////////
                     if (this.cert != null) {
                         let formData = new FormData(); //สร้าง FromData เพื่อรองรับข้อมูลประเภท File
@@ -2107,6 +2166,7 @@ export default {
                         await axios
                             .post("/api/complete", this.data)
                             .then((response) => {
+                                Swal.close();
                                 Swal.fire({
                                     title: response.data.message,
                                     icon: "success",

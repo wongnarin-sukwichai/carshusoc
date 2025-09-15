@@ -752,6 +752,20 @@
                                             class="px-2 py-1 bg-gray-100"
                                         ></td>
                                     </tr>
+                                    <tr v-if="detailList.course_id !== null">
+                                        <td
+                                            class="border border-gray-300 px-2 py-1 text-center"
+                                        >
+                                            รายการ
+                                        </td>
+                                        <td
+                                            class="border border-gray-300 px-4 py-1"
+                                        >
+                                            {{
+                                                setCourse(detailList.course_id)
+                                            }}
+                                        </td>
+                                    </tr>
                                     <template v-if="detailList.event_id === 3">
                                         <tr>
                                             <td
@@ -1230,6 +1244,20 @@
                                             class="px-2 py-1 bg-gray-100"
                                         ></td>
                                     </tr>
+                                     <tr v-if="detailList.course_id !== null">
+                                        <td
+                                            class="border border-gray-300 px-2 py-1 text-center"
+                                        >
+                                            รายการ
+                                        </td>
+                                        <td
+                                            class="border border-gray-300 px-4 py-1"
+                                        >
+                                            {{
+                                                setCourse(detailList.course_id)
+                                            }}
+                                        </td>
+                                    </tr>
                                     <template v-if="detailList.event_id === 3">
                                         <tr>
                                             <td
@@ -1683,6 +1711,7 @@ export default {
     async mounted() {
         await this.getEvent();
         await this.getEnroll();
+        await this.getCourse();
     },
     data() {
         return {
@@ -1706,6 +1735,7 @@ export default {
             workList: [],
             certList: [],
             receiptList: [],
+            courseList: [],
             ////////////////////////////////////////////////////////////////
             moment: moment,
             file: null,
@@ -1742,6 +1772,11 @@ export default {
                 this.enrollList = response.data;
             });
         },
+        getCourse() {
+            axios.get("/api/course").then((response) => {
+                this.courseList = response.data;
+            });
+        },
         ////////////////////////////////////////////////////////////////
         setEvent(id) {
             if (id != null) {
@@ -1754,6 +1789,15 @@ export default {
         },
         setMoment(id) {
             return moment(id).format("L");
+        },
+        setCourse(id) {
+            if (id != null) {
+                const arr = Array.from(this.courseList); // หรือ this.nationList.slice()
+                const res = arr.find((selection) => selection.id == id);
+                return res ? res.title : null;
+            }
+
+            return null;
         },
         ////////////////////////////////////////////////////////////////
         async showDetail(id) {

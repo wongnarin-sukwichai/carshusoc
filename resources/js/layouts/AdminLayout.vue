@@ -110,7 +110,7 @@
                                     class="mr-2"
                                     color="#85c1e9"
                                 ></box-icon>
-                                รายงาน (Excel)
+                                Certificate/Excel
                             </router-link>
                         </li>
                         <li>

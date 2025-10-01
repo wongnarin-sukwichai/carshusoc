@@ -12,7 +12,9 @@
             </span>
         </div>
 
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        <div
+            class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"
+        >
             <div
                 class="relative border-2 border-dashed rounded-xl cursor-pointer hover:border-gray-300 flex flex-col items-center justify-center text-center overflow-hidden"
                 v-for="(section, index) in sectionList"
@@ -33,7 +35,7 @@
                     }"
                 >
                     <div class="card">
-                         <div
+                        <div
                             class="front-content"
                             :class="{
                                 'text-md': section.title.length > 20,
@@ -46,7 +48,7 @@
                             <p>{{ section.title }}</p>
                         </div>
                         <div class="content">
-                             <p class="heading border-b-1 border-dashed">
+                            <p class="heading border-b-1 border-dashed">
                                 รายละเอียด
                             </p>
                             <div class="text-sm text-left pl-2">
@@ -88,7 +90,7 @@
                                     today
                                 "
                                 class="bg-white p-2 rounded-full w-2/4 mt-2 text-gray-900 hover:scale-105 hover:border-2 hover:border-sky-600 hover:text-sky-600"
-                                @click="chkCourse(section.id, section.course)"
+                                @click="chkCourse(section.id, section.course, section.title, section.start, section.end)"
                             >
                                 ลงทะเบียน
                             </button>
@@ -115,12 +117,20 @@
                         <div class="bg-white p-4 rounded-2xl mt-4">
                             <div
                                 class="font-semibold text-xl text-gray-400 mb-2"
-                            >** กรุณาเลือกบริการ</div>
+                            >
+                                ** กรุณาเลือกบริการ
+                            </div>
                             <div
                                 class="relative border-2 border-dashed rounded-xl cursor-pointer hover:border-sky-400 hover:border-3 p-4 group mb-2"
                                 v-for="(course, index) in courseList"
                                 :key="index"
-                                @click="sendData(course.id, course.price, course.postage)"
+                                @click="
+                                    sendData(
+                                        course.id,
+                                        course.price,
+                                        course.postage
+                                    )
+                                "
                             >
                                 <span
                                     class="font-semibold text-lg text-[#85c1e9]"
@@ -130,8 +140,9 @@
                                     class="border-1 border-dashed w-2/3 my-3"
                                     v-if="course.price !== null"
                                 ></div>
-                                <div class="text-md"
-                                v-if="course.price !== null"
+                                <div
+                                    class="text-md"
+                                    v-if="course.price !== null"
                                 >
                                     <span class="font-semibold pr-2"
                                         >ค่าบริการ :</span
@@ -196,6 +207,9 @@ export default {
                 content_id: this.$route.params.id,
                 section_id: "",
                 course_id: "",
+                title: "",
+                start: "",
+                end: "",
                 price: "",
                 postage: "",
             },
@@ -209,20 +223,27 @@ export default {
                     this.sectionList = response.data;
                 });
         },
+        chkPass() {
+            
+        },
         addSection() {
             this.$router.push("/addSection/" + this.$route.params.id);
         },
         setMoment(id) {
             return moment(id).format("L");
         },
-        chkCourse(id, code) {
+        chkCourse(id, code, title, start, end) {
+
             this.data.section_id = id;
+            this.data.title = title,
+            this.data.start = start;
+            this.data.end = end;
 
             if (code == null) {
                 const arr = Array.from(this.sectionList);
                 const res = arr.find((selection) => selection.id == id);
 
-                this.sendData(res.price, res.postage);
+                this.sendData(id, res.price, res.postage);
             } else {
                 axios.get("/api/course/" + id).then((response) => {
                     this.courseList = response.data;
@@ -275,7 +296,6 @@ export default {
                         });
                         this.$router.push("/profile");
                     } else {
-
                         this.data.course_id = id;
                         this.data.price = res;
                         this.data.postage = code;

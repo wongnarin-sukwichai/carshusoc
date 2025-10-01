@@ -17,10 +17,11 @@
             <div
                 class="border-2 border-dashed rounded-xl p-8 h-64 flex items-center justify-center"
             >
-                <span 
-                class="font-semibold"
-                :class="data.title.length > 10 ? 'text-md' : 'text-3xl'"
-                >{{ data.title }}</span>
+                <span
+                    class="font-semibold"
+                    :class="data.title.length > 10 ? 'text-md' : 'text-3xl'"
+                    >{{ data.title }}</span
+                >
             </div>
 
             <!-- Main 2 -->
@@ -32,9 +33,17 @@
                         <label
                             for="username"
                             class="block text-md font-medium text-gray-900"
-                            >{{ $t("addcont.title") }} :</label
+                            >{{ $t("addcont.title") }} :
+                            <transition name="fade" mode="out-in">
+                                <span
+                                    v-if="errors.title"
+                                    class="text-rose-300 text-sm"
+                                    >{{ errors.title }}</span
+                                ></transition
+                            >
+                        </label>
+                        <div class="mt-2"
                         >
-                        <div class="mt-2">
                             <div
                                 class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600"
                             >
@@ -142,6 +151,13 @@
                                 for="username"
                                 class="block text-md font-medium text-gray-900"
                                 >วันเริ่มกิจกรรม :
+                                <transition name="fade" mode="out-in">
+                                    <span
+                                        v-if="errors.start"
+                                        class="text-rose-300 text-sm"
+                                        >{{ errors.start }}</span
+                                    ></transition
+                                >
                             </label>
                             <div class="mt-2">
                                 <Datepicker
@@ -156,6 +172,13 @@
                                 for="username"
                                 class="block text-md font-medium text-gray-900"
                                 >วันสิ้นสุด :
+                                <transition name="fade" mode="out-in">
+                                    <span
+                                        v-if="errors.end"
+                                        class="text-rose-300 text-sm"
+                                        >{{ errors.end }}</span
+                                    ></transition
+                                >
                             </label>
                             <div class="mt-2">
                                 <Datepicker
@@ -252,7 +275,7 @@
                                 <label
                                     for="username"
                                     class="block text-md font-medium text-gray-900"
-                                    >ค่าบริการ : 
+                                    >ค่าบริการ :
                                 </label>
                                 <div class="mt-2">
                                     <div
@@ -518,7 +541,7 @@ export default {
         validateData() {
             let isValid = true;
 
-            const req = ["event_id"];
+            const req = ["title", "event_id"];
 
             for (let key of req) {
                 const value = this.data[key];
@@ -532,6 +555,24 @@ export default {
                     isValid = false;
                 } else {
                     this.errors[key] = ""; // เคลียร์ข้อความถ้ามีค่า
+                }
+            }
+
+            if (this.data.event_id < 3) {
+                const extraReq = ["start", "end"];
+                for (let key of extraReq) {
+                    const value = this.data[key];
+
+                    if (
+                        value === null ||
+                        value === undefined ||
+                        value.toString().trim() === ""
+                    ) {
+                        this.errors[key] = "** Required field.";
+                        isValid = false;
+                    } else {
+                        this.errors[key] = "";
+                    }
                 }
             }
 

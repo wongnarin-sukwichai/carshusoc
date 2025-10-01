@@ -120,19 +120,107 @@
             </div>
 
             <hr
-                class="mx-auto items-center justify-center my-4 w-2/6 border-2 border-gray-50"
+                class="mx-auto items-center justify-center my-4 w-2/6 border-2 border-gray-100 border-dashed"
             />
 
             <div class="flex items-center justify-center">
                 <div
-                    class="flex items-center justify-center border-2 border-dashed p-3 w-1/8 rounded-xl bg-sky-200 border-sky-400 hover:bg-sky-300 cursor-pointer"
-                    @click="sendData()"
+                    class="text-sm mr-4 flex items-center justify-center border-2 border-dashed p-2 w-1/8 rounded-xl bg-green-200 border-green-400 hover:bg-green-300 cursor-pointer"
+                    @click="report()"
                 >
-                    <box-icon name="search" class="mr-2"></box-icon>
+                    <box-icon
+                        name="file"
+                        class="mr-2"
+                        color="oklch(72.3% 0.219 149.579)"
+                    ></box-icon>
+                    Export to Excel
+                </div>
+                <div
+                    class="text-sm flex items-center justify-center border-2 border-dashed p-2 w-1/8 rounded-xl bg-sky-200 border-sky-400 hover:bg-sky-300 cursor-pointer"
+                    @click="search()"
+                >
+                    <box-icon
+                        name="search"
+                        class="mr-2"
+                        color="oklch(70.7% 0.165 254.624)"
+                    ></box-icon>
                     ค้นหา
                 </div>
             </div>
         </div>
+
+        <!----------------------------------- Layout 2 ------------------------------------------------------->
+
+        <transition name="fade" mode="out-in">
+            <div
+                class="border-2 border-dashed border-gray-200 text-lg p-4 rounded-xl mt-2"
+                v-show="showEnroll"
+            >
+                <div class="grid grid-cols-3 text-sm px-4">
+                    <div class="flex flex-col gap-2">
+                        <!-- เลขบัตรประชาชน -->
+                        <label
+                            class="inline-flex items-center gap-x-2 cursor-pointer"
+                        >
+                            <input
+                                type="radio"
+                                name="gender"
+                                :value="1"
+                                class="text-blue-600 focus:ring-blue-500 border-gray-300 cursor-pointer"
+                            />
+                            <span class="text-gray-700">เลือกทั้งหมด</span>
+                        </label>
+
+                        <!-- เลขหนังสือเดินทาง-->
+                        <label
+                            class="inline-flex items-center gap-x-2 cursor-pointer"
+                        >
+                            <input
+                                type="radio"
+                                name="gender"
+                                :value="2"
+                                class="text-pink-500 focus:ring-pink-400 border-gray-300 cursor-pointer"
+                            />
+                            <span class="text-gray-700">ไม่เลือกทั้งหมด</span>
+                        </label>
+                    </div>
+
+                    <span
+                        >วันสอบในวันที่ :
+                        <div class="font-semibold">
+                            {{ moment(data.examdate).format("LL") }}
+                        </div></span
+                    >
+                    <span class="text-sm"
+                        >ให้ไว้ ณ วันที่ :
+                        <Datepicker class="ml-2" />
+                    </span>
+
+                    <!-- <div
+                    class="text-sm flex items-center justify-center border-2 border-dashed p-2 w-1/8 rounded-xl bg-amber-200 border-amber-400 hover:bg-amber-300 cursor-pointer"
+                >
+                    <box-icon
+                        name="plus-circle"
+                        class="mr-2"
+                        color="oklch(82.8% 0.189 84.429)"
+                    ></box-icon>
+                    บันทึก
+                </div> -->
+                </div>
+
+                <!----------------------------------- Table ------------------------------------------------------->
+
+                <div
+                    class="border-2 border-gray-200 text-lg p-4 rounded-xl mt-4"
+                >
+                    <div class="grid grid-cols-6 grap-4 text-sm">
+                        <div v-for="(enroll, index) in enrollList" :key="index">
+                            {{ enroll.name }} {{ enroll.surname }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </transition>
     </div>
 
     <!----------------------------------- MODAL ------------------------------------------------------->
@@ -142,6 +230,9 @@
 import axios from "axios";
 import Swal from "sweetalert2";
 import Datepicker from "vuejs3-datepicker";
+import moment from "moment";
+import "moment/dist/locale/th";
+moment.locale("th");
 
 export default {
     async mounted() {
@@ -151,13 +242,17 @@ export default {
         return {
             ////////////////////////////////////////////////////////////////
             sectionList: [],
+            enrollList: [],
             ////////////////////////////////////////////////////////////////
             sectionShow: false,
+            showEnroll: false,
+            moment: moment,
             ////////////////////////////////////////////////////////////////
             data: {
                 start: "",
                 end: "",
                 section_id: "",
+                examdate: "",
             },
             errors: {
                 start: "",
@@ -181,6 +276,9 @@ export default {
             if (id != null) {
                 const arr = Array.from(this.sectionList); // หรือ this.nationList.slice()
                 const res = arr.find((selection) => selection.id == id);
+                this.data.start = res.start;
+                this.data.end = res.end;
+                this.data.examdate = res.examdate;
                 return res ? res.title : null;
             }
 
@@ -212,7 +310,7 @@ export default {
 
             return isValid;
         },
-        async sendData() {
+        async report() {
             try {
                 if (!this.validateData()) {
                     // SweetAlert Error
@@ -282,6 +380,129 @@ export default {
                     a.remove();
                     window.URL.revokeObjectURL(url);
 
+                    Swal.fire({
+                        title: "Success!!",
+                        text: "สำเร็จ! กรุณาตรวจสอบที่ไฟล์ดาวน์โหลดบนเครื่องของท่าน",
+                        icon: "success",
+                        customClass: {
+                            popup: "rounded-xl shadow-lg bg-white font-poppins",
+                            title: "text-2xl font-bold text-gray-800",
+                            htmlContainer: "text-base text-gray-600",
+                            confirmButton:
+                                "bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2",
+                            cancelButton:
+                                "bg-gray-300 hover:bg-gray-400 text-black font-medium px-4 py-2 ml-2",
+                        },
+                        didOpen: () => {
+                            Swal.getPopup().style.fontFamily =
+                                "Anuphan, sans-serif";
+                        },
+                    });
+                }
+            } catch (err) {
+                Swal.fire({
+                    title: "Error!",
+                    text: "ไม่สามารถดาวน์โหลด กรุณาลองใหม่อีกครั้ง",
+                    icon: "error",
+                    customClass: {
+                        popup: "rounded-xl shadow-lg bg-white font-poppins",
+                        title: "text-2xl font-bold text-gray-800",
+                        confirmButton:
+                            "bg-rose-300 hover:bg-rose-400 text-white font-medium px-4 py-2",
+                    },
+                    didOpen: () => {
+                        Swal.getPopup().style.fontFamily =
+                            "Anuphan, sans-serif";
+                    },
+                });
+            }
+        },
+        async search() {
+            try {
+                if (!this.validateData()) {
+                    // SweetAlert Error
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: "Check required fields please.",
+                        customClass: {
+                            popup: "rounded-xl shadow-lg bg-white font-poppins",
+                            title: "text-2xl font-bold text-gray-800",
+                            confirmButton:
+                                "bg-rose-300 hover:bg-rose-400 text-white font-medium px-4 py-2",
+                        },
+                        didOpen: () => {
+                            Swal.getPopup().style.fontFamily =
+                                "Poppins, sans-serif";
+                        },
+                    });
+                    return;
+                } else {
+                    axios
+                        .post("/api/reportSearch", this.data)
+                        .then((response) => {
+                            if (!response.data || response.data.length === 0) {
+                                this.showEnroll = false;
+                                Swal.fire({
+                                    title: "Error!",
+                                    text: "ไม่พบข้อมูล",
+                                    icon: "error",
+                                    customClass: {
+                                        popup: "rounded-xl shadow-lg bg-white font-poppins",
+                                        title: "text-2xl font-bold text-gray-800",
+                                        confirmButton:
+                                            "bg-rose-300 hover:bg-rose-400 text-white font-medium px-4 py-2",
+                                    },
+                                    didOpen: () => {
+                                        Swal.getPopup().style.fontFamily =
+                                            "Anuphan, sans-serif";
+                                    },
+                                });
+                            } else {
+                                this.showEnroll = true;
+                                this.enrollList = response.data;
+                            }
+                        });
+                }
+            } catch (err) {
+                Swal.fire({
+                    title: "Error!",
+                    text: "ไม่สามารถดึงข้อมูลได้ กรุณาติดต่อเจ้าหน้าที่ดูแลระบบ",
+                    icon: "error",
+                    customClass: {
+                        popup: "rounded-xl shadow-lg bg-white font-poppins",
+                        title: "text-2xl font-bold text-gray-800",
+                        confirmButton:
+                            "bg-rose-300 hover:bg-rose-400 text-white font-medium px-4 py-2",
+                    },
+                    didOpen: () => {
+                        Swal.getPopup().style.fontFamily =
+                            "Anuphan, sans-serif";
+                    },
+                });
+            }
+        },
+        async sendata() {
+            try {
+                if (!this.validateData()) {
+                    // SweetAlert Error
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: "Check required fields please.",
+                        customClass: {
+                            popup: "rounded-xl shadow-lg bg-white font-poppins",
+                            title: "text-2xl font-bold text-gray-800",
+                            confirmButton:
+                                "bg-rose-300 hover:bg-rose-400 text-white font-medium px-4 py-2",
+                        },
+                        didOpen: () => {
+                            Swal.getPopup().style.fontFamily =
+                                "Poppins, sans-serif";
+                        },
+                    });
+                    return;
+                } else {
                     Swal.fire({
                         title: "Success!!",
                         text: "สำเร็จ! กรุณาตรวจสอบที่ไฟล์ดาวน์โหลดบนเครื่องของท่าน",

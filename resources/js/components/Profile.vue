@@ -540,7 +540,7 @@
                                     type="radio"
                                     name="gender"
                                     :value="1"
-                                    class="text-blue-600 focus:ring-blue-500 border-gray-300 rounded-full"
+                                    class="text-blue-600 focus:ring-blue-500 border-gray-300 rounded-full cursor-pointer"
                                     v-model="data.ident"
                                 />
                                 <span class="text-gray-700"
@@ -556,7 +556,7 @@
                                     type="radio"
                                     name="gender"
                                     :value="2"
-                                    class="text-pink-500 focus:ring-pink-400 border-gray-300 rounded-full"
+                                    class="text-pink-500 focus:ring-pink-400 border-gray-300 rounded-full cursor-pointer"
                                     v-model="data.ident"
                                 />
                                 <span class="text-gray-700"

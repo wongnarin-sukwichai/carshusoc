@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
 {
@@ -37,6 +38,26 @@ class ReportController extends Controller
     public function show(string $id)
     {
         //
+    }
+
+    public function reportSearch(Request $request)
+    {
+        // dd($request->all());
+
+        $data = DB::table('enrolls')
+            ->where('enrolls.section_id', $request['section_id'])
+            ->where('enrolls.start', $request['start'])
+            ->where('enrolls.end', $request['end'])
+            ->join('users', 'enrolls.user_id', 'users.id')
+            ->select(
+                'enrolls.id',
+                'enrolls.cert',
+                'users.name',
+                'users.surname'
+            )
+            ->get();
+
+        return response()->json($data);
     }
 
     /**

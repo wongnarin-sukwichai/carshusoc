@@ -84,6 +84,7 @@ Route::middleware(['web'])->group(function () {
         Route::resource('cert', CertController::class);
 
         Route::resource('report', ReportController::class);
+        Route::post('reportSearch', [ReportController::class, 'reportSearch']);
 
         Route::resource('export', ExportController::class);
 

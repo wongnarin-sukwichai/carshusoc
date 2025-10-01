@@ -58,7 +58,7 @@ class SearchController extends Controller
             ->where('name', 'like', "%" . $request['search'] . "%")
             ->orWhere('surname', 'like', "%" . $request['search'] . "%")
             ->orderBy('id', 'DESC')
-            ->paginate(1);
+            ->paginate(5);
 
         return response()->json($data);
     }

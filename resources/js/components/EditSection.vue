@@ -29,7 +29,15 @@
                         <label
                             for="username"
                             class="block text-md font-medium text-gray-900"
-                            >{{ $t("addcont.title") }} :</label
+                            >{{ $t("addcont.title") }} :
+                            <transition name="fade" mode="out-in">
+                                <span
+                                    v-if="errors.title"
+                                    class="text-rose-300 text-sm"
+                                    >{{ errors.title }}</span
+                                ></transition
+                            >
+                            </label
                         >
                         <div class="mt-2">
                             <div
@@ -139,6 +147,13 @@
                                 for="username"
                                 class="block text-md font-medium text-gray-900"
                                 >วันเริ่มกิจกรรม :
+                                <transition name="fade" mode="out-in">
+                                <span
+                                    v-if="errors.start"
+                                    class="text-rose-300 text-sm"
+                                    >{{ errors.start }}</span
+                                ></transition
+                            >
                             </label>
                             <div class="mt-2">
                                 <Datepicker
@@ -153,6 +168,13 @@
                                 for="username"
                                 class="block text-md font-medium text-gray-900"
                                 >วันสิ้นสุด :
+                                <transition name="fade" mode="out-in">
+                                <span
+                                    v-if="errors.end"
+                                    class="text-rose-300 text-sm"
+                                    >{{ errors.end }}</span
+                                ></transition
+                            >
                             </label>
                             <div class="mt-2">
                                 <Datepicker
@@ -531,7 +553,7 @@ export default {
         validateData() {
             let isValid = true;
 
-            const req = ["event_id"];
+            const req = ["title", "event_id"];
 
             for (let key of req) {
                 const value = this.data[key];
@@ -545,6 +567,24 @@ export default {
                     isValid = false;
                 } else {
                     this.errors[key] = ""; // เคลียร์ข้อความถ้ามีค่า
+                }
+            }
+
+            if (this.data.event_id < 3) {
+                const extraReq = ["start", "end"];
+                for (let key of extraReq) {
+                    const value = this.data[key];
+
+                    if (
+                        value === null ||
+                        value === undefined ||
+                        value.toString().trim() === ""
+                    ) {
+                        this.errors[key] = "** Required field.";
+                        isValid = false;
+                    } else {
+                        this.errors[key] = "";
+                    }
                 }
             }
 

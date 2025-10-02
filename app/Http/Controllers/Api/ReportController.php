@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
+
+use App\Models\Enroll;
 
 class ReportController extends Controller
 {
@@ -29,7 +32,19 @@ class ReportController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = Carbon::parse($request['give'])->format('Y-m-d');
+
+        foreach ($request['enrolls'] as $r) {
+            Enroll::where('id', $r['id'])
+                ->update([
+                    'give' => $data,
+                    'cert' => $r['cert']
+                ]);
+        }
+
+        return response()->json([
+            'message' => 'Success!!'
+        ]);
     }
 
     /**
@@ -55,6 +70,7 @@ class ReportController extends Controller
                 'users.name',
                 'users.surname'
             )
+            ->orderBy('users.name', 'asc')
             ->get();
 
         return response()->json($data);

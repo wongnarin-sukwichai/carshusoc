@@ -94,6 +94,8 @@ Route::middleware(['web'])->group(function () {
 
         Route::resource('email', EmailController::class);
 
+        Route::get('chkPass',[EnrollController::class, 'chkPass']);
+
         ////////////////////////// Member //////////////////////////////////
         Route::get('showEnroll', [EnrollController::class, 'showEnroll']);
         Route::get('detailEnroll/{id}', [EnrollController::class, 'detailEnroll']);

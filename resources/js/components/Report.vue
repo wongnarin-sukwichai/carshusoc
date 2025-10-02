@@ -156,6 +156,17 @@
                 class="border-2 border-dashed border-gray-200 text-lg p-4 rounded-xl mt-2"
                 v-show="showEnroll"
             >
+                <div
+                    class="flex items-center text-[#85c1e9] text-xl font-bold mb-6"
+                >
+                    <box-icon
+                        name="certification"
+                        class="mr-2"                   
+                        color="#85c1e9"
+                    ></box-icon>
+                    จัดการสิทธิ์การรับใบ Certificate Electronic
+                </div>
+
                 <div class="grid grid-cols-3 text-sm px-4">
                     <div class="flex flex-col gap-2">
                         <!-- เลขบัตรประชาชน -->
@@ -164,9 +175,11 @@
                         >
                             <input
                                 type="radio"
-                                name="gender"
-                                :value="1"
-                                class="text-blue-600 focus:ring-blue-500 border-gray-300 cursor-pointer"
+                                name="check"
+                                value="all"
+                                class="border-gray-300 cursor-pointer"
+                                v-model="selectMode"
+                                @change="toggleAll(true)"
                             />
                             <span class="text-gray-700">เลือกทั้งหมด</span>
                         </label>
@@ -177,9 +190,11 @@
                         >
                             <input
                                 type="radio"
-                                name="gender"
-                                :value="2"
-                                class="text-pink-500 focus:ring-pink-400 border-gray-300 cursor-pointer"
+                                name="check"
+                                value="none"
+                                class="border-gray-300 cursor-pointer"
+                                v-model="selectMode"
+                                @change="toggleAll(false)"
                             />
                             <span class="text-gray-700">ไม่เลือกทั้งหมด</span>
                         </label>
@@ -193,19 +208,15 @@
                     >
                     <span class="text-sm"
                         >ให้ไว้ ณ วันที่ :
-                        <Datepicker class="ml-2" />
+                        <Datepicker class="ml-2" v-model="this.give" />
+                        <transition name="fade" mode="out-in">
+                            <span
+                                v-if="errors.give"
+                                class="text-rose-300 text-sm ml-2"
+                                >{{ errors.give }}</span
+                            ></transition
+                        >
                     </span>
-
-                    <!-- <div
-                    class="text-sm flex items-center justify-center border-2 border-dashed p-2 w-1/8 rounded-xl bg-amber-200 border-amber-400 hover:bg-amber-300 cursor-pointer"
-                >
-                    <box-icon
-                        name="plus-circle"
-                        class="mr-2"
-                        color="oklch(82.8% 0.189 84.429)"
-                    ></box-icon>
-                    บันทึก
-                </div> -->
                 </div>
 
                 <!----------------------------------- Table ------------------------------------------------------->
@@ -214,9 +225,34 @@
                     class="border-2 border-gray-200 text-lg p-4 rounded-xl mt-4"
                 >
                     <div class="grid grid-cols-6 grap-4 text-sm">
-                        <div v-for="(enroll, index) in enrollList" :key="index">
+                        <div
+                            v-for="enroll in enrollList"
+                            :key="enroll.id"
+                            class="flex items-center"
+                        >
+                            <input
+                                type="checkbox"
+                                class="cursor-pointer mr-2"
+                                v-model="enroll.cert"
+                                :true-value="1"
+                                :false-value="null"
+                            />
                             {{ enroll.name }} {{ enroll.surname }}
                         </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-end">
+                    <div
+                        class="text-sm flex items-center justify-center border-2 border-dashed p-2 w-1/12 mt-2 rounded-xl bg-amber-200 border-amber-400 hover:bg-amber-300 cursor-pointer"
+                        @click="sendata()"
+                    >
+                        <box-icon
+                            name="save"
+                            class="mr-2"
+                            color="oklch(82.8% 0.189 84.429)"
+                        ></box-icon>
+                        บันทึก
                     </div>
                 </div>
             </div>
@@ -247,6 +283,8 @@ export default {
             sectionShow: false,
             showEnroll: false,
             moment: moment,
+            selectMode: "",
+            give: "",
             ////////////////////////////////////////////////////////////////
             data: {
                 start: "",
@@ -258,6 +296,7 @@ export default {
                 start: "",
                 end: "",
                 section_id: "",
+                give: "",
             },
         };
     },
@@ -288,6 +327,13 @@ export default {
         showEvent() {
             this.sectionShow = !this.sectionShow;
         },
+        ////////////////////////////////////////////////////////////////
+        toggleAll(value) {
+            this.enrollList.forEach((enroll) => {
+                enroll.cert = value ? "1" : null;
+            });
+        },
+        ////////////////////////////////////////////////////////////////
         validateData() {
             let isValid = true;
 
@@ -295,6 +341,28 @@ export default {
 
             for (let key of req) {
                 const value = this.data[key];
+
+                if (
+                    value === null ||
+                    value === undefined ||
+                    value.toString().trim() === ""
+                ) {
+                    this.errors[key] = "** Required field.";
+                    isValid = false;
+                } else {
+                    this.errors[key] = ""; // เคลียร์ข้อความถ้ามีค่า
+                }
+            }
+
+            return isValid;
+        },
+        validateChk() {
+            let isValid = true;
+
+            const req = ["give"];
+
+            for (let key of req) {
+                const value = this[key];
 
                 if (
                     value === null ||
@@ -484,7 +552,7 @@ export default {
         },
         async sendata() {
             try {
-                if (!this.validateData()) {
+                if (!this.validateChk()) {
                     // SweetAlert Error
                     Swal.fire({
                         icon: "error",
@@ -502,30 +570,50 @@ export default {
                         },
                     });
                     return;
-                } else {
-                    Swal.fire({
-                        title: "Success!!",
-                        text: "สำเร็จ! กรุณาตรวจสอบที่ไฟล์ดาวน์โหลดบนเครื่องของท่าน",
-                        icon: "success",
-                        customClass: {
-                            popup: "rounded-xl shadow-lg bg-white font-poppins",
-                            title: "text-2xl font-bold text-gray-800",
-                            htmlContainer: "text-base text-gray-600",
-                            confirmButton:
-                                "bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2",
-                            cancelButton:
-                                "bg-gray-300 hover:bg-gray-400 text-black font-medium px-4 py-2 ml-2",
-                        },
-                        didOpen: () => {
-                            Swal.getPopup().style.fontFamily =
-                                "Anuphan, sans-serif";
-                        },
-                    });
                 }
+
+                // เปิด loading ค้างไว้
+                Swal.fire({
+                    title: "Processing...",
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    didOpen: () => Swal.showLoading(),
+                    customClass: {
+                        popup: "rounded-xl shadow-lg bg-white font-poppins",
+                        title: "text-2xl font-bold text-gray-800",
+                    },
+                });
+
+                await axios
+                    .post("/api/report", {
+                        give: this.give,
+                        enrolls: this.enrollList,
+                    })
+                    .then((response) => {});
+
+                Swal.close();
+                Swal.fire({
+                    title: "Success!!",
+                    text: "บันทึกสำเร็จ",
+                    icon: "success",
+                    customClass: {
+                        popup: "rounded-xl shadow-lg bg-white font-poppins",
+                        title: "text-2xl font-bold text-gray-800",
+                        htmlContainer: "text-base text-gray-600",
+                        confirmButton:
+                            "bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2",
+                        cancelButton:
+                            "bg-gray-300 hover:bg-gray-400 text-black font-medium px-4 py-2 ml-2",
+                    },
+                    didOpen: () => {
+                        Swal.getPopup().style.fontFamily =
+                            "Anuphan, sans-serif";
+                    },
+                });
             } catch (err) {
                 Swal.fire({
                     title: "Error!",
-                    text: "ไม่สามารถดาวน์โหลด กรุณาลองใหม่อีกครั้ง",
+                    text: "ไม่สามารถบันทึกข้อมูลได้ กรุณาลองใหม่อีกครั้ง",
                     icon: "error",
                     customClass: {
                         popup: "rounded-xl shadow-lg bg-white font-poppins",

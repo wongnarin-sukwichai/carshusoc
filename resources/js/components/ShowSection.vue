@@ -21,8 +21,17 @@
                 :key="index"
             >
                 <div
+                    class="absolute inset-0 flex items-center justify-center pointer-events-none select-none text-[58px] font-bold text-lime-400 rotate-[-20deg]"
+                    v-if="
+                        section.content_id === 2 && chkPass(section.id) !== null
+                    "
+                >
+                    PASS
+                </div>
+
+                <div
                     class="absolute inset-0 flex items-center justify-center pointer-events-none select-none text-[58px] font-bold text-red-400 rotate-[-20deg]"
-                    v-if="moment(section.end).format('YYYY-MM-DD') < today"
+                    v-else-if="moment(section.end).format('YYYY-MM-DD') < today"
                 >
                     EXPIRED
                 </div>
@@ -90,7 +99,15 @@
                                     today
                                 "
                                 class="bg-white p-2 rounded-full w-2/4 mt-2 text-gray-900 hover:scale-105 hover:border-2 hover:border-sky-600 hover:text-sky-600"
-                                @click="chkCourse(section.id, section.course, section.title, section.start, section.end)"
+                                @click="
+                                    chkCourse(
+                                        section.id,
+                                        section.course,
+                                        section.title,
+                                        section.start,
+                                        section.end
+                                    )
+                                "
                             >
                                 ลงทะเบียน
                             </button>
@@ -195,6 +212,7 @@ import Swal from "sweetalert2";
 export default {
     mounted() {
         this.getSection();
+        this.getPass();
     },
     data() {
         return {
@@ -202,6 +220,7 @@ export default {
             today: moment().format("YYYY-MM-DD"),
             sectionList: [],
             courseList: [],
+            passList: [],
             modalCourse: false,
             data: {
                 content_id: this.$route.params.id,
@@ -223,8 +242,16 @@ export default {
                     this.sectionList = response.data;
                 });
         },
-        chkPass() {
-            
+        getPass() {
+            axios.get("/api/chkPass/").then((response) => {
+                this.passList = response.data;
+                console.log(this.passList);
+            });
+        },
+        chkPass(id) {
+            const arr = Array.from(this.passList);
+            const res = arr.find((selection) => selection.section_id == id);
+            return res ? res.id : null;
         },
         addSection() {
             this.$router.push("/addSection/" + this.$route.params.id);
@@ -233,10 +260,8 @@ export default {
             return moment(id).format("L");
         },
         chkCourse(id, code, title, start, end) {
-
             this.data.section_id = id;
-            this.data.title = title,
-            this.data.start = start;
+            (this.data.title = title), (this.data.start = start);
             this.data.end = end;
 
             if (code == null) {

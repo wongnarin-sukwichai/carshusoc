@@ -182,6 +182,17 @@ class EnrollController extends Controller
         return response()->json($data);
     }
 
+    public function chkPass()
+    {
+        $data = Enroll::where('content_id', 2)
+            ->where('user_id', Auth::user()->id)
+            ->where('cert', 1)
+            ->select('section_id')
+            ->get();
+
+        return response()->json($data);
+    }
+
     /**
      * Show the form for editing the specified resource.
      */

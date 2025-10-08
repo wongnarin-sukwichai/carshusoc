@@ -204,7 +204,14 @@
                             <label
                                 for="username"
                                 class="block text-md font-medium text-gray-900"
-                                >วันที่สอบ/อบรม :
+                                >วันที่สอบ/วันสุดท้ายของการอบรม :
+                                <transition name="fade" mode="out-in">
+                                    <span
+                                        v-if="errors.examdate"
+                                        class="text-rose-300 text-sm"
+                                        >{{ errors.examdate }}</span
+                                    ></transition
+                                >
                             </label>
                             <div class="mt-2">
                                 <Datepicker
@@ -429,6 +436,7 @@ export default {
             errors: {
                 title: "",
                 event_id: "",
+                examdate: "",
             },
             modalInfo: false,
         };
@@ -571,7 +579,7 @@ export default {
             }
 
             if (this.data.event_id < 3) {
-                const extraReq = ["start", "end"];
+                const extraReq = ["start", "end", "examdate"];
                 for (let key of extraReq) {
                     const value = this.data[key];
 

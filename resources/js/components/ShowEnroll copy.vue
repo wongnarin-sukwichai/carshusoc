@@ -661,11 +661,13 @@
                                             >
                                                 <span
                                                     class="items-end justify-end"
-                                                    v-if="detailList.cert !== null"
                                                     ><box-icon
                                                         name="certification"
                                                         color="#ad65d9"
-                                                        class="cursor-pointer hover:scale-115"                                               
+                                                        class="cursor-pointer hover:scale-115"
+                                                        v-for="n in +detailList.cert ||
+                                                        0"
+                                                        :key="`complete-${n}`"
                                                         @click="
                                                             showCert(
                                                                 detailList.id
@@ -1585,7 +1587,7 @@
     </transition>
 
     <!-- Modal Cert -->
-    <!-- <transition name="fade" mode="out-in">
+    <transition name="fade" mode="out-in">
         <div class="relative z-10" v-show="this.modalCert">
             <div
                 class="fixed inset-0 bg-gray-500/50 bg-opacity-90 transition-opacity"
@@ -1636,7 +1638,7 @@
                 </div>
             </div>
         </div>
-    </transition> -->
+    </transition>
 
     <!-- Modal Cert -->
     <transition name="fade" mode="out-in">
@@ -1731,7 +1733,7 @@ export default {
             completeList: [],
             paymentList: [],
             workList: [],
-            // certList: [],
+            certList: [],
             receiptList: [],
             courseList: [],
             ////////////////////////////////////////////////////////////////
@@ -2068,11 +2070,11 @@ export default {
         showCert(id) {
             this.close();
 
-            // axios.get("/api/cert/" + id).then((response) => {
-            //     this.certList = response.data;
+            axios.get("/api/cert/" + id).then((response) => {
+                this.certList = response.data;
 
-            //     this.modalCert = true;
-            // });
+                this.modalCert = true;
+            });
         },
         showReceipt(id) {
             this.close();

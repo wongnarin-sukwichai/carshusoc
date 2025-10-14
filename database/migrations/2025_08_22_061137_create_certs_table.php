@@ -22,11 +22,17 @@ return new class extends Migration
             $table->date('start');
             $table->date('end');
             $table->date('examdate');
+            $table->date('send')->comment('ให้ไว้ ณ วันที่');
             $table->longtext('meet');
             $table->integer('listening')->nullable();
             $table->integer('reading')->nullable();
             $table->integer('grammar')->nullable();
-            $table->integer('conversations')->nullable();
+            $table->integer('convers')->nullable();
+            $table->integer('ept-start')->nullable();
+            $table->integer('ept-end')->nullable();
+            $table->string('cefr')->nullable();
+            $table->integer('toeic-start')->nullable();
+            $table->integer('toeic-end')->nullable();
             $table->integer('canva_id')->comment('ชื่อไฟล์ template');
             $table->timestamps();
         });

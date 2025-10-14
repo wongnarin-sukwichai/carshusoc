@@ -11,10 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('canvas', function (Blueprint $table) {
+        Schema::create('scores', function (Blueprint $table) {
             $table->id();
-            $table->integer('section_id');
-            $table->string('pic');
+            $table->string('title');
+            $table->integer('ept-start');
+            $table->integer('ept-end');
+            $table->string('cefr');
+            $table->integer('toeic-start');
+            $table->integer('toeic-end');
             $table->timestamps();
         });
     }
@@ -24,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('canvas');
+        Schema::dropIfExists('scores');
     }
 };

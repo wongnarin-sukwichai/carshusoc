@@ -32,12 +32,14 @@ class ReportController extends Controller
      */
     public function store(Request $request)
     {
-        $data = Carbon::parse($request['give'])->format('Y-m-d');
+
+        $data = Carbon::parse($request['send'])->format('Y-m-d');
 
         foreach ($request['enrolls'] as $r) {
             Enroll::where('id', $r['id'])
                 ->update([
-                    'give' => $data,
+                    'examdate' => $request['examdate'],
+                    'send' => $data,
                     'cert' => $r['cert']
                 ]);
         }

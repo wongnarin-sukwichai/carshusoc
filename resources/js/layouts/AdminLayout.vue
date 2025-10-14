@@ -99,20 +99,59 @@
                                 เจ้าหน้าที่ดูแลระบบ
                             </router-link>
                         </li>
-                         <li>
-                            <router-link
-                                to="/report"
+                        <li>
+                            <div
                                 class="text-gray-50 font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all"
+                                @click="showList()"
                             >
                                 <box-icon
-                                    name="report"
-                                    type="solid"
+                                    name="certification"
                                     class="mr-2"
                                     color="#85c1e9"
                                 ></box-icon>
-                                Certificate/Excel
-                            </router-link>
+                                ใบประกาศฯ
+                                <box-icon
+                                    name="chevron-down"
+                                    color="#85c1e9"
+                                    class="ml-2 cursor-pointer"
+                                ></box-icon>
+                            </div>
                         </li>
+                        <transition name="fade" mode="out-in">
+                            <ul
+                                class="space-y-2 pl-2 max-h-[500px] overflow-hidden transition-all duration-300 my-4"
+                                v-show="listReport"
+                            >
+                                <li>
+                                    <router-link
+                                        to="/reportExam"
+                                        class="text-gray-50 font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all pl-4"
+                                    >
+                                        <box-icon
+                                            name="edit-alt"
+                                            type="solid"
+                                            class="mr-2"
+                                            color="#85c1e9"
+                                        ></box-icon>
+                                        ใบสอบฯ / Excel
+                                    </router-link>
+                                </li>
+                                <li>
+                                    <router-link
+                                        to="/reportTrain"
+                                        class="text-gray-50 font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all pl-4 py-3"
+                                    >
+                                        <box-icon
+                                            name="cast"
+                                            class="mr-2"
+                                            color="#85c1e9"
+                                        ></box-icon>
+                                        ใบอบรมฯ / Excel
+                                    </router-link>
+                                </li>
+                            </ul>
+                        </transition>
+
                         <li>
                             <router-link
                                 to="/stat"
@@ -257,11 +296,8 @@
 
         <!-- Overlay สีดำ (เฉพาะ mobile) -->
 
-
         <!-- Space -->
-        <main
-        :class="isSidebarOpen ? 'flex-1 p-6' : 'flex-1 ml-0'"
-        >
+        <main :class="isSidebarOpen ? 'flex-1 p-6' : 'flex-1 ml-0'">
             <router-view v-slot="{ Component, route }">
                 <transition name="fade" mode="out-in">
                     <div :key="route.name">
@@ -284,6 +320,7 @@ export default {
             logo: "/img/logo/logo-rm.png",
             isSidebarOpen: true,
             pic: "img/profiles/thumbnails/",
+            listReport: false,
         };
     },
     methods: {
@@ -294,9 +331,12 @@ export default {
         toggleSidebar() {
             this.isSidebarOpen = !this.isSidebarOpen;
         },
-        link(){
-            window.open("files/tools/tools.pdf" , "_blank");
-        }
+        link() {
+            window.open("files/tools/tools.pdf", "_blank");
+        },
+        showList() {
+            this.listReport = !this.listReport;
+        },
     },
     computed: {
         user() {

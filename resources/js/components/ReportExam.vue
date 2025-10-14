@@ -302,7 +302,7 @@ export default {
     },
     methods: {
         getSection() {
-            axios.get("/api/section").then((response) => {
+            axios.get("/api/sectionTrain").then((response) => {
                 this.sectionList = response.data;
             });
         },

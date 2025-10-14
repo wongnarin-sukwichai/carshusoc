@@ -65,6 +65,8 @@ Route::middleware(['web'])->group(function () {
         Route::resource('content', ContentController::class);
 
         Route::resource('section', SectionController::class);
+        Route::get('sectionTrain', [SectionController::class, 'sectionTrain']);
+        Route::get('sectionExam', [SectionController::class, 'sectionExam']);
 
         Route::resource('enroll', EnrollController::class);
 

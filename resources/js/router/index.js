@@ -27,7 +27,8 @@ import Section from "../components/Section.vue";
 import AddSection from "../components/AddSection.vue";
 import EditSection from "../components/EditSection.vue";
 import Enroll from "../components/Enroll.vue";
-import Report from "../components/Report.vue";
+import ReportTrain from "../components/ReportTrain.vue";
+import ReportExam from "../components/ReportExam.vue";
 import Email from "../components/Email.vue";
 
 import store from "../store";
@@ -243,15 +244,24 @@ const routes = [
         },
     },
     {
-        path: "/report",
-        name: "report",
-        component: Report,
+        path: "/reportTrain",
+        name: "reportTrain",
+        component: ReportTrain,
         meta: {
             layout: "admin",
             guard: "admin",
         },
     },
-     {
+    {
+        path: "/reportExam",
+        name: "reportExam",
+        component: ReportExam,
+        meta: {
+            layout: "admin",
+            guard: "admin",
+        },
+    },
+    {
         path: "/email/:id",
         name: "email",
         component: Email,

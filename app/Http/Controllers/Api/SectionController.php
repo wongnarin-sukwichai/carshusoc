@@ -20,6 +20,20 @@ class SectionController extends Controller
         return response()->json($data);
     }
 
+    public function sectionTrain()
+    {
+        $data = Section::where('content_id', 2)->get();
+
+        return response()->json($data);
+    }
+
+    public function sectionExam()
+    {
+        $data = Section::where('content_id', 1)->get();
+
+        return response()->json($data);
+    }
+
     /**
      * Show the form for creating a new resource.
      */

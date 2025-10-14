@@ -17,11 +17,12 @@ return new class extends Migration
             $table->integer('section_id');
             $table->integer('user_id');
             $table->integer('course_id');
-            $table->string('title')->nullable();
+            $table->string('title');
             $table->date('start')->nullable();
             $table->date('end')->nullable();
-            $table->date('give')->nullable()->comment('ให้ไว้ ณ วันที่');
-            $table->integer('cert')->nullable()->comment('Certificate null=ไม่ผ่าน, มีเลข id canva=ผ่าน');
+            $table->date('examdate')->nullable()->comment('วันที่สอบ/อบรม');
+            $table->date('send')->nullable()->comment('ให้ไว้ ณ วันที่');
+            $table->integer('cert')->nullable()->comment('null=ไม่ผ่าน,1=ผ่าน');
             $table->date('submit')->nullable()->comment('กำหนดวันรับงานคืน');
             $table->integer('pay')->nullable()->comment('ราคาที่ต้องจ่าย-งานแปลภาษา-เจ้าหน้าที่ประเมิน');
             $table->integer('tag')->nullable()->comment('ค่าไปรษณีย์');

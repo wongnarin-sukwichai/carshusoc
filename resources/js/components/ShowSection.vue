@@ -249,7 +249,6 @@ export default {
         getPass() {
             axios.get("/api/chkPass/").then((response) => {
                 this.passList = response.data;
-                console.log(this.passList);
             });
         },
         chkPass(id) {

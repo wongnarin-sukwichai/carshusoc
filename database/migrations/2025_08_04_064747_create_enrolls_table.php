@@ -22,7 +22,8 @@ return new class extends Migration
             $table->date('end')->nullable();
             $table->date('examdate')->nullable()->comment('วันที่สอบ/อบรม');
             $table->date('send')->nullable()->comment('ให้ไว้ ณ วันที่');
-            $table->integer('cert')->nullable()->comment('null=ไม่ผ่าน,1=ผ่าน');
+            $table->integer('certTest')->nullable()->comment('ใบคะแนน null=ไม่ผ่าน,1=ผ่าน');
+            $table->integer('certTrain')->nullable()->comment('ใบอบรม null=ไม่ผ่าน,1=ผ่าน');
             $table->date('submit')->nullable()->comment('กำหนดวันรับงานคืน');
             $table->integer('pay')->nullable()->comment('ราคาที่ต้องจ่าย-งานแปลภาษา-เจ้าหน้าที่ประเมิน');
             $table->integer('tag')->nullable()->comment('ค่าไปรษณีย์');

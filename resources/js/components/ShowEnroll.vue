@@ -648,34 +648,7 @@
                                                 }}
                                             </span>
                                         </td>
-                                    </tr>
-                                    <template v-if="detailList.event_id === 2">
-                                        <tr>
-                                            <td
-                                                class="border border-gray-300 px-2 py-1 text-center"
-                                            >
-                                                ใบ Certificate
-                                            </td>
-                                            <td
-                                                class="border border-gray-300 px-4 py-1"
-                                            >
-                                                <span
-                                                    class="items-end justify-end"
-                                                    v-if="detailList.cert !== null"
-                                                    ><box-icon
-                                                        name="certification"
-                                                        color="#ad65d9"
-                                                        class="cursor-pointer hover:scale-115"                                               
-                                                        @click="
-                                                            showCert(
-                                                                detailList.id
-                                                            )
-                                                        "
-                                                    ></box-icon
-                                                ></span>
-                                            </td>
-                                        </tr>
-                                    </template>
+                                    </tr>                              
                                     <template v-if="detailList.event_id === 3">
                                         <tr>
                                             <td
@@ -1103,29 +1076,7 @@
                                                 }}
                                             </span>
                                         </td>
-                                    </tr>
-                                    <template v-if="detailList.event_id === 2">
-                                        <tr>
-                                            <td
-                                                class="border border-gray-300 px-2 py-1 text-center"
-                                            >
-                                                ใบ Certificate
-                                            </td>
-                                            <td class="px-4 py-1">
-                                                <box-icon
-                                                    name="certification"
-                                                    color="#ad65d9"
-                                                    class="cursor-pointer hover:scale-120"
-                                                    v-if="
-                                                        detailList.cert !== null
-                                                    "
-                                                    @click="
-                                                        showCert(detailList.id)
-                                                    "
-                                                ></box-icon>
-                                            </td>
-                                        </tr>
-                                    </template>
+                                    </tr>                              
                                     <template v-if="detailList.event_id === 3">
                                         <tr>
                                             <td
@@ -2064,15 +2015,6 @@ export default {
 
                 this.modalComplete = true;
             });
-        },
-        showCert(id) {
-            this.close();
-
-            // axios.get("/api/cert/" + id).then((response) => {
-            //     this.certList = response.data;
-
-            //     this.modalCert = true;
-            // });
         },
         showReceipt(id) {
             this.close();

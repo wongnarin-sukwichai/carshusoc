@@ -230,7 +230,7 @@
                                                             class="cursor-pointer hover:scale-120"
                                                             v-if="
                                                                 enroll.event_id ===
-                                                                2
+                                                                2 && enroll.certTrain === 1
                                                             "
                                                             @click="
                                                                 showCert(

@@ -49,7 +49,7 @@ class CertController extends Controller
     {
         $data = DB::table('enrolls')
             ->where('enrolls.user_id', Auth::user()->id)
-            ->where('enrolls.status', '2')
+            // ->where('enrolls.status', '2')
             ->join('contents', 'enrolls.content_id', 'contents.id')
             ->join('sections', 'enrolls.section_id', 'sections.id')
             ->join('users', 'enrolls.user_id', 'users.id')

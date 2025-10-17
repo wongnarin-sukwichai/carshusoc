@@ -186,7 +186,7 @@ class EnrollController extends Controller
     {
         $data = Enroll::where('content_id', 2)
             ->where('user_id', Auth::user()->id)
-            ->where('cert', 1)
+            ->where('certTrain', 1)
             ->select('section_id')
             ->get();
 

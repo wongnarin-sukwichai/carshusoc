@@ -6,8 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 use App\Models\Cert;
+use App\Models\Enroll;
+use App\Models\Canva;
 
 class CertController extends Controller
 {
@@ -68,6 +72,36 @@ class CertController extends Controller
             ->paginate(5);
 
         return response()->json($data);
+    }
+
+    public function certTrain(string $id)
+    {
+        $data = Enroll::find($id);
+
+        // ✅ ถ้าไม่เจอข้อมูลเลย
+        if (!$data || $data->certTrain == null) {
+            return response()->json(404);
+        }
+
+        $res = public_path('/img/certs/cert-1.png');
+
+        $image = (new ImageManager(new Driver()))->read($res);
+
+        // เขียนข้อความ
+        $image->text('The quick brown fox', 120, 100, function ($font) {
+            $font->size(36);
+            $font->color('#000000');
+            $font->align('left');
+            $font->valign('top');
+        });
+
+        // ส่งไฟล์ออกเป็น response
+        $png = $image->encodeByExtension('png');
+
+        return response($png, 200, [
+            'Content-Type'        => 'image/png',
+            'Content-Disposition' => 'attachment; filename="certificate.png"',
+        ]);
     }
 
     /**

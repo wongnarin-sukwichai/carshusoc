@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('section_id');
             $table->integer('enroll_id');
             $table->integer('user_id');
+            $table->integer('canva_id');
             $table->string('name');
             $table->string('surname');
             $table->string('title');
@@ -33,7 +34,6 @@ return new class extends Migration
             $table->string('cefr')->nullable();
             $table->integer('toeic-start')->nullable();
             $table->integer('toeic-end')->nullable();
-            $table->integer('canva_id')->comment('ชื่อไฟล์ template');
             $table->timestamps();
         });
     }

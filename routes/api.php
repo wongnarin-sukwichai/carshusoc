@@ -86,7 +86,8 @@ Route::middleware(['web'])->group(function () {
         Route::resource('cert', CertController::class);
 
         Route::resource('report', ReportController::class);
-        Route::post('reportSearch', [ReportController::class, 'reportSearch']);
+        Route::post('reportSearchTrain', [ReportController::class, 'reportSearchTrain']);
+        Route::post('reportTrain', [ReportController::class, 'reportTrain']);
 
         Route::resource('export', ExportController::class);
 
@@ -105,5 +106,6 @@ Route::middleware(['web'])->group(function () {
         Route::post('uploadWork', [UploadController::class, 'uploadWork']);
         Route::post('uploadPayment', [UploadController::class, 'uploadPayment']);
         Route::get('showCert', [CertController::class, 'showCert']);
+        Route::get('certTrain/{id}', [CertController::class, 'certTrain']);
     });
 });

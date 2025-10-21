@@ -164,7 +164,7 @@
                         class="mr-2"
                         color="#85c1e9"
                     ></box-icon>
-                    จัดการสิทธิ์การรับใบ Certificate Electronic
+                    จัดการสิทธิ์การรับใบ Certificate (อบรม)
                 </div>
 
                 <div class="grid grid-cols-3 text-sm px-4">
@@ -201,7 +201,7 @@
                     </div>
 
                     <span
-                        >วันสอบในวันที่ :
+                        >อบรมระหว่างวันที่ :
                         <transition name="fade" mode="out-in">
                             <span
                                 v-if="errors.examdate"
@@ -240,7 +240,7 @@
                             <input
                                 type="checkbox"
                                 class="cursor-pointer mr-2"
-                                v-model="enroll.cert"
+                                v-model="enroll.certTrain"
                                 :true-value="1"
                                 :false-value="null"
                             />
@@ -295,14 +295,14 @@ export default {
             examdate: "",
             send: "",
             data: {
+                section_id: "",
                 start: "",
                 end: "",
-                section_id: "",
             },
             errors: {
-                start: "",
-                end: "",
                 section_id: "",
+                start: "",
+                end: "",          
                 send: "",
             },
         };
@@ -337,7 +337,7 @@ export default {
         ////////////////////////////////////////////////////////////////
         toggleAll(value) {
             this.enrollList.forEach((enroll) => {
-                enroll.cert = value ? "1" : null;
+                enroll.certTrain = value ? "1" : null;
             });
         },
         ////////////////////////////////////////////////////////////////
@@ -514,7 +514,7 @@ export default {
                     return;
                 } else {
                     axios
-                        .post("/api/reportSearch", this.data)
+                        .post("/api/reportSearchTrain", this.data)
                         .then((response) => {
                             if (!response.data || response.data.length === 0) {
                                 this.showEnroll = false;
@@ -614,7 +614,8 @@ export default {
                         },
                     });
 
-                    await axios.post("/api/report", {
+                    await axios.post("/api/reportTrain", {
+                        section_id: this.data.section_id,
                         examdate: this.examdate,
                         send: this.send,
                         enrolls: this.enrollList,

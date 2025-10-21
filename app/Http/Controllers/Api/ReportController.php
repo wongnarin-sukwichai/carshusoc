@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 
 use App\Models\Enroll;
+use App\Models\Cert;
+use App\Models\Canva;
 
 class ReportController extends Controller
 {
@@ -32,21 +34,7 @@ class ReportController extends Controller
      */
     public function store(Request $request)
     {
-
-        $data = Carbon::parse($request['send'])->format('Y-m-d');
-
-        foreach ($request['enrolls'] as $r) {
-            Enroll::where('id', $r['id'])
-                ->update([
-                    'examdate' => $request['examdate'],
-                    'send' => $data,
-                    'cert' => $r['cert']
-                ]);
-        }
-
-        return response()->json([
-            'message' => 'Success!!'
-        ]);
+        //
     }
 
     /**
@@ -57,18 +45,18 @@ class ReportController extends Controller
         //
     }
 
-    public function reportSearch(Request $request)
+    public function reportSearchTrain(Request $request)
     {
-        // dd($request->all());
+        $start = Carbon::parse($request['start'])->startOfDay();
+        $end = Carbon::parse($request['end'])->startOfDay();
 
         $data = DB::table('enrolls')
             ->where('enrolls.section_id', $request['section_id'])
-            ->where('enrolls.start', $request['start'])
-            ->where('enrolls.end', $request['end'])
+            ->whereBetween('enrolls.created_at', [$start, $end])
             ->join('users', 'enrolls.user_id', 'users.id')
             ->select(
                 'enrolls.id',
-                'enrolls.cert',
+                'enrolls.certTrain',
                 'users.name',
                 'users.surname'
             )
@@ -76,6 +64,29 @@ class ReportController extends Controller
             ->get();
 
         return response()->json($data);
+    }
+
+    public function reportTrain(Request $request)
+    {
+
+        $data = Carbon::parse($request['send'])->format('Y-m-d');
+        $res = Canva::where('section_id', $request['section_id'])
+                ->orderBy('id', 'DESC')
+                ->first()->id;
+
+        foreach ($request['enrolls'] as $r) {
+            Enroll::where('id', $r['id'])
+                ->update([
+                    'enddate' => $request['examdate'],
+                    'send' => $data,
+                    'certTrain' => $r['certTrain'],
+                    'canva_id' => $res
+                ]);
+        }
+
+        return response()->json([
+            'message' => 'Success!!'
+        ]);
     }
 
     /**

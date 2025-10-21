@@ -471,6 +471,7 @@
                                             {{ detailList.title }}
                                         </td>
                                     </tr>
+
                                     <tr>
                                         <td
                                             class="border border-gray-300 px-2 py-1 text-center"
@@ -485,73 +486,97 @@
                                         </td>
                                     </tr>
                                     <template
-                                        v-if="
-                                            detailList.event_id === 1 ||
-                                            detailList.event_id === 2
-                                        "
+                                        v-if="detailList.enddate === null"
                                     >
-                                        <tr>
-                                            <td
-                                                class="border border-gray-300 px-2 py-1 text-center"
-                                            >
-                                                เริ่ม - สิ้นสุด
-                                            </td>
-                                            <td
-                                                class="border border-gray-300 px-4 py-1 text-xs"
-                                            >
-                                                <span
-                                                    v-if="
-                                                        detailList.start !==
-                                                            null &&
-                                                        detailList.end !== null
-                                                    "
+                                        <template
+                                            v-if="
+                                                detailList.event_id === 1 ||
+                                                detailList.event_id === 2
+                                            "
+                                        >
+                                            <tr>
+                                                <td
+                                                    class="border border-gray-300 px-2 py-1 text-center"
                                                 >
-                                                    {{
-                                                        setMoment(
-                                                            detailList.start
-                                                        )
-                                                    }}
+                                                    เริ่ม - สิ้นสุด
+                                                </td>
+                                                <td
+                                                    class="border border-gray-300 px-4 py-1"
+                                                >
                                                     <span
-                                                        class="px-1 font-semibold"
-                                                        >-</span
+                                                        v-if="
+                                                            detailList.start !==
+                                                                null &&
+                                                            detailList.end !==
+                                                                null
+                                                        "
                                                     >
-                                                    {{
-                                                        setMoment(
-                                                            detailList.end
-                                                        )
-                                                    }}
-                                                </span>
-                                            </td>
-                                        </tr>
+                                                        {{
+                                                            setMoment(
+                                                                detailList.start
+                                                            )
+                                                        }}
+                                                        <span
+                                                            class="px-1 font-semibold"
+                                                            >-</span
+                                                        >
+                                                        {{
+                                                            setMoment(
+                                                                detailList.end
+                                                            )
+                                                        }}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td
+                                                    class="border border-gray-300 px-2 py-1 text-center"
+                                                >
+                                                    วันสอบ/อบรม
+                                                </td>
+                                                <td
+                                                    class="border border-gray-300 px-4 py-1"
+                                                >
+                                                    {{ detailList.examdate }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td
+                                                    class="border border-gray-300 px-2 py-1 text-center"
+                                                >
+                                                    เวลาสอบ/อบรม
+                                                </td>
+                                                <td
+                                                    class="border border-gray-300 px-4 py-1"
+                                                >
+                                                    {{ detailList.examtime }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td
+                                                    class="border border-gray-300 px-2 py-1 text-center"
+                                                >
+                                                    สถานที่สอบ/อบรม
+                                                </td>
+                                                <td
+                                                    class="border border-gray-300 px-4 py-1"
+                                                >
+                                                    <span
+                                                        v-if="
+                                                            detailList.status ===
+                                                            2
+                                                        "
+                                                    >
+                                                        {{ detailList.meet }}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </template>
                                         <tr>
                                             <td
                                                 class="border border-gray-300 px-2 py-1 text-center"
                                             >
-                                                วันสอบ/อบรม
-                                            </td>
-                                            <td
-                                                class="border border-gray-300 px-4 py-1"
-                                            >
-                                                {{ detailList.examdate }}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td
-                                                class="border border-gray-300 px-2 py-1 text-center"
-                                            >
-                                                เวลาสอบ/อบรม
-                                            </td>
-                                            <td
-                                                class="border border-gray-300 px-4 py-1 text-xs"
-                                            >
-                                                {{ detailList.examtime }}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td
-                                                class="border border-gray-300 px-2 py-1 text-center"
-                                            >
-                                                สถานที่สอบ/อบรม
+                                                อื่นๆ
                                             </td>
                                             <td
                                                 class="border border-gray-300 px-4 py-1"
@@ -561,27 +586,13 @@
                                                         detailList.status === 2
                                                     "
                                                 >
-                                                    {{ detailList.meet }}
+                                                    {{
+                                                        detailList.section_other
+                                                    }}
                                                 </span>
                                             </td>
                                         </tr>
                                     </template>
-                                    <tr>
-                                        <td
-                                            class="border border-gray-300 px-2 py-1 text-center"
-                                        >
-                                            อื่นๆ
-                                        </td>
-                                        <td
-                                            class="border border-gray-300 px-4 py-1"
-                                        >
-                                            <span
-                                                v-if="detailList.status === 2"
-                                            >
-                                                {{ detailList.section_other }}
-                                            </span>
-                                        </td>
-                                    </tr>
                                     <tr>
                                         <td
                                             colspan="2"
@@ -648,7 +659,7 @@
                                                 }}
                                             </span>
                                         </td>
-                                    </tr>                              
+                                    </tr>
                                     <template v-if="detailList.event_id === 3">
                                         <tr>
                                             <td
@@ -919,73 +930,97 @@
                                         </td>
                                     </tr>
                                     <template
-                                        v-if="
-                                            detailList.event_id === 1 ||
-                                            detailList.event_id === 2
-                                        "
+                                        v-if="detailList.enddate === null"
                                     >
-                                        <tr>
-                                            <td
-                                                class="border border-gray-300 px-2 py-1 text-center"
-                                            >
-                                                เริ่ม - สิ้นสุด
-                                            </td>
-                                            <td
-                                                class="border border-gray-300 px-4 py-1 text-xs"
-                                            >
-                                                <span
-                                                    v-if="
-                                                        detailList.start !==
-                                                            null &&
-                                                        detailList.end !== null
-                                                    "
+                                        <template
+                                            v-if="
+                                                detailList.event_id === 1 ||
+                                                detailList.event_id === 2
+                                            "
+                                        >
+                                            <tr>
+                                                <td
+                                                    class="border border-gray-300 px-2 py-1 text-center"
                                                 >
-                                                    {{
-                                                        setMoment(
-                                                            detailList.start
-                                                        )
-                                                    }}
+                                                    เริ่ม - สิ้นสุด
+                                                </td>
+                                                <td
+                                                    class="border border-gray-300 px-4 py-1"
+                                                >
                                                     <span
-                                                        class="px-1 font-semibold"
-                                                        >-</span
+                                                        v-if="
+                                                            detailList.start !==
+                                                                null &&
+                                                            detailList.end !==
+                                                                null
+                                                        "
                                                     >
-                                                    {{
-                                                        setMoment(
-                                                            detailList.end
-                                                        )
-                                                    }}
-                                                </span>
-                                            </td>
-                                        </tr>
+                                                        {{
+                                                            setMoment(
+                                                                detailList.start
+                                                            )
+                                                        }}
+                                                        <span
+                                                            class="px-1 font-semibold"
+                                                            >-</span
+                                                        >
+                                                        {{
+                                                            setMoment(
+                                                                detailList.end
+                                                            )
+                                                        }}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td
+                                                    class="border border-gray-300 px-2 py-1 text-center"
+                                                >
+                                                    วันสอบ/อบรม
+                                                </td>
+                                                <td
+                                                    class="border border-gray-300 px-4 py-1"
+                                                >
+                                                    {{ detailList.examdate }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td
+                                                    class="border border-gray-300 px-2 py-1 text-center"
+                                                >
+                                                    เวลาสอบ/อบรม
+                                                </td>
+                                                <td
+                                                    class="border border-gray-300 px-4 py-1"
+                                                >
+                                                    {{ detailList.examtime }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td
+                                                    class="border border-gray-300 px-2 py-1 text-center"
+                                                >
+                                                    สถานที่สอบ/อบรม
+                                                </td>
+                                                <td
+                                                    class="border border-gray-300 px-4 py-1"
+                                                >
+                                                    <span
+                                                        v-if="
+                                                            detailList.status ===
+                                                            2
+                                                        "
+                                                    >
+                                                        {{ detailList.meet }}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </template>
                                         <tr>
                                             <td
                                                 class="border border-gray-300 px-2 py-1 text-center"
                                             >
-                                                วันสอบ/อบรม
-                                            </td>
-                                            <td
-                                                class="border border-gray-300 px-4 py-1"
-                                            >
-                                                {{ detailList.examdate }}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td
-                                                class="border border-gray-300 px-2 py-1 text-center"
-                                            >
-                                                เวลาสอบ/อบรม
-                                            </td>
-                                            <td
-                                                class="border border-gray-300 px-4 py-1"
-                                            >
-                                                {{ detailList.examtime }}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td
-                                                class="border border-gray-300 px-2 py-1 text-center"
-                                            >
-                                                สถานที่สอบ/อบรม
+                                                อื่นๆ
                                             </td>
                                             <td
                                                 class="border border-gray-300 px-4 py-1"
@@ -995,27 +1030,13 @@
                                                         detailList.status === 2
                                                     "
                                                 >
-                                                    {{ detailList.meet }}
+                                                    {{
+                                                        detailList.section_other
+                                                    }}
                                                 </span>
                                             </td>
                                         </tr>
                                     </template>
-                                    <tr>
-                                        <td
-                                            class="border border-gray-300 px-2 py-1 text-center"
-                                        >
-                                            อื่นๆ
-                                        </td>
-                                        <td
-                                            class="border border-gray-300 px-4 py-1"
-                                        >
-                                            <span
-                                                v-if="detailList.status === 2"
-                                            >
-                                                {{ detailList.section_other }}
-                                            </span>
-                                        </td>
-                                    </tr>
                                     <tr>
                                         <td
                                             colspan="2"
@@ -1076,7 +1097,7 @@
                                                 }}
                                             </span>
                                         </td>
-                                    </tr>                              
+                                    </tr>
                                     <template v-if="detailList.event_id === 3">
                                         <tr>
                                             <td
@@ -1193,7 +1214,7 @@
                                             class="px-2 py-1 bg-gray-100"
                                         ></td>
                                     </tr>
-                                     <tr v-if="detailList.course_id !== null">
+                                    <tr v-if="detailList.course_id !== null">
                                         <td
                                             class="border border-gray-300 px-2 py-1 text-center"
                                         >

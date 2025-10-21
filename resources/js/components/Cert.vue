@@ -79,19 +79,25 @@
                                                         scope="col"
                                                         class="p-4.5 text-left whitespace-nowrap text-sm leading-6 font-semibold text-gray-900 capitalize"
                                                     >
-                                                        Budget
+                                                        Complete Date
                                                     </th>
                                                     <th
                                                         scope="col"
                                                         class="p-4.5 text-left whitespace-nowrap text-sm leading-6 font-semibold text-gray-900 capitalize"
                                                     >
-                                                        Comp. Date
+                                                        Exam. cert
                                                     </th>
                                                     <th
                                                         scope="col"
                                                         class="p-4.5 text-left whitespace-nowrap text-sm leading-6 font-semibold text-gray-900 capitalize"
                                                     >
-                                                        Cert / File
+                                                        Train. cert
+                                                    </th>
+                                                    <th
+                                                        scope="col"
+                                                        class="p-4.5 text-left whitespace-nowrap text-sm leading-6 font-semibold text-gray-900 capitalize"
+                                                    >
+                                                        File
                                                     </th>
                                                 </tr>
                                             </thead>
@@ -176,7 +182,7 @@
                                                         </div>
                                                     </td>
                                                     <td
-                                                        class="p-4.5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900"
+                                                        class="p-4.5 whitespace-nowrap text-sm leading-6 font-semibold text-gray-900"
                                                     >
                                                         {{
                                                             setEvent(
@@ -185,7 +191,7 @@
                                                         }}
                                                     </td>
                                                     <td
-                                                        class="p-4.5 whitespace-nowrap text-xs leading-6 font-medium text-gray-900"
+                                                        class="p-4.5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900"
                                                     >
                                                         {{
                                                             setMoment(
@@ -194,26 +200,7 @@
                                                         }}
                                                     </td>
                                                     <td
-                                                        class="p-4.5 whitespace-nowrap text-sm leading-6 font-semibold text-gray-900"
-                                                    >
-                                                        <span
-                                                            v-if="
-                                                                enroll.pay !==
-                                                                    null ||
-                                                                enroll.tag !==
-                                                                    null
-                                                            "
-                                                        >
-                                                            {{
-                                                                Number(
-                                                                    enroll.pay +
-                                                                        enroll.tag
-                                                                ).toLocaleString()
-                                                            }}
-                                                        </span>
-                                                    </td>
-                                                    <td
-                                                        class="p-4.5 whitespace-nowrap text-xs leading-6 font-medium text-gray-900"
+                                                        class="p-4.5 whitespace-nowrap text-sm leading-6 font-medium text-gray-900"
                                                     >
                                                         {{
                                                             setMoment(
@@ -230,22 +217,50 @@
                                                             class="cursor-pointer hover:scale-120"
                                                             v-if="
                                                                 enroll.event_id ===
-                                                                2 && enroll.certTrain === 1
+                                                                    1 &&
+                                                                enroll.certTest ===
+                                                                    1
                                                             "
                                                             @click="
-                                                                showCert(
+                                                                showCertTest(
                                                                     enroll.id
                                                                 )
                                                             "
                                                         ></box-icon>
-
+                                                    </td>
+                                                    <td
+                                                        class="p-4.5 whitespace-nowrap text-xs leading-6 font-medium text-gray-900"
+                                                    >
+                                                        <box-icon
+                                                            name="certification"
+                                                            color="#ad65d9"
+                                                            class="cursor-pointer hover:scale-120"
+                                                            v-if="
+                                                                enroll.event_id ===
+                                                                    2 &&
+                                                                enroll.certTrain ===
+                                                                    1
+                                                            "
+                                                            @click="
+                                                                showCertTrain(
+                                                                    enroll.id,
+                                                                    enroll.certTrain
+                                                                )
+                                                            "
+                                                        ></box-icon>
+                                                    </td>
+                                                    <td
+                                                        class="p-4.5 whitespace-nowrap text-xs leading-6 font-medium text-gray-900"
+                                                    >
                                                         <box-icon
                                                             name="file"
                                                             color="oklch(76.8% 0.233 130.85)"
                                                             class="cursor-pointer hover:scale-120"
                                                             v-if="
                                                                 enroll.event_id ===
-                                                                3
+                                                                    3 &&
+                                                                enroll.complete !==
+                                                                    null
                                                             "
                                                             @click="
                                                                 showComplete(
@@ -333,60 +348,6 @@
             </div>
         </div>
     </transition>
-
-    <!-- Modal Cert -->
-    <transition name="fade" mode="out-in">
-        <div class="relative z-10" v-show="this.modalCert">
-            <div
-                class="fixed inset-0 bg-gray-500/50 bg-opacity-90 transition-opacity"
-            ></div>
-            <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
-                <div
-                    class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
-                >
-                    <div
-                        class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"
-                    >
-                        <div class="bg-white p-4 rounded-2xl mt-4">
-                            <div
-                                class="font-semibold text-xl text-gray-400 mb-2"
-                            >
-                                ** กรุณาเลือกไฟล์
-                            </div>
-                            <div
-                                class="relative border-2 border-dashed rounded-xl cursor-pointer hover:border-lime-400 hover:border-3 p-4 group mb-2"
-                                v-for="(cert, index) in certList"
-                                :key="index"
-                                @click="linkCert(cert.title, cert.created_at)"
-                            >
-                                <span
-                                    class="flex items-center jusitfy-center font-semibold text-lg text-[#85c1e9]"
-                                >
-                                    <box-icon
-                                        name="certification"
-                                        color="#ad65d9"
-                                        class="cursor-pointer hover:scale-115"
-                                    ></box-icon>
-                                    : {{ cert.title }}
-                                </span>
-                            </div>
-                        </div>
-                        <div
-                            class="bg-gray-50 px-4 py-2 sm:flex sm:flex-row-reverse sm:px-6"
-                        >
-                            <button
-                                type="button"
-                                class="inline-flex w-full justify-center rounded-lg bg-red-300 px-3 py-1.5 text-sm text-white shadow-xs hover:bg-red-400 sm:ml-3 sm:w-auto"
-                                @click="close()"
-                            >
-                                ปิด
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </transition>
 </template>
 
 <script>
@@ -407,7 +368,6 @@ export default {
             enrollList: "",
             ////////////////////////////////////////////////////////////////
             modalComplete: false,
-            modalCert: false,
             ////////////////////////////////////////////////////////////////
             completeList: [],
             certList: [],
@@ -445,6 +405,91 @@ export default {
             this.modalCert = false;
         },
         ////////////////////////////////////////////////////////////////
+        showCertTrain(id, code) {
+            // SweetAlert Confirm
+            Swal.fire({
+                title: "Download Certificate?",
+                text: "Do you want to download the Certificate?",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes",
+                customClass: {
+                    popup: "rounded-xl shadow-lg bg-white font-poppins",
+                    title: "text-2xl font-bold text-gray-800",
+                    htmlContainer: "text-base text-gray-600",
+                    confirmButton:
+                        "bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2",
+                    cancelButton:
+                        "bg-gray-300 hover:bg-gray-400 text-black font-medium px-4 py-2 ml-2",
+                },
+                didOpen: () => {
+                    Swal.getPopup().style.fontFamily = "Poppins, sans-serif";
+                },
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    if (code === 1) {
+                        axios
+                            .get("/api/certTrain/" + id)
+                            .then((response) => {
+                                Swal.fire({
+                                    title: "Download Certificate Complete",
+                                    icon: "success",
+                                    draggable: true,
+                                    customClass: {
+                                        popup: "rounded-xl shadow-lg bg-white font-poppins",
+                                        title: "text-2xl text-gray-800",
+                                        htmlContainer:
+                                            "text-base text-gray-600",
+                                        confirmButton:
+                                            "bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2",
+                                        cancelButton:
+                                            "bg-gray-300 hover:bg-gray-400 text-black font-medium px-4 py-2 ml-2",
+                                    },
+                                    didOpen: () => {
+                                        Swal.getPopup().style.fontFamily =
+                                            "Poppins, sans-serif";
+                                    },
+                                });
+                            })
+                            .catch(() => {
+                                Swal.fire({
+                                    title: "Error!",
+                                    text: "Can't Download. Contact to Staff Please.",
+                                    icon: "error",
+                                    customClass: {
+                                        popup: "rounded-xl shadow-lg bg-white font-poppins",
+                                        title: "text-2xl font-bold text-gray-800",
+                                        confirmButton:
+                                            "bg-rose-300 hover:bg-rose-400 text-white font-medium px-4 py-2",
+                                    },
+                                    didOpen: () => {
+                                        Swal.getPopup().style.fontFamily =
+                                            "Poppins, sans-serif";
+                                    },
+                                });
+                            });
+                    } else {
+                        Swal.fire({
+                            title: "Error!",
+                            text: "Can't Download. Contact to Staff Please.",
+                            icon: "error",
+                            customClass: {
+                                popup: "rounded-xl shadow-lg bg-white font-poppins",
+                                title: "text-2xl font-bold text-gray-800",
+                                confirmButton:
+                                    "bg-rose-300 hover:bg-rose-400 text-white font-medium px-4 py-2",
+                            },
+                            didOpen: () => {
+                                Swal.getPopup().style.fontFamily =
+                                    "Poppins, sans-serif";
+                            },
+                        });
+                    }
+                }
+            });
+        },
         showComplete(id) {
             this.close();
 
@@ -454,24 +499,15 @@ export default {
                 this.modalComplete = true;
             });
         },
-        showCert(id) {
-            this.close();
-
-            axios.get("/api/cert/" + id).then((response) => {
-                this.certList = response.data;
-
-                this.modalCert = true;
-            });
-        },
         ////////////////////////////////////////////////////////////////
         linkComplete(id, code) {
             const url = moment(code).format("YYYY/MM/DD");
             window.open("files/completes/" + url + "/" + id, "_blank");
         },
-        linkCert(id, code) {
-            const url = moment(code).format("YYYY/MM/DD");
-            window.open("files/certs/" + url + "/" + id, "_blank");
-        },
+        // linkCert(id, code) {
+        //     const url = moment(code).format("YYYY/MM/DD");
+        //     window.open("files/certs/" + url + "/" + id, "_blank");
+        // },
     },
     components: {
         TailwindPagination,

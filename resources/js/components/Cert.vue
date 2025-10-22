@@ -431,32 +431,16 @@ export default {
                 if (result.isConfirmed) {
                     if (code === 1) {
                         axios
-                            .get("/api/certTrain/" + id)
-                            .then((response) => {
-                                Swal.fire({
-                                    title: "Download Certificate Complete",
-                                    icon: "success",
-                                    draggable: true,
-                                    customClass: {
-                                        popup: "rounded-xl shadow-lg bg-white font-poppins",
-                                        title: "text-2xl text-gray-800",
-                                        htmlContainer:
-                                            "text-base text-gray-600",
-                                        confirmButton:
-                                            "bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2",
-                                        cancelButton:
-                                            "bg-gray-300 hover:bg-gray-400 text-black font-medium px-4 py-2 ml-2",
-                                    },
-                                    didOpen: () => {
-                                        Swal.getPopup().style.fontFamily =
-                                            "Poppins, sans-serif";
-                                    },
-                                });
+                            .head(`/api/certTrain/${id}`)
+                            .then(() => {
+                                // ถ้ามีไฟล์จริง ค่อยเปิดโหลด
+                                window.open(`/api/certTrain/${id}`, "_blank");
                             })
                             .catch(() => {
+                                // ถ้าไม่มีไฟล์
                                 Swal.fire({
                                     title: "Error!",
-                                    text: "Can't Download. Contact to Staff Please.",
+                                    text: "Not Found. Contact to Staff Please.",
                                     icon: "error",
                                     customClass: {
                                         popup: "rounded-xl shadow-lg bg-white font-poppins",

@@ -202,15 +202,8 @@
 
                     <span
                         >อบรมระหว่างวันที่ :
-                        <transition name="fade" mode="out-in">
-                            <span
-                                v-if="errors.examdate"
-                                class="text-rose-300 text-sm ml-2"
-                                >{{ errors.examdate }}</span
-                            ></transition
-                        >
                         <div class="font-semibold">
-                            {{ moment(examdate).format("LL") }}
+                            {{ moment(data.start).format("LL") }} - {{ moment(data.end).format("LL") }}
                         </div></span
                     >
                     <span class="text-sm"

@@ -27,7 +27,7 @@ class SectionController extends Controller
         return response()->json($data);
     }
 
-    public function sectionExam()
+    public function sectionTest()
     {
         $data = Section::where('content_id', 1)->get();
 

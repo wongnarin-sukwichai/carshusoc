@@ -35,6 +35,7 @@ class ReportExport implements FromCollection, WithHeadings
             ->join('users', 'enrolls.user_id', 'users.id')
             ->select(
                 'enrolls.id',
+                'enrolls.scoreTest',
                 'enrolls.created_at',
                 'contents.title AS content_title',
                 'contents.short_name',
@@ -62,6 +63,7 @@ class ReportExport implements FromCollection, WithHeadings
     {
         return [
             'รหัสรายการ',
+            'คะแนนสอบ',
             'วันที่',
             'หมวดหมู่',
             'ชื่อย่อ',

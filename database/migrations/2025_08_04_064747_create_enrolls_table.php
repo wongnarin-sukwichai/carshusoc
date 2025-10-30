@@ -23,6 +23,7 @@ return new class extends Migration
             $table->date('enddate')->nullable()->comment('วันที่สอบ/อบรม');
             $table->date('send')->nullable()->comment('ให้ไว้ ณ วันที่');
             $table->integer('certTest')->nullable()->comment('ใบคะแนน null=ไม่ผ่าน,1=ผ่าน');
+            $table->integer('scoreTest')->nullable()->comment('คะแนนสอบ');
             $table->integer('certTrain')->nullable()->comment('ใบอบรม null=ไม่ผ่าน,1=ผ่าน');
             $table->integer('canva_id')->nullable();
             $table->date('submit')->nullable()->comment('กำหนดวันรับงานคืน');

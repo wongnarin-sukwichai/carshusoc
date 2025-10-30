@@ -161,59 +161,69 @@
                 >
                     <box-icon
                         name="certification"
-                        class="mr-2"                   
+                        class="mr-2"
                         color="#85c1e9"
                     ></box-icon>
-                    จัดการสิทธิ์การรับใบ Certificate Electronic
+                    จัดการสิทธิ์การรับใบ Certificate (สอบ)
                 </div>
 
-                <div class="grid grid-cols-3 text-sm px-4">
-                    <div class="flex flex-col gap-2">
-                        <!-- เลขบัตรประชาชน -->
-                        <label
-                            class="inline-flex items-center gap-x-2 cursor-pointer"
-                        >
-                            <input
-                                type="radio"
-                                name="check"
-                                value="all"
-                                class="border-gray-300 cursor-pointer"
-                                v-model="selectMode"
-                                @change="toggleAll(true)"
-                            />
-                            <span class="text-gray-700">เลือกทั้งหมด</span>
-                        </label>
+                <div class="grid grid-cols-5 text-sm px-4">
+                    <div class="flex flex-col items-start gap-2">
+                        <input
+                            type="file"
+                            ref="fileInput"
+                            @change="handleFile"
+                            class="block text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                        />
+                    </div>
 
-                        <!-- เลขหนังสือเดินทาง-->
-                        <label
-                            class="inline-flex items-center gap-x-2 cursor-pointer"
-                        >
-                            <input
-                                type="radio"
-                                name="check"
-                                value="none"
-                                class="border-gray-300 cursor-pointer"
-                                v-model="selectMode"
-                                @change="toggleAll(false)"
-                            />
-                            <span class="text-gray-700">ไม่เลือกทั้งหมด</span>
-                        </label>
+                    <div
+                        class="text-sm mr-4 flex items-center justify-center border-2 border-dashed p-2 w-30 rounded-xl bg-green-200 border-green-400 hover:bg-green-300 cursor-pointer"
+                        @click="importScore()"
+                    >
+                        <box-icon
+                            name="import"
+                            class="mr-2"
+                            color="oklch(72.3% 0.219 149.579)"
+                        ></box-icon>
+                        นำเข้าข้อมูล
                     </div>
 
                     <span
-                        >วันสอบในวันที่ :
+                        >สมัครสอบระหว่างวันที่ :
+                        <transition name="fade" mode="out-in">
+                            <span
+                                v-if="errors.examdate"
+                                class="text-rose-300 text-sm ml-2"
+                                >{{ errors.examdate }}</span
+                            ></transition
+                        >
                         <div class="font-semibold">
-                            {{ moment(data.examdate).format("LL") }}
+                            {{ moment(data.start).format("LL") }} -
+                            {{ moment(data.end).format("LL") }}
+                        </div></span
+                    >
+                    <span
+                        >ห้องสอบ :
+                        <transition name="fade" mode="out-in">
+                            <span
+                                v-if="errors.meet"
+                                class="text-rose-300 text-sm ml-2"
+                                >{{ data.meet }}</span
+                            ></transition
+                        >
+                        <div class="font-semibold">
+                            {{ data.meet }}
                         </div></span
                     >
                     <span class="text-sm"
-                        >ให้ไว้ ณ วันที่ :
-                        <Datepicker class="ml-2" v-model="this.give" />
+                        >สอบวันที่ :
+                        <Datepicker class="ml-2" v-model="this.send" />
                         <transition name="fade" mode="out-in">
                             <span
-                                v-if="errors.give"
+                                v-if="errors.send"
                                 class="text-rose-300 text-sm ml-2"
-                                >{{ errors.give }}</span
+                                >{{ errors.send }}</span
                             ></transition
                         >
                     </span>
@@ -228,16 +238,14 @@
                         <div
                             v-for="enroll in enrollList"
                             :key="enroll.id"
-                            class="flex items-center"
+                            class="flex items-center justify-between px-3 py-2 border-b border-gray-200"
                         >
-                            <input
-                                type="checkbox"
-                                class="cursor-pointer mr-2"
-                                v-model="enroll.cert"
-                                :true-value="1"
-                                :false-value="null"
-                            />
-                            {{ enroll.name }} {{ enroll.surname }}
+                            <span>{{ enroll.name }} {{ enroll.surname }}</span>
+                            <span
+                                class="text-sm font-semibold text-blue-800 bg-blue-100 px-3 py-1 rounded-full"
+                            >
+                                {{ enroll.scoreTest }}
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -269,6 +277,7 @@ import Datepicker from "vuejs3-datepicker";
 import moment from "moment";
 import "moment/dist/locale/th";
 moment.locale("th");
+import * as XLSX from "xlsx";
 
 export default {
     async mounted() {
@@ -283,26 +292,28 @@ export default {
             sectionShow: false,
             showEnroll: false,
             moment: moment,
-            selectMode: "",
-            give: "",
             ////////////////////////////////////////////////////////////////
+            examdate: "",
+            send: "",
             data: {
+                section_id: "",
                 start: "",
                 end: "",
-                section_id: "",
-                examdate: "",
+                meet: "",
             },
             errors: {
+                section_id: "",
                 start: "",
                 end: "",
-                section_id: "",
-                give: "",
+                meet: "",
+                send: "",
             },
+            fileData: null,
         };
     },
     methods: {
         getSection() {
-            axios.get("/api/sectionTrain").then((response) => {
+            axios.get("/api/sectionTest").then((response) => {
                 this.sectionList = response.data;
             });
         },
@@ -317,7 +328,8 @@ export default {
                 const res = arr.find((selection) => selection.id == id);
                 this.data.start = res.start;
                 this.data.end = res.end;
-                this.data.examdate = res.examdate;
+                this.examdate = res.examdate;
+                this.data.meet = res.meet;
                 return res ? res.title : null;
             }
 
@@ -330,7 +342,7 @@ export default {
         ////////////////////////////////////////////////////////////////
         toggleAll(value) {
             this.enrollList.forEach((enroll) => {
-                enroll.cert = value ? "1" : null;
+                enroll.certTrain = value ? "1" : null;
             });
         },
         ////////////////////////////////////////////////////////////////
@@ -359,7 +371,7 @@ export default {
         validateChk() {
             let isValid = true;
 
-            const req = ["give"];
+            const req = ["examdate", "meet", "send"];
 
             for (let key of req) {
                 const value = this[key];
@@ -507,7 +519,7 @@ export default {
                     return;
                 } else {
                     axios
-                        .post("/api/reportSearch", this.data)
+                        .post("/api/reportSearchTest", this.data)
                         .then((response) => {
                             if (!response.data || response.data.length === 0) {
                                 this.showEnroll = false;
@@ -551,13 +563,93 @@ export default {
             }
         },
         async sendata() {
-            try {
-                if (!this.validateChk()) {
-                    // SweetAlert Error
+            const confirm = await Swal.fire({
+                title: "Are you sure?",
+                text: "Do you want to confirm the changes?",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes",
+                customClass: {
+                    popup: "rounded-xl shadow-lg bg-white font-poppins",
+                    title: "text-2xl font-bold text-gray-800",
+                    htmlContainer: "text-base text-gray-600",
+                    confirmButton:
+                        "bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2",
+                    cancelButton:
+                        "bg-gray-300 hover:bg-gray-400 text-black font-medium px-4 py-2 ml-2",
+                },
+                didOpen: () => {
+                    Swal.getPopup().style.fontFamily = "Poppins, sans-serif";
+                },
+            });
+
+            // หากกดปุ่มยืนยัน
+            if (confirm.isConfirmed) {
+                try {
+                    if (!this.validateChk()) {
+                        await Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: "Check required fields please.",
+                            customClass: {
+                                popup: "rounded-xl shadow-lg bg-white font-poppins",
+                                title: "text-2xl font-bold text-gray-800",
+                                confirmButton:
+                                    "bg-rose-300 hover:bg-rose-400 text-white font-medium px-4 py-2",
+                            },
+                            didOpen: () => {
+                                Swal.getPopup().style.fontFamily =
+                                    "Poppins, sans-serif";
+                            },
+                        });
+                        return;
+                    }
+
+                    // แสดง Loading ระหว่างส่งข้อมูล
                     Swal.fire({
+                        title: "Processing...",
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        didOpen: () => Swal.showLoading(),
+                        customClass: {
+                            popup: "rounded-xl shadow-lg bg-white font-poppins",
+                            title: "text-2xl font-bold text-gray-800",
+                        },
+                    });
+
+                    await axios.post("/api/reportTrain", {
+                        section_id: this.data.section_id,
+                        examdate: this.examdate,
+                        send: this.send,
+                        enrolls: this.enrollList,
+                    });
+
+                    Swal.close();
+
+                    await Swal.fire({
+                        title: "Success!!",
+                        text: "บันทึกสำเร็จ",
+                        icon: "success",
+                        customClass: {
+                            popup: "rounded-xl shadow-lg bg-white font-poppins",
+                            title: "text-2xl font-bold text-gray-800",
+                            htmlContainer: "text-base text-gray-600",
+                            confirmButton:
+                                "bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2",
+                        },
+                        didOpen: () => {
+                            Swal.getPopup().style.fontFamily =
+                                "Anuphan, sans-serif";
+                        },
+                    });
+                } catch (err) {
+                    Swal.close();
+                    Swal.fire({
+                        title: "Error!",
+                        text: "ไม่สามารถบันทึกข้อมูลได้ กรุณาลองใหม่อีกครั้ง",
                         icon: "error",
-                        title: "Error",
-                        text: "Check required fields please.",
                         customClass: {
                             popup: "rounded-xl shadow-lg bg-white font-poppins",
                             title: "text-2xl font-bold text-gray-800",
@@ -566,67 +658,56 @@ export default {
                         },
                         didOpen: () => {
                             Swal.getPopup().style.fontFamily =
-                                "Poppins, sans-serif";
+                                "Anuphan, sans-serif";
                         },
                     });
-                    return;
+                }
+            }
+        },
+        handleFile(event) {
+            this.fileData = event.target.files[0];
+        },
+        importScore() {
+            if (!this.fileData) {
+                alert("กรุณาเลือกไฟล์ก่อน!");
+                return;
+            }
+
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                const data = new Uint8Array(e.target.result);
+                const workbook = XLSX.read(data, { type: "array" });
+                const sheetName = workbook.SheetNames[0];
+                const worksheet = workbook.Sheets[sheetName];
+
+                // แปลงเป็น Array ของแถว
+                const excelData = XLSX.utils.sheet_to_json(worksheet, {
+                    header: 1,
+                });
+
+                // ลูปข้อมูล (ข้ามหัวตาราง)
+                let updatedCount = 0;
+                for (let i = 1; i < excelData.length; i++) {
+
+                    const row = excelData[i];
+                    const id = row[0]; // คอลัมน์ A
+                    const score = row[1]; // คอลัมน์ R
+
+                    console.log("Row data:", row);
+
+                    const found = this.enrollList.find((e) => e.id === id);
+                    if (found) {
+                        found.scoreTest = score;
+                        updatedCount++;
+                    }
                 }
 
-                // เปิด loading ค้างไว้
-                Swal.fire({
-                    title: "Processing...",
-                    allowOutsideClick: false,
-                    allowEscapeKey: false,
-                    didOpen: () => Swal.showLoading(),
-                    customClass: {
-                        popup: "rounded-xl shadow-lg bg-white font-poppins",
-                        title: "text-2xl font-bold text-gray-800",
-                    },
-                });
+                console.log("✅ Updated enrollList:", this.enrollList);
+                alert(`นำเข้าคะแนนสำเร็จ ${updatedCount} รายการ`);
+            };
 
-                await axios
-                    .post("/api/report", {
-                        give: this.give,
-                        enrolls: this.enrollList,
-                    })
-                    .then((response) => {});
-
-                Swal.close();
-                Swal.fire({
-                    title: "Success!!",
-                    text: "บันทึกสำเร็จ",
-                    icon: "success",
-                    customClass: {
-                        popup: "rounded-xl shadow-lg bg-white font-poppins",
-                        title: "text-2xl font-bold text-gray-800",
-                        htmlContainer: "text-base text-gray-600",
-                        confirmButton:
-                            "bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2",
-                        cancelButton:
-                            "bg-gray-300 hover:bg-gray-400 text-black font-medium px-4 py-2 ml-2",
-                    },
-                    didOpen: () => {
-                        Swal.getPopup().style.fontFamily =
-                            "Anuphan, sans-serif";
-                    },
-                });
-            } catch (err) {
-                Swal.fire({
-                    title: "Error!",
-                    text: "ไม่สามารถบันทึกข้อมูลได้ กรุณาลองใหม่อีกครั้ง",
-                    icon: "error",
-                    customClass: {
-                        popup: "rounded-xl shadow-lg bg-white font-poppins",
-                        title: "text-2xl font-bold text-gray-800",
-                        confirmButton:
-                            "bg-rose-300 hover:bg-rose-400 text-white font-medium px-4 py-2",
-                    },
-                    didOpen: () => {
-                        Swal.getPopup().style.fontFamily =
-                            "Anuphan, sans-serif";
-                    },
-                });
-            }
+            reader.readAsArrayBuffer(this.fileData);
         },
     },
     components: {

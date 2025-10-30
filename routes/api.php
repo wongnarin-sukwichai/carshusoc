@@ -66,7 +66,7 @@ Route::middleware(['web'])->group(function () {
 
         Route::resource('section', SectionController::class);
         Route::get('sectionTrain', [SectionController::class, 'sectionTrain']);
-        Route::get('sectionExam', [SectionController::class, 'sectionExam']);
+        Route::get('sectionTest', [SectionController::class, 'sectionTest']);
 
         Route::resource('enroll', EnrollController::class);
 
@@ -89,6 +89,9 @@ Route::middleware(['web'])->group(function () {
         Route::post('reportSearchTrain', [ReportController::class, 'reportSearchTrain']);
         Route::post('reportTrain', [ReportController::class, 'reportTrain']);
 
+        Route::post('reportSearchTest', [ReportController::class, 'reportSearchTest']);
+        Route::post('reportTest', [ReportController::class, 'reportTest']);
+
         Route::resource('export', ExportController::class);
 
         Route::post('uploadReceipt', [UploadController::class, 'uploadReceipt']);
@@ -97,7 +100,7 @@ Route::middleware(['web'])->group(function () {
 
         Route::resource('email', EmailController::class);
 
-        Route::get('chkPass',[EnrollController::class, 'chkPass']);
+        Route::get('chkPass', [EnrollController::class, 'chkPass']);
 
         ////////////////////////// Member //////////////////////////////////
         Route::get('showEnroll', [EnrollController::class, 'showEnroll']);

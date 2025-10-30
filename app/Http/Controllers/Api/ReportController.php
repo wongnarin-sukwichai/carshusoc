@@ -89,6 +89,27 @@ class ReportController extends Controller
         ]);
     }
 
+    public function reportSearchTest(Request $request)
+    {
+        $start = Carbon::parse($request['start'])->startOfDay();
+        $end = Carbon::parse($request['end'])->startOfDay();
+
+        $data = DB::table('enrolls')
+            ->where('enrolls.section_id', $request['section_id'])
+            ->whereBetween('enrolls.created_at', [$start, $end])
+            ->join('users', 'enrolls.user_id', 'users.id')
+            ->select(
+                'enrolls.id',
+                'enrolls.scoreTest',
+                'users.name',
+                'users.surname'
+            )
+            ->orderBy('users.name', 'asc')
+            ->get();
+
+        return response()->json($data);
+    }
+
     /**
      * Show the form for editing the specified resource.
      */

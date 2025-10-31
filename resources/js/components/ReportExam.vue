@@ -209,11 +209,11 @@
                             <span
                                 v-if="errors.meet"
                                 class="text-rose-300 text-sm ml-2"
-                                >{{ data.meet }}</span
+                                >{{ meet }}</span
                             ></transition
                         >
                         <div class="font-semibold">
-                            {{ data.meet }}
+                            {{ meet }}
                         </div></span
                     >
                     <span class="text-sm"
@@ -234,18 +234,61 @@
                 <div
                     class="border-2 border-gray-200 text-lg p-4 rounded-xl mt-4"
                 >
-                    <div class="grid grid-cols-6 grap-4 text-sm">
+                    <div class="grid grid-cols-4 grap-4 text-sm">
                         <div
                             v-for="enroll in enrollList"
                             :key="enroll.id"
                             class="flex items-center justify-between px-3 py-2 border-b border-gray-200"
                         >
                             <span>{{ enroll.name }} {{ enroll.surname }}</span>
-                            <span
-                                class="text-sm font-semibold text-blue-800 bg-blue-100 px-3 py-1 rounded-full"
-                            >
-                                {{ enroll.scoreTest }}
-                            </span>
+                            <div class="relative group inline-block">
+                                <span
+                                    class="text-sm font-semibold text-blue-800 bg-blue-100 px-3 py-1 rounded-full cursor-pointer"
+                                >
+                                    {{ enroll.listen }}
+                                </span>
+                                <div
+                                    class="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 hidden group-hover:block bg-gray-600 text-white text-xs rounded-md px-2 py-1 whitespace-nowrap shadow-lg z-10"
+                                >
+                                    Listening
+                                </div>
+                            </div>
+                             <div class="relative group inline-block">
+                                <span
+                                    class="text-sm font-semibold text-blue-800 bg-blue-100 px-3 py-1 rounded-full cursor-pointer"
+                                >
+                                    {{ enroll.reading }}
+                                </span>
+                                <div
+                                    class="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 hidden group-hover:block bg-gray-600 text-white text-xs rounded-md px-2 py-1 whitespace-nowrap shadow-lg z-10"
+                                >
+                                    Reading
+                                </div>
+                            </div>
+                            <div class="relative group inline-block">
+                                <span
+                                    class="text-sm font-semibold text-blue-800 bg-blue-100 px-3 py-1 rounded-full cursor-pointer"
+                                >
+                                    {{ enroll.conver }}
+                                </span>
+                                <div
+                                    class="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 hidden group-hover:block bg-gray-600 text-white text-xs rounded-md px-2 py-1 whitespace-nowrap shadow-lg z-10"
+                                >
+                                    Conversations
+                                </div>
+                            </div>
+                            <div class="relative group inline-block">
+                                <span
+                                    class="text-sm font-semibold text-blue-800 bg-blue-100 px-3 py-1 rounded-full cursor-pointer"
+                                >
+                                    {{ enroll.grammar }}
+                                </span>
+                                <div
+                                    class="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 hidden group-hover:block bg-gray-600 text-white text-xs rounded-md px-2 py-1 whitespace-nowrap shadow-lg z-10"
+                                >
+                                    Grammar
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -295,11 +338,11 @@ export default {
             ////////////////////////////////////////////////////////////////
             examdate: "",
             send: "",
+            meet: "",
             data: {
                 section_id: "",
                 start: "",
                 end: "",
-                meet: "",
             },
             errors: {
                 section_id: "",
@@ -329,7 +372,7 @@ export default {
                 this.data.start = res.start;
                 this.data.end = res.end;
                 this.examdate = res.examdate;
-                this.data.meet = res.meet;
+                this.meet = res.meet;
                 return res ? res.title : null;
             }
 
@@ -338,12 +381,6 @@ export default {
         ////////////////////////////////////////////////////////////////
         showEvent() {
             this.sectionShow = !this.sectionShow;
-        },
-        ////////////////////////////////////////////////////////////////
-        toggleAll(value) {
-            this.enrollList.forEach((enroll) => {
-                enroll.certTrain = value ? "1" : null;
-            });
         },
         ////////////////////////////////////////////////////////////////
         validateData() {
@@ -619,10 +656,11 @@ export default {
                         },
                     });
 
-                    await axios.post("/api/reportTrain", {
+                    await axios.post("/api/reportTest", {
                         section_id: this.data.section_id,
                         examdate: this.examdate,
                         send: this.send,
+
                         enrolls: this.enrollList,
                     });
 
@@ -689,22 +727,41 @@ export default {
                 // ลูปข้อมูล (ข้ามหัวตาราง)
                 let updatedCount = 0;
                 for (let i = 1; i < excelData.length; i++) {
-
                     const row = excelData[i];
                     const id = row[0]; // คอลัมน์ A
-                    const score = row[1]; // คอลัมน์ R
+                    const listen = row[1]; // คอลัมน์ R
+                    const reading = row[2]; // คอลัมน์ R
+                    const conver = row[3]; // คอลัมน์ R
+                    const grammar = row[4]; // คอลัมน์ R
 
                     console.log("Row data:", row);
 
                     const found = this.enrollList.find((e) => e.id === id);
                     if (found) {
-                        found.scoreTest = score;
+                        found.listen = listen;
+                        found.reading = reading;
+                        found.conver = conver;
+                        found.grammar= grammar;
                         updatedCount++;
                     }
                 }
 
-                console.log("✅ Updated enrollList:", this.enrollList);
-                alert(`นำเข้าคะแนนสำเร็จ ${updatedCount} รายการ`);
+                Swal.fire({
+                    title: "Success!!",
+                    text: "นำเข้าคะแนนสำเร็จ " + updatedCount + " รายการ",
+                    icon: "success",
+                    customClass: {
+                        popup: "rounded-xl shadow-lg bg-white font-poppins",
+                        title: "text-2xl font-bold text-gray-800",
+                        htmlContainer: "text-base text-gray-600",
+                        confirmButton:
+                            "bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2",
+                    },
+                    didOpen: () => {
+                        Swal.getPopup().style.fontFamily =
+                            "Anuphan, sans-serif";
+                    },
+                });
             };
 
             reader.readAsArrayBuffer(this.fileData);

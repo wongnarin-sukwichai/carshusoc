@@ -100,7 +100,10 @@ class ReportController extends Controller
             ->join('users', 'enrolls.user_id', 'users.id')
             ->select(
                 'enrolls.id',
-                'enrolls.scoreTest',
+                'enrolls.listen',
+                'enrolls.reading',
+                'enrolls.conver',
+                'enrolls.grammar',
                 'users.name',
                 'users.surname'
             )
@@ -108,6 +111,33 @@ class ReportController extends Controller
             ->get();
 
         return response()->json($data);
+    }
+
+    public function reportTest(Request $request)
+    {
+
+        $data = Carbon::parse($request['send'])->format('Y-m-d');
+        $res = Canva::where('section_id', $request['section_id'])
+                ->orderBy('id', 'DESC')
+                ->first()->id;
+
+        foreach ($request['enrolls'] as $r) {
+            Enroll::where('id', $r['id'])
+                ->update([
+                    'enddate' => $request['examdate'],
+                    'send' => $data,
+                    'certTest' => 1,
+                    'listen' => $r['listen'],
+                    'reading' => $r['reading'],
+                    'conver' => $r['conver'],
+                    'grammar' => $r['grammar'],
+                    'canva_id' => $res
+                ]);
+        }
+
+        return response()->json([
+            'message' => 'Success!!'
+        ]);
     }
 
     /**

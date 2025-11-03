@@ -734,7 +734,7 @@ export default {
                     const conver = row[3]; // คอลัมน์ R
                     const grammar = row[4]; // คอลัมน์ R
 
-                    console.log("Row data:", row);
+                    // console.log("Row data:", row);
 
                     const found = this.enrollList.find((e) => e.id === id);
                     if (found) {

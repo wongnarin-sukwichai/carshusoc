@@ -10,6 +10,7 @@ use Illuminate\Support\Carbon;
 use App\Models\Enroll;
 use App\Models\Cert;
 use App\Models\Canva;
+use App\Models\Score;
 
 class ReportController extends Controller
 {
@@ -120,6 +121,7 @@ class ReportController extends Controller
         $res = Canva::where('section_id', $request['section_id'])
                 ->orderBy('id', 'DESC')
                 ->first()->id;
+        $result = Score::orderBy('id', 'DESC')->first()->setscore;
 
         foreach ($request['enrolls'] as $r) {
             Enroll::where('id', $r['id'])
@@ -131,6 +133,7 @@ class ReportController extends Controller
                     'reading' => $r['reading'],
                     'conver' => $r['conver'],
                     'grammar' => $r['grammar'],
+                    'setScore' => $result,
                     'canva_id' => $res
                 ]);
         }

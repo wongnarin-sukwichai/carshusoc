@@ -27,12 +27,12 @@
                 :key="index"
                 >
                     <div
-                        class="border-2 rounded-lg border-dashed border-gray-200"
+                        class="border-2 rounded-lg border-gray-200"
                     >
                         <img :src="pic + admin.pic" class="rounded-lg w-auto" />
                     </div>
                     <div
-                        class="mt-2 border-2 rounded-lg border-dashed border-gray-200 text-center p-2 text-[#85c1e9] text-sm"
+                        class="mt-2 border-2 rounded-lg border-gray-200 text-center p-2 text-[#85c1e9] text-sm"
                     >
                         <p>{{ admin.name }} {{ admin.surname }}</p>
                         <p>เจ้าหน้าที่ดูแลระบบ</p>

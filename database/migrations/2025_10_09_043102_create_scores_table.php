@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('scores', function (Blueprint $table) {
             $table->id();
+            $table->integer('setscore')->comment('กำหนดชุดคะแนน');
             $table->string('title');
-            $table->integer('ept-start');
-            $table->integer('ept-end');
+            $table->integer('ept_start');
+            $table->integer('ept_end');
             $table->string('cefr');
-            $table->integer('toeic-start');
-            $table->integer('toeic-end');
+            $table->integer('toeic_start');
+            $table->integer('toeic_end');
             $table->timestamps();
         });
     }

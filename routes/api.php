@@ -26,6 +26,7 @@ use App\Http\Controllers\Api\PasswordResetController;
 use App\Http\Controllers\Api\ReportController;
 use App\Http\Controllers\Api\ReceiptController;
 use App\Http\Controllers\Api\EmailController;
+use App\Http\Controllers\Api\ScoreController;
 
 Route::middleware(['web'])->group(function () {
 
@@ -102,6 +103,8 @@ Route::middleware(['web'])->group(function () {
 
         Route::get('chkPass', [EnrollController::class, 'chkPass']);
 
+        Route::resource('score', ScoreController::class);
+
         ////////////////////////// Member //////////////////////////////////
         Route::get('showEnroll', [EnrollController::class, 'showEnroll']);
         Route::get('detailEnroll/{id}', [EnrollController::class, 'detailEnroll']);
@@ -110,5 +113,6 @@ Route::middleware(['web'])->group(function () {
         Route::post('uploadPayment', [UploadController::class, 'uploadPayment']);
         Route::get('showCert', [CertController::class, 'showCert']);
         Route::get('certTrain/{id}', [CertController::class, 'certTrain']);
+        Route::get('certTest/{id}', [CertController::class, 'certTest']);
     });
 });

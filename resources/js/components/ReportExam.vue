@@ -165,6 +165,12 @@
                         color="#85c1e9"
                     ></box-icon>
                     จัดการสิทธิ์การรับใบ Certificate (สอบ)
+                    <box-icon
+                        name="info-circle"
+                        color="oklch(80.8% 0.114 19.571)"
+                        class="items-center justify-center ml-1 cursor-pointer hover:scale-115"
+                        @click="showInfo()"
+                    ></box-icon>
                 </div>
 
                 <div class="grid grid-cols-5 text-sm px-4">
@@ -253,7 +259,7 @@
                                     Listening
                                 </div>
                             </div>
-                             <div class="relative group inline-block">
+                            <div class="relative group inline-block">
                                 <span
                                     class="text-sm font-semibold text-blue-800 bg-blue-100 px-3 py-1 rounded-full cursor-pointer"
                                 >
@@ -311,6 +317,90 @@
     </div>
 
     <!----------------------------------- MODAL ------------------------------------------------------->
+    <!-- Modal Info -->
+    <transition name="fade" mode="out-in">
+        <div class="relative z-10" v-show="this.modalInfo">
+            <div
+                class="fixed inset-0 bg-gray-500/50 bg-opacity-90 transition-opacity"
+            ></div>
+
+            <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+                <div
+                    class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
+                >
+                    <div
+                        class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"
+                    >
+                        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                            <span class="text-[#85c1e9] text-lg font-bold">
+                                : ตารางเปรียบเทียบระดับ TOEIC, CEFR และ EPT
+                            </span>
+                            <table
+                                class="table-auto w-full border border-gray-300 text-sm text-center text-gray-700 mt-2"
+                            >
+                                <thead class="bg-gray-100">
+                                    <tr>
+                                        <th
+                                            class="border border-gray-300 px-4 py-2"
+                                        >
+                                            TOEIC
+                                        </th>
+                                        <th
+                                            class="border border-gray-300 px-4 py-2"
+                                        >
+                                            CEFR
+                                        </th>
+                                        <th
+                                            class="border border-gray-300 px-4 py-2"
+                                        >
+                                            EPT
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                        v-for="(score, index) in scoreList"
+                                        :key="index"
+                                    >
+                                        <td
+                                            class="border border-gray-300 px-4 py-2"
+                                        >
+                                            {{ score.toeic_start }}–{{
+                                                score.toeic_end
+                                            }}
+                                        </td>
+                                        <td
+                                            class="border border-gray-300 px-4 py-2"
+                                        >
+                                            {{ score.cefr }}
+                                        </td>
+                                        <td
+                                            class="border border-gray-300 px-4 py-2 bg-green-100"
+                                        >
+                                            {{ score.ept_start }}–{{
+                                                score.ept_end
+                                            }}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div
+                            class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6"
+                        >
+                            <button
+                                type="button"
+                                class="inline-flex w-full justify-center rounded-lg bg-red-300 px-3 py-1.5 text-sm text-white shadow-xs hover:bg-red-400 sm:ml-3 sm:w-auto"
+                                @click="showInfo()"
+                            >
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </transition>
 </template>
 
 <script>
@@ -325,14 +415,17 @@ import * as XLSX from "xlsx";
 export default {
     async mounted() {
         this.getSection();
+        this.getScore();
     },
     data() {
         return {
             ////////////////////////////////////////////////////////////////
             sectionList: [],
             enrollList: [],
+            scoreList: [],
             ////////////////////////////////////////////////////////////////
             sectionShow: false,
+            modalInfo: false,
             showEnroll: false,
             moment: moment,
             ////////////////////////////////////////////////////////////////
@@ -360,6 +453,11 @@ export default {
                 this.sectionList = response.data;
             });
         },
+        getScore() {
+            axios.get("/api/score").then((response) => {
+                this.scoreList = response.data;
+            });
+        },
         ////////////////////////////////////////////////////////////////
         setEvent(id) {
             this.sectionShow = false;
@@ -381,6 +479,9 @@ export default {
         ////////////////////////////////////////////////////////////////
         showEvent() {
             this.sectionShow = !this.sectionShow;
+        },
+        showInfo() {
+            this.modalInfo = !this.modalInfo;
         },
         ////////////////////////////////////////////////////////////////
         validateData() {
@@ -741,7 +842,7 @@ export default {
                         found.listen = listen;
                         found.reading = reading;
                         found.conver = conver;
-                        found.grammar= grammar;
+                        found.grammar = grammar;
                         updatedCount++;
                     }
                 }

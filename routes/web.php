@@ -37,6 +37,9 @@ Route::get('/receiptMail', function () {
 Route::get('/workMail', function () {
     return view('emails/workMail');
 });
+Route::get('/enroll', function () {
+    return view('emails/enroll');
+});
 
 //////////////////////////// ไว้ล่างสุด ///////////////////////////////////////////
 Route::get('{any}', function () {

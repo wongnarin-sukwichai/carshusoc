@@ -14,8 +14,10 @@ use App\Models\Work;
 use App\Models\Payment;
 use App\Models\Email;
 use App\Models\User;
+use App\Models\Content;
 
-use App\Mail\SendMail;
+use App\Mail\EnrollMail;
+use App\Models\Section;
 
 class EnrollController extends Controller
 {
@@ -86,7 +88,20 @@ class EnrollController extends Controller
         $data->tag = $request['postage'];
         $data->user_id = Auth::user()->id;
 
-        $data->save();
+        // $data->save();
+
+        $res = User::where('id', $data->user_id)->select('name', 'surname', 'email')->first();
+        $result = Content::where('id', $data->content_id)->first()->title;
+        $meet = Section::where('id', $data->section_id)->first()->meet;
+        $code = (object) [
+            'name'      => $res->name . ' ' . $res->surname,
+            'content'     => $result,
+            'title'        => $data->title,
+            'start'       => Carbon::parse($data->start)->format('d/m/Y'),
+            'end'      => Carbon::parse($data->end)->format('d/m/Y'),
+            'meet'      => $meet
+        ];
+        Mail::to($res->email)->send(new EnrollMail($code));
 
         return response()->json([
             'message' => 'Success!!'
@@ -269,7 +284,7 @@ class EnrollController extends Controller
             $code = Email::find(1);
             $code->enroll_id = $request['id'];
 
-            Mail::to($email)->send(new SendMail($code));
+            // Mail::to($email)->send(new SendMail($code));
         }
         ////////////////////////////////////////////////////////////
         if (!empty($request['paymentname'])) {
@@ -286,7 +301,7 @@ class EnrollController extends Controller
             $code = Email::find(3);
             $code->enroll_id = $request['id'];
 
-            Mail::to($email)->send(new SendMail($code));
+            // Mail::to($email)->send(new SendMail($code));
         }
 
         $data = Enroll::find($id);

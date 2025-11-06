@@ -97,8 +97,8 @@
 
                             <button
                                 v-if="
-                                    (section.content_id === 2 &&
-                                        chkPass(section.id) !== null) ||
+                                    section.content_id === 2 &&
+                                    chkPass(section.id) === null &&
                                     moment(section.end).format('YYYY-MM-DD') >=
                                         today
                                 "
@@ -324,6 +324,18 @@ export default {
                         });
                         this.$router.push("/profile");
                     } else {
+                        // แสดง Loading ระหว่างส่งข้อมูล
+                        Swal.fire({
+                            title: "Processing...",
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            didOpen: () => Swal.showLoading(),
+                            customClass: {
+                                popup: "rounded-xl shadow-lg bg-white font-poppins",
+                                title: "text-2xl font-bold text-gray-800",
+                            },
+                        });
+
                         this.data.course_id = id;
                         this.data.price = res;
                         this.data.postage = code;
@@ -331,6 +343,8 @@ export default {
                         axios
                             .post("/api/enroll", this.data)
                             .then((response) => {
+                                Swal.close();
+
                                 Swal.fire({
                                     title: "Success!!",
                                     icon: "success",

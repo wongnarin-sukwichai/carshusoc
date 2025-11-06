@@ -36,7 +36,7 @@
                                 {{ email.title }}
                             </p>
                             <p class="mt-1 truncate text-xs/5 text-gray-500">
-                                {{ (email.th).substring(0, 30) }}... | {{ (email.eng).substring(0, 30) }}...
+                                {{ email.topic }}
                             </p>
                         </div>
                     </div>

@@ -15,9 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('topic');
-            $table->longText('th')->nullable();
-            $table->longText('eng')->nullable();
-            $table->string('owner');
+            $table->longText('template')->nullable();
             $table->timestamps();
         });
     }

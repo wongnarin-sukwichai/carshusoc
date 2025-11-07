@@ -15,6 +15,7 @@ use App\Models\User;
 use App\Models\Email;
 
 use App\Mail\SendMail;
+use App\Mail\ThankMail;
 
 class CompleteController extends Controller
 {
@@ -57,12 +58,6 @@ class CompleteController extends Controller
             $result->owner = Auth::user()->id;
 
             $result->save();
-
-            $email = User::where('id', $request->user_id)->value('email');
-            $code = Email::find(2);
-            $code->enroll_id = $request['id'];
-
-            Mail::to($email)->send(new SendMail($code));
         }
         ////////////////////////////////////////////////////////////
         if (!empty($request['receiptname'])) {
@@ -73,22 +68,16 @@ class CompleteController extends Controller
             $result->owner = Auth::user()->id;
 
             $result->save();
-
-            $email = User::where('id', $request->user_id)->value('email');
-            $code = Email::find(4);
-            $code->enroll_id = $request['id'];
-
-            Mail::to($email)->send(new SendMail($code));
         }
         ////////////////////////////////////////////////////////////
 
         if($request['status'] == 2) {
 
-            $email = User::where('id', $request->user_id)->value('email');
-            $code = Email::find(5);
-            $code->enroll_id = $request['id'];
-
-            Mail::to($email)->send(new SendMail($code));
+            $res = User::where('id', $request->user_id)->select('name', 'surname', 'email')->first();
+            $code = (object) [
+                'name'      => $res->name . ' ' . $res->surname,
+            ];
+            Mail::to($res->email)->send(new ThankMail($code));
         }
 
         ////////////////////////////////////////////////////////////

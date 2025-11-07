@@ -115,6 +115,22 @@
                             >
                                 ลงทะเบียน
                             </button>
+                            <button
+                                v-else-if="
+                                    section.content_id === 3"
+                                class="bg-white p-2 rounded-full w-2/4 mt-2 text-gray-900 hover:scale-105 hover:border-2 hover:border-sky-600 hover:text-sky-600"
+                                @click="
+                                    chkCourse(
+                                        section.id,
+                                        section.course,
+                                        section.title,
+                                        section.start,
+                                        section.end
+                                    )
+                                "
+                            >
+                                ลงทะเบียน
+                            </button>
                         </div>
                     </div>
                 </div>

@@ -724,7 +724,7 @@
                                             </span>
                                         </td>
                                     </tr>
-                                    <template v-if="detailList.event_id === 2">
+                                    <!-- <template v-if="detailList.event_id === 2">
                                         <tr>
                                             <td
                                                 class="border border-gray-300 px-2 py-1 text-center"
@@ -752,7 +752,7 @@
                                                 ></span>
                                             </td>
                                         </tr>
-                                    </template>
+                                    </template> -->
                                     <template v-if="detailList.event_id === 3">
                                         <tr>
                                             <td
@@ -1170,7 +1170,7 @@
                                             </span>
                                         </td>
                                     </tr>
-                                    <template v-if="detailList.event_id === 2">
+                                    <!-- <template v-if="detailList.event_id === 2">
                                         <tr>
                                             <td
                                                 class="border border-gray-300 px-2 py-1 text-center"
@@ -1208,7 +1208,7 @@
                                                 ></span>
                                             </td>
                                         </tr>
-                                    </template>
+                                    </template> -->
                                     <template v-if="detailList.event_id === 3">
                                         <tr>
                                             <td

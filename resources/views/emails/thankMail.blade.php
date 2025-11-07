@@ -15,32 +15,29 @@
 
         <!-- โลโก้ตรงกลาง -->
         <div style="text-align:center;">
-            <img src="https://carshusoc.com/img/logo/logo.png" alt="Logo" width="30%" style="display:block; margin:0 auto;">
+            <img src="https://carshusoc.com/img/logo/logo.png" alt="Logo" width="30%"
+                style="display:block; margin:0 auto;">
         </div>
 
         <!-- ข้อความต้อนรับ -->
-        <h2 style="text-align:center; color:#333; margin-top:0%">แจ้งข้อมูลการลงทะเบียน</h2>
+        <h2 style="text-align:center; color:#333; margin-top:0%">ขอขอบพระคุณ</h2>
         <p style="text-align:left; font-size:15px; color:#555;">
-            เรื่อง แจ้งข้อมูลการลงทะเบียนกับศูนย์บริการวิชาการและวิจัย (CARS-HUSOC)
+            เรื่อง ขอขอบพระคุณที่ใช้บริการ
         </p>
         <p style="text-left:center; font-size:15px; color:#555;">
             เรียน คุณ <span style="font-weight: bold;">{{ $name }}</span>
         </p>
         <p style="text-indent: 2em; text-left:center; font-size:15px; color:#555;">
-            ตามที่ท่านได้ลงทะเบียนเข้าร่วมการอบรม หลักสูตร <span style="font-weight: bold;">{{ $content }}</span>
             ทางศูนย์บริการวิชาการและวิจัย (CARS-HUSOC) คณะมนุษยศาสตร์และสังคมศาสตร์ มหาวิทยาลัยมหาสารคาม
-            ขอส่งรายละเอียดการเข้าร่วมการอบรม ดังนี้
         </p>
-        <p style="text-left:center; font-size:15px; color:#555;">
-            หัวข้ออบรม : <span style="font-weight: bold;">{{ $title }}</span>
+        <p style="text-indent: 2em; text-left:center; font-size:15px; color:#555;">
+            ขอขอบพระคุณเป็นอย่างสูงที่ท่านได้ใช้บริการกับทางศูนย์ฯ ทางศูนย์ฯ
+            รู้สึกยินดีเป็นอย่างยิ่งที่ได้ให้บริการแก่ท่าน และหวังเป็นอย่างยิ่งว่าจะมีโอกาสได้ให้บริการอีกในครั้งต่อไป
         </p>
-        <p style="text-left:center; font-size:15px; color:#555;">
-            วัน/เวลาอบรม : <span style="font-weight: bold;">{{ $start }} - {{ $end }}</span>
+        <p style="text-indent: 2em; text-left:center; font-size:15px; color:#555;">
+            เพื่อพัฒนาคุณภาพการให้บริการของศูนย์ฯ ให้ดียิ่งขึ้นขอความกรุณาท่านตอบแบบประเมินความพึงพอใจการให้บริการ
+            ผ่านลิงก์นี้
         </p>
-        <p style="text-left:center; font-size:15px; color:#555;">
-            สถานที่อบรม: <span style="font-weight: bold;">{{ $meet }}</span>
-        </p>
-
         <p style="text-left:center; font-size:15px; color:#555;">
             ศูนย์บริการวิชาการและวิจัย (CARS-HUSOC)
         </p>

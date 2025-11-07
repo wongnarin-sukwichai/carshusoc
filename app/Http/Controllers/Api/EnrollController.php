@@ -16,8 +16,11 @@ use App\Models\Email;
 use App\Models\User;
 use App\Models\Content;
 
-use App\Mail\EnrollMail;
 use App\Models\Section;
+
+use App\Mail\EnrollMail;
+use App\Mail\UploadMail;
+use App\Mail\PaymentMail;
 
 class EnrollController extends Controller
 {
@@ -88,7 +91,7 @@ class EnrollController extends Controller
         $data->tag = $request['postage'];
         $data->user_id = Auth::user()->id;
 
-        // $data->save();
+        $data->save();
 
         $res = User::where('id', $data->user_id)->select('name', 'surname', 'email')->first();
         $result = Content::where('id', $data->content_id)->first()->title;
@@ -280,11 +283,11 @@ class EnrollController extends Controller
 
             $res->save();
 
-            $email = User::where('id', $request->user_id)->value('email');
-            $code = Email::find(1);
-            $code->enroll_id = $request['id'];
-
-            // Mail::to($email)->send(new SendMail($code));
+            $res = User::where('id', $request['user_id'])->select('name', 'surname', 'email')->first();
+            $code = (object) [
+                'name'      => $res->name . ' ' . $res->surname,
+            ];
+            Mail::to($res->email)->send(new UploadMail($code));
         }
         ////////////////////////////////////////////////////////////
         if (!empty($request['paymentname'])) {
@@ -297,11 +300,11 @@ class EnrollController extends Controller
 
             $check = true;
 
-            $email = User::where('id', $request->user_id)->value('email');
-            $code = Email::find(3);
-            $code->enroll_id = $request['id'];
-
-            // Mail::to($email)->send(new SendMail($code));
+            $res = User::where('id', $request['user_id'])->select('name', 'surname', 'email')->first();
+            $code = (object) [
+                'name'      => $res->name . ' ' . $res->surname,
+            ];
+            Mail::to($res->email)->send(new PaymentMail($code));
         }
 
         $data = Enroll::find($id);

@@ -19,28 +19,19 @@
         </div>
 
         <!-- ข้อความต้อนรับ -->
-        <h2 style="text-align:center; color:#333; margin-top:0%">แจ้งข้อมูลการลงทะเบียน</h2>
+        <h2 style="text-align:center; color:#333; margin-top:0%">ได้รับเอกสาร</h2>
         <p style="text-align:left; font-size:15px; color:#555;">
-            เรื่อง แจ้งข้อมูลการลงทะเบียนกับศูนย์บริการวิชาการและวิจัย (CARS-HUSOC)
+            เรื่อง แจ้งการรับเอกสาร
         </p>
         <p style="text-left:center; font-size:15px; color:#555;">
             เรียน คุณ <span style="font-weight: bold;">{{ $name }}</span>
         </p>
         <p style="text-indent: 2em; text-left:center; font-size:15px; color:#555;">
-            ตามที่ท่านได้ลงทะเบียนเข้าร่วมการอบรม หลักสูตร <span style="font-weight: bold;">{{ $content }}</span>
             ทางศูนย์บริการวิชาการและวิจัย (CARS-HUSOC) คณะมนุษยศาสตร์และสังคมศาสตร์ มหาวิทยาลัยมหาสารคาม
-            ขอส่งรายละเอียดการเข้าร่วมการอบรม ดังนี้
         </p>
-        <p style="text-left:center; font-size:15px; color:#555;">
-            หัวข้ออบรม : <span style="font-weight: bold;">{{ $title }}</span>
+         <p style="text-indent: 2em; text-left:center; font-size:15px; color:#555;">
+            ขอเรียนให้ทราบว่า ทางเราได้รับเอกสารจากท่านแล้ว ในการนี้ จะดำเนินการประเมินราคา พร้อมแจ้งผลให้ท่านทราบในลำดับต่อไป 
         </p>
-        <p style="text-left:center; font-size:15px; color:#555;">
-            วัน/เวลาอบรม : <span style="font-weight: bold;">{{ $start }} - {{ $end }}</span>
-        </p>
-        <p style="text-left:center; font-size:15px; color:#555;">
-            สถานที่อบรม: <span style="font-weight: bold;">{{ $meet }}</span>
-        </p>
-
         <p style="text-left:center; font-size:15px; color:#555;">
             ศูนย์บริการวิชาการและวิจัย (CARS-HUSOC)
         </p>

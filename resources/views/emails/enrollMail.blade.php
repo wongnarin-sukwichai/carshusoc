@@ -19,7 +19,7 @@
         </div>
 
         <!-- ข้อความต้อนรับ -->
-        <h2 style="text-align:center; color:#333; margin-top:0%">แจ้งข้อมูลการลงทะเบียน</h2>
+        <h2 style="text-align:center; color:#333; margin-top:0%;font-weight: bold;">แจ้งข้อมูลการลงทะเบียน</h2>
         <p style="text-align:left; font-size:15px; color:#555;">
             เรื่อง แจ้งข้อมูลการลงทะเบียนกับศูนย์บริการวิชาการและวิจัย (CARS-HUSOC)
         </p>
@@ -38,7 +38,7 @@
             วัน/เวลาอบรม : <span style="font-weight: bold;">{{ $start }} - {{ $end }}</span>
         </p>
         <p style="text-left:center; font-size:15px; color:#555;">
-            สถานที่อบรม: <span style="font-weight: bold;">{{ $meet }}</span>
+            สถานที่อบรม : <span style="font-weight: bold;">{{ $meet }}</span>
         </p>
 
         <p style="text-left:center; font-size:15px; color:#555;">

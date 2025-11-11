@@ -5,8 +5,14 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 use App\Models\Email;
+use App\Models\Section;
+use App\Models\Enroll;
+
+use App\Mail\WarnMail;
 
 class EmailController extends Controller
 {
@@ -16,6 +22,13 @@ class EmailController extends Controller
     public function index()
     {
         $data = Email::all();
+
+        return response()->json($data);
+    }
+
+    public function warnMail()
+    {
+        $data = Section::where('content_id', '!=', 3)->get();
 
         return response()->json($data);
     }
@@ -34,6 +47,29 @@ class EmailController extends Controller
     public function store(Request $request)
     {
         //
+    }
+
+    public function sendWarnMail(Request $request)
+    {
+        $data = DB::table('enrolls')
+            ->where('enrolls.section_id', $request['section_id'])
+            ->whereBetween('enrolls.created_at', [$request['start'], $request['end']])
+            ->join('users', 'enrolls.user_id', 'users.id')
+            ->select('email')
+            ->get();
+
+        $code = (object) [
+            'title' => $request['title'],
+            'old' => $request['old'],
+            'new' => $request['new'],
+            'meet' => $request['meet'],
+            'examdate' => $request['examdate'],
+            'examtime' => $request['examtime']
+        ];
+
+        foreach ($data as $r) {
+            Mail::to($r->email)->send(new WarnMail($code));
+        }
     }
 
     /**
@@ -59,12 +95,12 @@ class EmailController extends Controller
      */
     public function update(Request $request, string $id)
     {
-         $data = Email::find($id);
+        $data = Email::find($id);
 
         $data->topic = $request['topic'];
         $data->th = $request['th'];
         $data->eng = $request['eng'];
-        $data->owner = Auth::user()->name ." " . Auth::user()->surname;
+        $data->owner = Auth::user()->name . " " . Auth::user()->surname;
 
         $data->save();
 

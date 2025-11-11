@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Thank Mail</title>
+    <title>Warn Mail</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
@@ -20,33 +20,61 @@
         </div>
 
         <!-- ข้อความต้อนรับ -->
-        <h2 style="text-align:center; color:#333; margin-top:0%; font-weight: bold;">ขอขอบพระคุณ</h2>
-        <p style="text-align:left; font-size:15px; color:#555;">
-            เรื่อง ขอขอบพระคุณที่ใช้บริการ
+        <h2
+            style="
+                        text-align: center;
+                        color: #333;
+                        margin-top: 0%;
+                        font-weight: bold;
+                    ">
+            แจ้งเปลี่ยนแปลงห้องอบรม
+        </h2>
+        <p style="text-align: left; font-size: 15px; color: #555">
+            เรื่อง แจ้งเปลี่ยนแปลงห้องอบรม
         </p>
-        <p style="text-left:center; font-size:15px; color:#555;">
-            เรียน คุณ <span style="font-weight: bold;">{{ $name }}</span>
+        <p style="text-indent: 2em; font-size: 15px; color: #555">
+            ทางศูนย์บริการวิชาการและวิจัย (CARS-HUSOC)
+            คณะมนุษยศาสตร์และสังคมศาสตร์ มหาวิทยาลัยมหาสารคาม
         </p>
-        <p style="text-indent: 2em; text-left:center; font-size:15px; color:#555;">
-            ทางศูนย์บริการวิชาการและวิจัย (CARS-HUSOC) คณะมนุษยศาสตร์และสังคมศาสตร์ มหาวิทยาลัยมหาสารคาม
+        <p style="text-indent: 2em; font-size: 15px; color: #555">
+            ขอแจ้งว่า มีการเปลี่ยนแปลงห้องอบรม
         </p>
-        <p style="text-indent: 2em; text-left:center; font-size:15px; color:#555;">
-            ขอขอบพระคุณเป็นอย่างสูงที่ท่านได้ใช้บริการกับทางศูนย์ฯ ทางศูนย์ฯ
-            รู้สึกยินดีเป็นอย่างยิ่งที่ได้ให้บริการแก่ท่าน และหวังเป็นอย่างยิ่งว่าจะมีโอกาสได้ให้บริการอีกในครั้งต่อไป
+        <p style="font-size: 15px; color: #555">
+            หัวข้อ :
+            <span style="font-weight: bold">{{ $title }}</span>
         </p>
-        <p style="text-indent: 2em; text-left:center; font-size:15px; color:#555;">
-            เพื่อพัฒนาคุณภาพการให้บริการของศูนย์ฯ ให้ดียิ่งขึ้นขอความกรุณาท่านตอบแบบประเมินความพึงพอใจการให้บริการ
-            ผ่านลิงก์นี้
+        <p style="font-size: 15px; color: #555">
+            จากเดิม :
+            <span style="font-weight: bold">{{ $old }}</span>
         </p>
-        <p style="text-left:center; font-size:15px; color:#555;">
+        <p style="font-size: 15px; color: #555">
+            เปลี่ยนแปลงเป็น :
+            <span style="font-weight: bold">{{ $new }}</span>
+        </p>
+        <p style="font-size: 15px; color: #555">
+            สถานที่ :
+            <span style="font-weight: bold">{{ $meet }}</span>
+        </p>
+        <p style="font-size: 15px; color: #555">
+            วันที่ :
+            <span style="font-weight: bold">{{ $examdate }}</span>
+        </p>
+        <p style="font-size: 15px; color: #555">
+            เวลา :
+            <span style="font-weight: bold">{{ $examtime }}</span>
+        </p>
+        <p style="text-indent: 2em; font-size: 15px; color: #555">
+            จึงเรียนมาเพื่อโปรดทราบ และขออภัยในความไม่สะดวกมา ณ โอกาสนี้
+        </p>
+        <p style="font-size: 15px; color: #555">
             ศูนย์บริการวิชาการและวิจัย (CARS-HUSOC)
         </p>
-        <p style="text-left:center; font-size:15px; color:#555;">
+        <p style="font-size: 15px; color: #555">
             คณะมนุษยศาสตร์และสังคมศาสตร์ มหาวิทยาลัยมหาสารคาม
         </p>
 
-        <br>
-        <hr style="border:2px dashed oklch(92.9% 0.013 255.508)">
+        <br />
+        <hr style="border: 2px dashed oklch(92.9% 0.013 255.508)" />
 
         <!-- ข้อความติดต่อ -->
         <div style="text-align:center; margin-top:20px; font-size:13px; color:#777;">

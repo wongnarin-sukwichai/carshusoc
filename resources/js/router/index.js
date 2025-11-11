@@ -30,6 +30,7 @@ import Enroll from "../components/Enroll.vue";
 import ReportTrain from "../components/ReportTrain.vue";
 import ReportExam from "../components/ReportExam.vue";
 import Email from "../components/Email.vue";
+import WarnMail from "../components/WarnMail.vue";
 
 import store from "../store";
 
@@ -265,6 +266,15 @@ const routes = [
         path: "/email/:id",
         name: "email",
         component: Email,
+        meta: {
+            layout: "admin",
+            guard: "admin",
+        },
+    },
+    {
+        path: "/warnMail",
+        name: "warnMail",
+        component: WarnMail,
         meta: {
             layout: "admin",
             guard: "admin",

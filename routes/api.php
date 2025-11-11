@@ -105,6 +105,9 @@ Route::middleware(['web'])->group(function () {
 
         Route::resource('score', ScoreController::class);
 
+        Route::get('warnMail', [EmailController::class, 'warnMail']);
+        Route::post('sendWarnMail', [EmailController::class, 'sendWarnMail']);
+
         ////////////////////////// Member //////////////////////////////////
         Route::get('showEnroll', [EnrollController::class, 'showEnroll']);
         Route::get('detailEnroll/{id}', [EnrollController::class, 'detailEnroll']);

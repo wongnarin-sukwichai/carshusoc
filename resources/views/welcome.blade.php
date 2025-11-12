@@ -34,6 +34,10 @@
     @endif
 
     <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
         .font-thai {
             font-family: 'Anuphan';
         }
@@ -72,11 +76,11 @@
                 <a class="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-4 hover:text-gray-900 focus:outline-none focus:shadow-outline transform transition hover:scale-110"
                     href="{{ url('/') }}">@lang('messages.home')</a>
                 <a class="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-4 hover:text-gray-900 focus:outline-none focus:shadow-outline transform transition hover:scale-110"
-                    href="#">@lang('messages.about')</a>
+                    href="{{ url('/about') }}">@lang('messages.about')</a>
+                {{-- <a class="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-4 hover:text-gray-900 focus:outline-none focus:shadow-outline transform transition hover:scale-110"
+                    href="#">@lang('messages.info')</a> --}}
                 <a class="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-4 hover:text-gray-900 focus:outline-none focus:shadow-outline transform transition hover:scale-110"
-                    href="#">@lang('messages.info')</a>
-                <a class="px-4 py-2 mt-2 text-sm bg-transparent rounded-lg md:mt-8 md:ml-4 hover:text-gray-900 focus:outline-none focus:shadow-outline transform transition hover:scale-110"
-                    href="#">@lang('messages.contact')</a>
+                    href="#footer">@lang('messages.contact')</a>
                 <a class="px-10 py-3 mt-2 text-sm text-center bg-white text-gray-800 rounded-full md:mt-8 md:ml-4 transform transition hover:scale-110"
                     href="{{ url('/login') }}">@lang('messages.login')</a>
                 <a class="px-10 py-3 mt-2 text-sm text-center bg-yellow-500 text-white rounded-full md:mt-8 md:ml-4 transform transition hover:scale-110"
@@ -123,7 +127,8 @@
             </div>
             <!--Right Col-->
             <div class="w-full lg:w-6/12 lg:-mt-10 relative" id="girl">
-                <img data-aos="fade-up" data-aos-once="true" class="w-10/12 mx-auto 2xl:-mb-20 scale-110" src="img/girl.png" />
+                <img data-aos="fade-up" data-aos-once="true" class="w-10/12 mx-auto 2xl:-mb-20 scale-110"
+                    src="img/girl.png" />
                 <!-- calendar -->
                 <div data-aos="fade-up" data-aos-delay="300" data-aos-once="true"
                     class="absolute top-20 -left-6 sm:top-32 sm:left-10 md:top-40 md:left-16 lg:-left-0 lg:top-52 floating-4">
@@ -189,7 +194,6 @@
             <div class="grid grid-cols-3 lg:grid-cols-3 gap-4 justify-items-center">
                 <img class="h-16" src="{{ url('/img/info/logo-msu.png') }}">
                 <img class="h-12" src="{{ url('/img/info/logo-husoc.png') }}">
-                <img class="h-16" src="{{ url('/img/info/logo-library.png') }}">
             </div>
         </div>
 
@@ -200,7 +204,7 @@
             <h1 class="font-bold text-darken my-3 text-3xl">
                 @lang('messages.serv')
                 <span class="text-yellow-500">
-                    CARS-HUSOC.
+                    CARS-HUSOC
                 </span>
             </h1>
             <p class="leading-relaxed text-gray-500">
@@ -211,49 +215,22 @@
         <!-- card -->
         <div class="grid md:grid-cols-3 gap-14 md:gap-5 mt-8">
             <!-- card item -->
-            <div data-aos="fade-up" class="bg-white shadow-xl text-center rounded-xl relative group overflow-hidden">
-                <img src="{{ url('/img/project/01.png') }}" class="rounded-xl" />
+            @foreach ($content as $r)
+                <div data-aos="fade-up"
+                    class="bg-white shadow-xl text-center rounded-xl relative group overflow-hidden">
+                    <img src="{{ url('/img/contents/' . $r->pic) }}" class="rounded-xl" />
 
-                <!-- overlay -->
-                <div
-                    class="absolute bg-black bg-opacity-50 bottom-0 left-0 right-0 top-0 w-full h-full flex items-center justify-center rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out">
-                    <a href="{{ url('/login') }}"
-                        class="rounded-full text-white text-xs lg:text-md px-6 py-3 font-medium focus:outline-none transform transition hover:scale-110 duration-300 ease-in-out"
-                        style="background: rgba(35, 189, 238, 0.9)">
-                        Join Now...
-                    </a>
+                    <!-- overlay -->
+                    <div
+                        class="absolute bg-black bg-opacity-50 bottom-0 left-0 right-0 top-0 w-full h-full flex items-center justify-center rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out">
+                        <a href="{{ url('/login') }}"
+                            class="rounded-full text-white text-xs lg:text-md px-6 py-3 font-medium focus:outline-none transform transition hover:scale-110 duration-300 ease-in-out"
+                            style="background: rgba(35, 189, 238, 0.9)">
+                            Join Now...
+                        </a>
+                    </div>
                 </div>
-            </div>
-
-            <!-- card item -->
-            <div data-aos="fade-up" class="bg-white shadow-xl text-center rounded-xl relative group overflow-hidden">
-                <img src="{{ url('/img/project/02.png') }}" class="rounded-xl" />
-
-                <!-- overlay -->
-                <div
-                    class="absolute bg-black bg-opacity-50 bottom-0 left-0 right-0 top-0 w-full h-full flex items-center justify-center rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out">
-                    <a href="{{ url('/login') }}"
-                        class="rounded-full text-white text-xs lg:text-md px-6 py-3 font-medium focus:outline-none transform transition hover:scale-110 duration-300 ease-in-out"
-                        style="background: rgba(35, 189, 238, 0.9)">
-                        Join Now...
-                    </a>
-                </div>
-            </div>
-
-            <!-- card item -->
-            <div data-aos="fade-up" class="bg-white shadow-xl text-center rounded-xl relative group overflow-hidden">
-                <img src="{{ url('/img/project/03.png') }}" class="rounded-xl" />
-
-                <!-- overlay -->
-                <div
-                    class="absolute bg-black bg-opacity-50 bottom-0 left-0 right-0 top-0 w-full h-full flex items-center justify-center rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out">
-                    <a href="{{ url('/login') }}"
-                        class="rounded-full text-white text-xs lg:text-md px-6 py-3 font-medium focus:outline-none transform transition hover:scale-110 duration-300 ease-in-out"
-                        style="background: rgba(35, 189, 238, 0.9)">
-                        Join Now...
-                    </a>
-                </div>
-            </div>
+            @endforeach
         </div>
 
         <hr class="mx-32 border border-dashed border-gray-200 my-24">
@@ -474,7 +451,7 @@
     </div>
     <!-- .container -->
 
-    <footer class="mt-32" style="background-color: rgba(37, 38, 65, 1);">
+    <footer id="footer" class="mt-32" style="background-color: rgba(37, 38, 65, 1);">
         <div class=" mx-auto">
             <div class="grid grid-cols-6 gap-4 mx-32 text-left">
                 <div class="mt-8">
@@ -483,31 +460,40 @@
                     <ul class="mt-4 text-gray-400 text-sm">
                         <li
                             class="pb-1 cursor-pointer hover:text-white transform hover:scale-110 transition duration-300 ease-in-out">
-                            กองแผนงาน</li>
+                            <a href="https://plan.msu.ac.th/" target="_blank">กองแผนงาน</a>
+                        </li>
                         <li
                             class="pb-1 cursor-pointer hover:text-white transform hover:scale-110 transition duration-300 ease-in-out">
-                            กองการเจ้าหน้าที่</li>
+                            <a href="https://pd.msu.ac.th/pd7/" target="_blank">กองการเจ้าหน้าที่</a>
+                        </li>
                         <li
                             class="pb-1 cursor-pointer hover:text-white transform hover:scale-110 transition duration-300 ease-in-out">
-                            กองกิจการนิสิต</li>
+                            <a href="https://sa.msu.ac.th/" target="_blank">กองกิจการนิสิต</a>
+                        </li>
                         <li
                             class="pb-1 cursor-pointer hover:text-white transform hover:scale-110 transition duration-300 ease-in-out">
-                            กองคลังและพัสดุ</li>
+                            <a href="https://fin.msu.ac.th/" target="_blank">กองคลังและพัสดุ</a>
+                        </li>
                         <li
                             class="pb-1 cursor-pointer hover:text-white transform hover:scale-110 transition duration-300 ease-in-out">
-                            กองบริการศึกษา</li>
+                            <a href="https://acad.msu.ac.th/th/" target="_blank">กองบริการศึกษา</a>
+                        </li>
                         <li
                             class="pb-1 cursor-pointer hover:text-white transform hover:scale-110 transition duration-300 ease-in-out">
-                            บัณฑิตวิทยาลัย</li>
+                            <a href="https://grad.msu.ac.th/th/" target="_blank">บัณฑิตวิทยาลัย</a>
+                        </li>
                         <li
                             class="pb-1 cursor-pointer hover:text-white transform hover:scale-110 transition duration-300 ease-in-out">
-                            สำนักงานวิทยบริการ</li>
+                            <a href="https://library.msu.ac.th/" target="_blank">สำนักงานวิทยบริการ</a>
+                        </li>
                         <li
                             class="pb-1 cursor-pointer hover:text-white transform hover:scale-110 transition duration-300 ease-in-out">
-                            สำนักคอมพิวเตอร์</li>
+                            <a href="https://cc.msu.ac.th/" target="_blank">สำนักคอมพิวเตอร์</a>
+                        </li>
                         <li
                             class="pb-1 cursor-pointer hover:text-white transform hover:scale-110 transition duration-300 ease-in-out">
-                            สำนักศึกษาทั่วไป</li>
+                            <a href="https://genedu.msu.ac.th/thai/" target="_blank">สำนักศึกษาทั่วไป</a>
+                        </li>
                     </ul>
                 </div>
                 <div class="mt-8">
@@ -516,10 +502,13 @@
                     <ul class="mt-4 text-gray-400 text-sm">
                         <li
                             class="pb-1 cursor-pointer hover:text-white transform hover:scale-110 transition duration-300 ease-in-out">
-                            สำนักงานการวิจัยแห่งชาติ (วช.)</li>
+                            <a href="https://www.nrct.go.th/" target="_blank">สำนักงานการวิจัยแห่งชาติ (วช.)</a>
+                        </li>
                         <li
                             class="pb-1 cursor-pointer hover:text-white transform hover:scale-110 transition duration-300 ease-in-out">
-                            กระทรวงการอุดมศึกษา วิทยาศาสตร์ วิจัยและนวัตกรรม (อว.)</li>
+                            <a href="https://www.mhesi.go.th/" target="_blank">กระทรวงการอุดมศึกษา วิทยาศาสตร์
+                                วิจัยและนวัตกรรม (อว.)</a>
+                        </li>
                     </ul>
                 </div>
                 <div class="mt-8">
@@ -528,31 +517,28 @@
                     <ul class="mt-4 text-gray-400 text-sm">
                         <li
                             class="pb-1 cursor-pointer hover:text-white transform hover:scale-110 transition duration-300 ease-in-out">
-                            หน้าหลัก</li>
+                            <a href="/">หน้าแรก</a>
+                        </li>
                         <li
                             class="pb-1 cursor-pointer hover:text-white transform hover:scale-110 transition duration-300 ease-in-out">
-                            เกี่ยวกับคณะ</li>
+                            <a href="/about">เกี่ยวกับ</a>
+                        </li>
                         <li
                             class="pb-1 cursor-pointer hover:text-white transform hover:scale-110 transition duration-300 ease-in-out">
-                            บุคลากร</li>
+                            <a href="/login">เข้าสู่ระบบ</a>
+                        </li>
                         <li
                             class="pb-1 cursor-pointer hover:text-white transform hover:scale-110 transition duration-300 ease-in-out">
-                            หลักสูตรปริญญาตรี</li>
-                        <li
-                            class="pb-1 cursor-pointer hover:text-white transform hover:scale-110 transition duration-300 ease-in-out">
-                            หลักสูตรปริญญาโท</li>
-                        <li
-                            class="pb-1 cursor-pointer hover:text-white transform hover:scale-110 transition duration-300 ease-in-out">
-                            หลักสูตรปริญญาเอก</li>
-                        <li
-                            class="pb-1 cursor-pointer hover:text-white transform hover:scale-110 transition duration-300 ease-in-out">
-                            งานวิจัย</li>
+                            <a href="/register"> สมัครสมาชิก</a>
+                        </li>
                     </ul>
                 </div>
                 <div class="mt-8 col-span-2">
-                    <p class="font-under text-xl text-white">คณะมนุษยศาสตร์และสังคมศาสตร์ มหาวิทยาลัยมหาสารคาม</p>
+                    <p class="font-under text-xl text-white">ศูนย์บริการวิชาการและวิจัย (CARS-HUSOC)</p>
                     <hr class=" border border-dashed border-gray-50 my-2 mr-16">
                     <p class="text-left mt-4 text-gray-400 text-sm">
+                        ศูนย์บริการวิชาการและวิจัย (CARS-HUSOC)
+                        <br>
                         คณะมนุษยศาสตร์และสังคมศาสตร์ มหาวิทยาลัยมหาสารคาม
                         <br>
                         ตำบลขามเรียง อำเภอกันทรวิชัย จังหวัดมหาสารคาม
@@ -561,11 +547,11 @@
                         <br><br>
                         โทรศัพท์ : 043-754-369
                         <br>
-                        เบอร์ภายใน : 4734 , 4703
+                        เบอร์ภายใน : 4804
                         <br>
                         มือถือ : 089-710-4115
                         <br>
-                        E-mail : husoc.msu@msu.ac.th
+                        E-mail : carhusocmsu@gmail.com
                     </p>
                 </div>
                 <div class="mt-8">
@@ -574,7 +560,7 @@
                     <p class="text-left mt-4 text-gray-400 text-sm">
                         ผู้ดูแลเว็บไซต์ : วงศ์นรินทร์ สุขวิชัย<br>
                         E-mail : wongnarin.s.s@msu.ac.th<br>
-                        เบอร์โทรศัพท์ : 091-132-7411 , 4717 (ภายใน)
+                        เบอร์โทรศัพท์ :
                         <br><br>
                     <div class="flex space-x-1 text-sm">
                         <span class="bg-black text-white px-1 py-1 rounded">1</span>
@@ -597,10 +583,36 @@
         </div>
     </footer>
 
+    <button id="backToTopBtn"
+        class="fixed bottom-6 right-6 bg-gray-700 text-white p-3 rounded-full shadow-lg hover:bg-gray-900 transition hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
+        </svg>
+    </button>
+
     <!-- AOS init -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
         AOS.init();
+    </script>
+    <!-- Scroll Top -->
+    <script>
+        window.addEventListener("scroll", function() {
+            const btn = document.getElementById("backToTopBtn");
+            if (window.scrollY > 200) {
+                btn.classList.remove("hidden");
+            } else {
+                btn.classList.add("hidden");
+            }
+        });
+
+        document.getElementById("backToTopBtn").addEventListener("click", function() {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        });
     </script>
 
 </html>

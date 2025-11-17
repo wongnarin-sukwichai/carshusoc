@@ -213,7 +213,7 @@
         </div>
 
         <!-- card -->
-        <div class="grid md:grid-cols-3 gap-14 md:gap-5 mt-8">
+        <div class="grid md:grid-cols-4 gap-4 md:gap-4 mt-8">
             <!-- card item -->
             @foreach ($content as $r)
                 <div data-aos="fade-up"

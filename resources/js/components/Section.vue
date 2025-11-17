@@ -12,9 +12,9 @@
             </span>
         </div>
 
-        <div class="grid grid-cols-5 gap-4">
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
             <div
-                class="relative border-2 border-dashed rounded-xl cursor-pointer hover:border-gray-300 flex flex-col items-center justify-center text-center overflow-hidden"
+                class="relative border-2 shadow-lg rounded-xl cursor-pointer hover:border-gray-300 flex flex-col items-center justify-center text-center overflow-hidden"
                 v-for="(section, index) in sectionList"
                 :key="index"
             >
@@ -132,7 +132,7 @@
         <div class="bg-white p-4 rounded-2xl md:ml-8 mt-4">
             <div class="grid grid-cols-5 gap-4">
                 <div
-                    class="relative border-2 border-dashed rounded-xl cursor-pointer hover:border-sky-300 p-4 group"
+                    class="relative border-2 rounded-xl cursor-pointer hover:border-sky-300 p-4 group"
                     v-for="(course, index) in courseList"
                     :key="index"
                 >
@@ -224,7 +224,7 @@
                     >
                         <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                             <div
-                                class="border-2 border-dashed rounded-xl p-3.5 mb-2"
+                                class="border-2 rounded-xl p-3.5 mb-2"
                             >
                                 <span class="text-[#85c1e9] text-lg font-bold">
                                     หัวข้อ :
@@ -235,7 +235,7 @@
                                 }}</span>
                             </div>
                             <div
-                                class="border-2 border-dashed rounded-xl p-3.5 mb-2"
+                                class="border-2 rounded-xl p-3.5 mb-2"
                             >
                                 <span class="text-[#85c1e9] text-lg font-bold">
                                     : ชื่อเรื่อง
@@ -260,7 +260,7 @@
                             <div class="grid grid-cols-2 gap-4">
                                 <!-- ค่าบริการ -->
                                 <div
-                                    class="border-2 border-dashed rounded-xl p-3.5 mb-2"
+                                    class="border-2 rounded-xl p-3.5 mb-2"
                                 >
                                     <label
                                         class="block text-[#85c1e9] text-lg font-bold mb-1"
@@ -278,7 +278,7 @@
 
                                 <!-- ค่าไปรษณีย์ -->
                                 <div
-                                    class="border-2 border-dashed rounded-xl p-3.5 mb-2"
+                                    class="border-2 rounded-xl p-3.5 mb-2"
                                 >
                                     <label
                                         class="block text-[#85c1e9] text-lg font-bold mb-1"
@@ -295,7 +295,7 @@
                                 </div>
                             </div>
                             <div
-                                class="border-2 border-dashed rounded-xl p-3.5"
+                                class="border-2 rounded-xl p-3.5"
                             >
                                 <span class="text-[#85c1e9] text-lg font-bold">
                                     : อื่นๆ
@@ -349,7 +349,7 @@
                     >
                         <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                             <div
-                                class="border-2 border-dashed rounded-xl p-3.5 mb-2 border-amber-400"
+                                class="border-2 rounded-xl p-3.5 mb-2 border-amber-400"
                             >
                                 <span class="text-[#85c1e9] text-lg font-bold">
                                     : ชื่อเรื่อง
@@ -367,7 +367,7 @@
                             <div class="grid grid-cols-2 gap-4">
                                 <!-- ค่าบริการ -->
                                 <div
-                                    class="border-2 border-dashed rounded-xl p-3.5 mb-2 border-amber-400"
+                                    class="border-2 rounded-xl p-3.5 mb-2 border-amber-400"
                                 >
                                     <label
                                         class="block text-[#85c1e9] text-lg font-bold mb-1"
@@ -385,7 +385,7 @@
 
                                 <!-- ค่าไปรษณีย์ -->
                                 <div
-                                    class="border-2 border-dashed rounded-xl p-3.5 mb-2 border-amber-400"
+                                    class="border-2 rounded-xl p-3.5 mb-2 border-amber-400"
                                 >
                                     <label
                                         class="block text-[#85c1e9] text-lg font-bold mb-1"
@@ -402,7 +402,7 @@
                                 </div>
                             </div>
                             <div
-                                class="border-2 border-dashed rounded-xl p-3.5 border-amber-400"
+                                class="border-2 rounded-xl p-3.5 border-amber-400"
                             >
                                 <span class="text-[#85c1e9] text-lg font-bold">
                                     : อื่นๆ

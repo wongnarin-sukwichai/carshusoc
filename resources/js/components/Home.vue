@@ -1,8 +1,8 @@
 <template>
     <div class="bg-white p-4 rounded-2xl">
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             <div
-                class="border-2 border-dashed rounded-xl"
+                class="border-2 rounded-xl shadow-lg"
                 v-for="(content, index) in contentList"
                 :key="index"
             >

@@ -117,6 +117,7 @@ export default {
                 .get("/api/detail/" + this.$route.params.id)
                 .then((response) => {
                     this.content = response.data;
+                    console.log(this.content)
                     this.getOwner(this.content.owner);
                 });
         },

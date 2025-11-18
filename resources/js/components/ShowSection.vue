@@ -31,7 +31,7 @@
 
                 <div
                     class="absolute inset-0 flex items-center justify-center pointer-events-none select-none text-[58px] font-bold text-red-400 rotate-[-20deg]"
-                    v-else-if="moment(section.end).format('YYYY-MM-DD') < today"
+                    v-else-if="chkExpire(section.end) === true"
                 >
                     EXPIRED
                 </div>
@@ -42,7 +42,7 @@
                         'opacity-5':
                             (section.content_id === 2 &&
                                 chkPass(section.id) !== null) ||
-                            moment(section.end).format('YYYY-MM-DD') < today,
+                            chkExpire(section.end) === true,
                     }"
                 >
                     <div class="card">
@@ -74,7 +74,7 @@
                                     <span class="font-semibold"
                                         >วันสอบ/อบรม :</span
                                     >
-                                    {{ section.examdate }}
+                                    {{ setMoment(section.examdate) }}
                                 </p>
                                 <p v-if="section.examtime">
                                     <span class="font-semibold">เวลา : </span
@@ -94,13 +94,10 @@
                                     {{ section.postage }} บาท
                                 </p>
                             </div>
-
                             <button
                                 v-if="
-                                    section.content_id === 2 &&
-                                    chkPass(section.id) === null &&
-                                    moment(section.end).format('YYYY-MM-DD') >=
-                                        today
+                                    section.content_id === 1 &&
+                                    chkExpire(section.end) === false
                                 "
                                 class="bg-white p-2 rounded-full w-2/4 mt-2 text-gray-900 hover:scale-105 hover:border-2 hover:border-sky-600 hover:text-sky-600"
                                 @click="
@@ -117,7 +114,43 @@
                             </button>
                             <button
                                 v-else-if="
-                                    section.content_id === 3"
+                                    section.content_id === 2 &&
+                                    chkPass(section.id) === null &&
+                                    chkExpire(section.end) === false
+                                "
+                                class="bg-white p-2 rounded-full w-2/4 mt-2 text-gray-900 hover:scale-105 hover:border-2 hover:border-sky-600 hover:text-sky-600"
+                                @click="
+                                    chkCourse(
+                                        section.id,
+                                        section.course,
+                                        section.title,
+                                        section.start,
+                                        section.end
+                                    )
+                                "
+                            >
+                                ลงทะเบียน
+                            </button>
+                            <button
+                                v-else-if="
+                                    section.content_id === 4 &&
+                                    chkExpire(section.end) === false
+                                "
+                                class="bg-white p-2 rounded-full w-2/4 mt-2 text-gray-900 hover:scale-105 hover:border-2 hover:border-sky-600 hover:text-sky-600"
+                                @click="
+                                    chkCourse(
+                                        section.id,
+                                        section.course,
+                                        section.title,
+                                        section.start,
+                                        section.end
+                                    )
+                                "
+                            >
+                                ลงทะเบียน
+                            </button>
+                            <button
+                                v-else-if="section.content_id === 3"
                                 class="bg-white p-2 rounded-full w-2/4 mt-2 text-gray-900 hover:scale-105 hover:border-2 hover:border-sky-600 hover:text-sky-600"
                                 @click="
                                     chkCourse(
@@ -163,9 +196,9 @@
                                 :key="index"
                                 @click="
                                     sendData(
-                                        course.id,
                                         course.price,
-                                        course.postage
+                                        course.postage,
+                                        course.id
                                     )
                                 "
                             >
@@ -287,7 +320,7 @@ export default {
                 const arr = Array.from(this.sectionList);
                 const res = arr.find((selection) => selection.id == id);
 
-                this.sendData(id, res.price, res.postage);
+                this.sendData(res.price, res.postage, null);
             } else {
                 axios.get("/api/course/" + id).then((response) => {
                     this.courseList = response.data;
@@ -296,10 +329,13 @@ export default {
                 this.modalCourse = true;
             }
         },
+        chkExpire(date) {
+            return moment(date).isBefore(this.today);
+        },
         close() {
             this.modalCourse = false;
         },
-        sendData(id, res, code) {
+        sendData(res, code, course) {
             Swal.fire({
                 title: "Are you sure?",
                 text: "Do you want to confirm to Register",
@@ -352,9 +388,9 @@ export default {
                             },
                         });
 
-                        this.data.course_id = id;
                         this.data.price = res;
                         this.data.postage = code;
+                        this.data.course_id = course;
 
                         axios
                             .post("/api/enroll", this.data)

@@ -1763,7 +1763,7 @@ export default {
         setCourse(id) {
             if (id != null) {
                 const arr = Array.from(this.courseList); // หรือ this.nationList.slice()
-                const res = arr.find((selection) => selection.id == id);
+                const res = arr.find((selection) => selection.section_id == id);
                 return res ? res.title : null;
             }
 

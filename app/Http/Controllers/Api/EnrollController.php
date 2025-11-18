@@ -73,6 +73,8 @@ class EnrollController extends Controller
     public function store(Request $request)
     {
 
+        dd($request->all());
+
         $data = new Enroll();
 
         $data->content_id = $request['content_id'];
@@ -104,7 +106,7 @@ class EnrollController extends Controller
             'end'      => Carbon::parse($data->end)->format('d/m/Y'),
             'meet'      => $meet
         ];
-        Mail::to($res->email)->send(new EnrollMail($code));
+        // Mail::to($res->email)->send(new EnrollMail($code));
 
         return response()->json([
             'message' => 'Success!!'

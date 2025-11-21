@@ -156,9 +156,22 @@ export default {
                 });
                 return;
             } else {
+                ////////////////////////// Loading //////////////////////////////////
+                // เปิด loading ค้างไว้
+                Swal.fire({
+                    title: "Processing...",
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    didOpen: () => Swal.showLoading(),
+                    customClass: {
+                        popup: "rounded-xl shadow-lg bg-white font-poppins",
+                        title: "text-2xl font-bold text-gray-800",
+                    },
+                });
                 axios
                     .post("/api/register", this.data)
                     .then((response) => {
+                        Swal.close();
                         Swal.fire({
                             title: "Registration successful! Please check your email for the password.",
                             icon: "success",

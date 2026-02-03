@@ -73,8 +73,6 @@ class EnrollController extends Controller
     public function store(Request $request)
     {
 
-        dd($request->all());
-
         $data = new Enroll();
 
         $data->content_id = $request['content_id'];

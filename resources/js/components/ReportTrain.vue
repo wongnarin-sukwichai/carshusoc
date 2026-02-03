@@ -315,8 +315,8 @@ export default {
             if (id != null) {
                 const arr = Array.from(this.sectionList); // หรือ this.nationList.slice()
                 const res = arr.find((selection) => selection.id == id);
-                this.data.start = res.start;
-                this.data.end = res.end;
+                //this.data.start = res.start;
+                //this.data.end = res.end;
                 this.examdate = res.examdate;
                 return res ? res.title : null;
             }

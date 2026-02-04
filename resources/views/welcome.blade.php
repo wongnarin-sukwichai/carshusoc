@@ -233,7 +233,8 @@
             @endforeach
         </div>
 
-        <hr class="mx-32 border border-dashed border-gray-200 my-24">
+        <!-- Content Hidden -->
+        <!-- <hr class="mx-32 border border-dashed border-gray-200 my-24"> -->
 
         <!-- lorem -->
         <div>

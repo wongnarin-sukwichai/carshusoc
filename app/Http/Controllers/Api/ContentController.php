@@ -15,7 +15,9 @@ class ContentController extends Controller
      */
     public function index()
     {
-        $data = Content::all();
+        // $data = Content::all();
+        //ชั่วคราว
+        $data = Content::where('mode', null)->get();
 
         return response()->json($data);
     }

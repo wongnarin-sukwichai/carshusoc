@@ -15,7 +15,8 @@
 
         <!-- โลโก้ตรงกลาง -->
         <div style="text-align:center;">
-            <img src="https://carshusoc.com/img/logo/logo.png" alt="Logo" width="30%" style="display:block; margin:0 auto;">
+            <img src="https://carshusoc.com/img/logo/logo.png" alt="Logo" width="30%"
+                style="display:block; margin:0 auto;">
         </div>
 
         <!-- ข้อความต้อนรับ -->
@@ -24,21 +25,21 @@
             เรื่อง แจ้งข้อมูลการลงทะเบียนกับศูนย์บริการวิชาการและวิจัย (CARS-HUSOC)
         </p>
         <p style="text-left:center; font-size:15px; color:#555;">
-            เรียน คุณ <span style="font-weight: bold;">{{ $name }}</span>
+            เรียน คุณ <span style="font-weight: bold;"></span>
         </p>
         <p style="text-indent: 2em; text-left:center; font-size:15px; color:#555;">
-            ตามที่ท่านได้ลงทะเบียนเข้าร่วมการอบรม หลักสูตร <span style="font-weight: bold;">{{ $content }}</span>
+            ตามที่ท่านได้ลงทะเบียนเข้าร่วม หลักสูตร <span style="font-weight: bold;"></span>
             ทางศูนย์บริการวิชาการและวิจัย (CARS-HUSOC) คณะมนุษยศาสตร์และสังคมศาสตร์ มหาวิทยาลัยมหาสารคาม
             ขอส่งรายละเอียดการเข้าร่วมการอบรม ดังนี้
         </p>
         <p style="text-left:center; font-size:15px; color:#555;">
-            หัวข้ออบรม : <span style="font-weight: bold;">{{ $title }}</span>
+            หัวข้อ : <span style="font-weight: bold;"></span>
         </p>
         <p style="text-left:center; font-size:15px; color:#555;">
-            วัน/เวลาอบรม : <span style="font-weight: bold;">{{ $start }} - {{ $end }}</span>
+            วัน/เวลา : <span style="font-weight: bold;"></span>
         </p>
         <p style="text-left:center; font-size:15px; color:#555;">
-            สถานที่อบรม : <span style="font-weight: bold;">{{ $meet }}</span>
+            สถานที่ : <span style="font-weight: bold;"></span>
         </p>
 
         <p style="text-left:center; font-size:15px; color:#555;">

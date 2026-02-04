@@ -15,7 +15,9 @@ class SectionController extends Controller
      */
     public function index()
     {
-        $data = Section::all();
+        //$data = Section::all();
+        //ชั่วคราว
+        $data = Section::where('mode', null)->get();
 
         return response()->json($data);
     }
@@ -80,7 +82,9 @@ class SectionController extends Controller
      */
     public function show(string $id)
     {
-        $data = Section::where('content_id', $id)->get();
+        //$data = Section::where('content_id', $id)->get();
+        //ชั่วคราว
+        $data = Section::where('content_id', $id)->where('mode', null)->get();
 
         return response()->json($data);
     }

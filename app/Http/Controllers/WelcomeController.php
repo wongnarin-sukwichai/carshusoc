@@ -11,13 +11,19 @@ class WelcomeController extends Controller
     /**
      * Display a listing of the resource.
      */
+    // public function index()
+    // {
+    //     $data = Content::all();
+
+    //     return view('welcome', [
+    //         'content' => $data
+    //     ]);
+    // }
+    
+    //รอปรับปรุงหน้าเว็บ
     public function index()
     {
-        $data = Content::all();
-
-        return view('welcome', [
-            'content' => $data
-        ]);
+        return redirect('/login');
     }
 
     public function about()

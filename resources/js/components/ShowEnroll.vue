@@ -376,10 +376,10 @@
                 <img :src="logo" class="w-8 h-8 rounded-lg mr-2" />
                 ธนาคารไทยพาณิชย์ เลขบัญชี :
                 <span class="font-semibold px-2 text-purple-800"
-                    >408-931-6919</span
+                    >406-552932-8</span
                 >
                 | <span class="font-semibold px-2">ชื่อบัญชี</span> :
-                มหาวิทยาลัยมหาสารคาม (เงินรับฝาก)
+                มหาวิทยาลัยมหาสารคาม (เงินรายได้)
             </div>
         </div>
 

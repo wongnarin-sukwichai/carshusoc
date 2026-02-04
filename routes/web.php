@@ -41,6 +41,9 @@ Route::get('/about', [WelcomeController::class, 'about']);
 // Route::get('/enroll', function () {
 //     return view('emails/enroll');
 // });
+Route::get('/testmail', function () {
+    return view('emails/testmail');
+});
 
 //////////////////////////// ไว้ล่างสุด ///////////////////////////////////////////
 Route::get('{any}', function () {

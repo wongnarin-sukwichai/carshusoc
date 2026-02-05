@@ -186,7 +186,7 @@
                                                     >
                                                         {{
                                                             setEvent(
-                                                                enroll.event_id
+                                                                enroll.event_id,
                                                             )
                                                         }}
                                                     </td>
@@ -195,7 +195,7 @@
                                                     >
                                                         {{
                                                             setMoment(
-                                                                enroll.created_at
+                                                                enroll.created_at,
                                                             )
                                                         }}
                                                     </td>
@@ -204,7 +204,7 @@
                                                     >
                                                         {{
                                                             setMoment(
-                                                                enroll.update_at
+                                                                enroll.update_at,
                                                             )
                                                         }}
                                                     </td>
@@ -224,7 +224,7 @@
                                                             @click="
                                                                 showCertTest(
                                                                     enroll.id,
-                                                                    enroll.certTest
+                                                                    enroll.certTest,
                                                                 )
                                                             "
                                                         ></box-icon>
@@ -245,7 +245,7 @@
                                                             @click="
                                                                 showCertTrain(
                                                                     enroll.id,
-                                                                    enroll.certTrain
+                                                                    enroll.certTrain,
                                                                 )
                                                             "
                                                         ></box-icon>
@@ -265,7 +265,7 @@
                                                             "
                                                             @click="
                                                                 showComplete(
-                                                                    enroll.id
+                                                                    enroll.id,
                                                                 )
                                                             "
                                                         ></box-icon>
@@ -287,6 +287,29 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div
+            class="border-2 border-dashed border-gray-200 text-sm p-4 rounded-xl mb-2"
+        >
+            <div class="flex">
+                <box-icon
+                    name="info-circle"
+                    color="oklch(80.8% 0.114 19.571)"
+                    class="items-center justify-center mx-1 cursor-pointer hover:scale-115"
+                ></box-icon>
+                <span class="items-center justify-center mt-0.5">
+                    กรุณาตอบแบบประเมินความพึงพอใจ
+                    เพื่อให้ครบตามเงื่อนไขการรับใบประกาศฯ :
+
+                    <a
+                        href="https://forms.gle/zpW7kBbaLPM1hRpS9"
+                        target="_blank"
+                        class="text-sky-500 inline-block transform hover:scale-105 transition"
+                        >...Click</a
+                    >
+                </span>
             </div>
         </div>
     </div>
@@ -317,7 +340,7 @@
                                 @click="
                                     linkComplete(
                                         complete.title,
-                                        complete.created_at
+                                        complete.created_at,
                                     )
                                 "
                             >

@@ -1081,7 +1081,7 @@ export default {
                             return;
                         }
                         axios
-                            .put("/api/user/" + this.user.id)
+                            .put("/api/user/" + this.user.id, this.data)
                             .then((response) => {
                                 // SweetAlert Success
                                 Swal.fire({

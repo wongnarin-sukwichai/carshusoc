@@ -1710,6 +1710,7 @@ export default {
             moment: moment,
             file: null,
             payment: null,
+            slipChk: false,
             ////////////////////////////////////////////////////////////////
             data: {
                 id: "",

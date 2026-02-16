@@ -184,7 +184,7 @@
                         class="flex flex-wrap items-center cursor-pointer"
                     >
                         <div class="relative">
-                            <div v-if="user.pic === null">
+                            <div v-if="!user?.pic">
                                 <box-icon
                                     name="user"
                                     size="md"
@@ -194,7 +194,7 @@
                             <div v-else>
                                 <img
                                     class="rounded-full w-10"
-                                    :src="pic + this.user.pic"
+                                    :src="pic + user.pic"
                                 />
                             </div>
                             <span
@@ -223,12 +223,15 @@
                 @click="toggleSidebar"
                 class="fixed opacity-50 top-4 left-3.5 z-50 flex items-center justify-center w-10 h-10 rounded-full bg-sky-500 text-white shadow-lg cursor-pointer hover:bg-sky-600 hover:opacity-100 transition duration-300"
             >
-                <box-icon
-                    name="menu"
-                    type="solid"
-                    color="white"
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
                     class="w-4 h-4"
-                ></box-icon>
+                    fill="currentColor"
+                    aria-hidden="true"
+                >
+                    <path d="M4 6h16v2H4V6zm0 5h16v2H4v-2zm0 5h16v2H4v-2z" />
+                </svg>
             </div>
         </transition>
 
@@ -238,12 +241,15 @@
             class="fixed opacity-50 top-4 left-3.5 z-50 flex items-center justify-center w-10 h-10 rounded-full bg-sky-500 text-white shadow-lg cursor-pointer hover:bg-sky-600 hover:opacity-100 transition duration-300"
         >
             <!-- Optional: icon หรือแถบสี -->
-            <box-icon
-                name="menu"
-                type="solid"
-                color="white"
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
                 class="w-4 h-4"
-            ></box-icon>
+                fill="currentColor"
+                aria-hidden="true"
+            >
+                <path d="M4 6h16v2H4V6zm0 5h16v2H4v-2zm0 5h16v2H4v-2z" />
+            </svg>
         </div>
 
         <!-- Overlay สีดำ (เฉพาะ mobile) -->
@@ -263,8 +269,6 @@
 </template>
 
 <script>
-import "boxicons";
-
 export default {
     mounted() {},
     data() {

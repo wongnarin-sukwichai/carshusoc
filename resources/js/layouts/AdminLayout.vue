@@ -170,12 +170,24 @@
                                 class="text-gray-50 font-medium text-[15px] flex items-center rounded-md left-0 hover:left-1 relative transition-all cursor-pointer"
                                 @click="link()"
                             >
-                                <box-icon
-                                    name="file-pdf"
-                                    type="solid"
-                                    class="mr-2"
-                                    color="#85c1e9"
-                                ></box-icon>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    class="w-5 h-5 mr-2"
+                                    fill="currentColor"
+                                    style="color: #85c1e9"
+                                    aria-hidden="true"
+                                >
+                                    <!-- file shape -->
+                                    <path
+                                        d="M6 2h9l5 5v15a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm8 1.5V8h4.5L14 3.5z"
+                                    />
+                                    <!-- PDF letters -->
+                                    <path
+                                        d="M7 14h2.2c.9 0 1.5.6 1.5 1.5S10.1 17 9.2 17H8v2H7v-5zm1 1v1h1.1c.3 0 .6-.2.6-.5s-.2-.5-.6-.5H8zm4-1h1.6c1.4 0 2.4 1 2.4 2.5S15 19 13.6 19H12v-5zm1 1v3h.6c.8 0 1.4-.6 1.4-1.5S14.4 15 13.6 15H13zm4-1h3v1h-2v1h1.6v1H18v2h-1v-5z"
+                                    />
+                                </svg>
+
                                 คู่มือระบบ
                             </div>
                         </li>
@@ -271,12 +283,15 @@
                 @click="toggleSidebar"
                 class="fixed opacity-50 top-4 left-3.5 z-50 flex items-center justify-center w-10 h-10 rounded-full bg-sky-500 text-white shadow-lg cursor-pointer hover:bg-sky-600 hover:opacity-100 transition duration-300"
             >
-                <box-icon
-                    name="menu"
-                    type="solid"
-                    color="white"
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
                     class="w-4 h-4"
-                ></box-icon>
+                    fill="currentColor"
+                    aria-hidden="true"
+                >
+                    <path d="M4 6h16v2H4V6zm0 5h16v2H4v-2zm0 5h16v2H4v-2z" />
+                </svg>
             </div>
         </transition>
 
@@ -286,12 +301,15 @@
             class="fixed opacity-50 top-4 left-3.5 z-50 flex items-center justify-center w-10 h-10 rounded-full bg-sky-500 text-white shadow-lg cursor-pointer hover:bg-sky-600 hover:opacity-100 transition duration-300"
         >
             <!-- Optional: icon หรือแถบสี -->
-            <box-icon
-                name="menu"
-                type="solid"
-                color="white"
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
                 class="w-4 h-4"
-            ></box-icon>
+                fill="currentColor"
+                aria-hidden="true"
+            >
+                <path d="M4 6h16v2H4V6zm0 5h16v2H4v-2zm0 5h16v2H4v-2z" />
+            </svg>
         </div>
 
         <!-- Overlay สีดำ (เฉพาะ mobile) -->

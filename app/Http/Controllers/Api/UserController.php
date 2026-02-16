@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -72,6 +73,7 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
+
         $data = User::find($id);
 
         $data->name = $request['name'];
@@ -89,7 +91,7 @@ class UserController extends Controller
         $data->status = 1;
 
         if ($request['chgPass'] == true) {
-            $data->password = bcrypt($request['password']);
+            $data->password = Hash::make($request['pass']);
         }
 
         $data->save();

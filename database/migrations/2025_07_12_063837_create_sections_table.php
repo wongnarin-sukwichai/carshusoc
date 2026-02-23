@@ -28,6 +28,7 @@ return new class extends Migration
             $table->integer('alert')->nullable()->comment('1=แสดง Alert');
             $table->integer('status')->nullable()->comment('null=เปิด,1=จบคลอสไปแล้ว');
             $table->string('created')->comment('ใครเป็นคนสร้าง');
+            $table->integer('mode')->nullable()->comment('null=เปิด, 1=ปิด');
             $table->timestamps();
         });
     }

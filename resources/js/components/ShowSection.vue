@@ -106,7 +106,7 @@
                                         section.course,
                                         section.title,
                                         section.start,
-                                        section.end
+                                        section.end,
                                     )
                                 "
                             >
@@ -125,7 +125,7 @@
                                         section.course,
                                         section.title,
                                         section.start,
-                                        section.end
+                                        section.end,
                                     )
                                 "
                             >
@@ -143,7 +143,7 @@
                                         section.course,
                                         section.title,
                                         section.start,
-                                        section.end
+                                        section.end,
                                     )
                                 "
                             >
@@ -158,7 +158,7 @@
                                         section.course,
                                         section.title,
                                         section.start,
-                                        section.end
+                                        section.end,
                                     )
                                 "
                             >
@@ -198,7 +198,7 @@
                                     sendData(
                                         course.price,
                                         course.postage,
-                                        course.id
+                                        course.id,
                                     )
                                 "
                             >
@@ -254,6 +254,150 @@
             </div>
         </div>
     </transition>
+
+    <!-- Modal Add Course -->
+    <transition name="fade" mode="out-in">
+        <div class="relative z-10" v-show="this.modalPolicy">
+            <div
+                class="fixed inset-0 bg-gray-500/50 bg-opacity-90 transition-opacity"
+            ></div>
+            <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+                <div
+                    class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
+                >
+                    <div
+                        class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"
+                    >
+                        <div class="bg-white p-4 rounded-2xl mt-4">
+                            <div class="text-xl text-gray-400 mb-2">
+                                <div
+                                    class="space-y-4 text-gray-800 text-sm leading-relaxed"
+                                >
+                                    <h2
+                                        class="text-lg font-bold border-b pb-2 mb-2"
+                                    >
+                                        แนวปฏิบัติในการเข้ารับการอบรม
+                                    </h2>
+
+                                    <!-- ข้อ 1 -->
+                                    <div>
+                                        <p class="font-semibold">
+                                            1. การเข้าห้องอบรม
+                                        </p>
+                                        <p class="mt-1">
+                                            ผู้เข้ารับการอบรมต้องเข้าห้องอบรมตรงตามเวลาที่กำหนด
+                                            โดยควรเข้าห้องอบรมก่อนเวลาเริ่มการอบรม
+                                            และลงชื่อเข้าอบรมตามระเบียบที่หน่วยงานกำหนดอย่างเคร่งครัด
+                                        </p>
+                                    </div>
+
+                                    <!-- ข้อ 2 -->
+                                    <div>
+                                        <p class="font-semibold">
+                                            2. การขาดเรียนและการลาเรียน
+                                        </p>
+                                        <p class="mt-1">
+                                            ผู้เข้ารับการอบรมสามารถขาดเรียนและลาเรียนรวมกันได้ไม่เกิน
+                                            <span
+                                                class="font-semibold text-red-600"
+                                                >6 ชั่วโมงต่อหนึ่งหลักสูตร</span
+                                            >
+                                            หากเกินจำนวนชั่วโมงที่กำหนด
+                                            จะถือว่าไม่เป็นไปตามเงื่อนไขของรายวิชา
+                                            และจะไม่มีการอนุโลมในทุกกรณี
+                                        </p>
+                                    </div>
+
+                                    <!-- ข้อ 3 -->
+                                    <div>
+                                        <p class="font-semibold">3. การสอบ</p>
+                                        <p class="mt-1">
+                                            ผู้เข้ารับการอบรมต้องเข้ารับการสอบตามวันและเวลาที่กำหนดอย่างเคร่งครัด
+                                            ไม่อนุญาตให้ขาดสอบไม่ว่ากรณีใด ๆ
+                                            หากขาดสอบจะถือว่าเป็นการสละสิทธิ์
+                                            และต้องลงทะเบียนเข้ารับการอบรมใหม่อีกครั้ง
+                                        </p>
+                                    </div>
+
+                                    <!-- ข้อ 4 -->
+                                    <div>
+                                        <p class="font-semibold">
+                                            4. เกณฑ์การประเมินผลคะแนน
+                                        </p>
+
+                                        <div class="mt-2 pl-4 space-y-2">
+                                            <div>
+                                                <p class="font-medium">
+                                                    คะแนนสอบรวม 100%
+                                                </p>
+                                                <ul class="list-disc pl-6">
+                                                    <li>
+                                                        ระดับปริญญาโท
+                                                        ต้องได้คะแนนไม่น้อยกว่า
+                                                        50%
+                                                    </li>
+                                                    <li>
+                                                        ระดับปริญญาเอก
+                                                        ต้องได้คะแนนไม่น้อยกว่า
+                                                        60%
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <div>
+                                                <p class="font-medium">
+                                                    หลักสูตรภาษาอังกฤษขั้นพื้นฐาน
+                                                </p>
+                                                <ul class="list-disc pl-6">
+                                                    <li>สอบ 100%</li>
+                                                </ul>
+                                            </div>
+
+                                            <div>
+                                                <p class="font-medium">
+                                                    หลักสูตรภาษาอังกฤษเพื่อจุดประสงค์ทางวิชาการ
+                                                </p>
+                                                <ul class="list-disc pl-6">
+                                                    <li>การปฏิบัติ 20%</li>
+                                                    <li>การสอบ 80%</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- หมายเหตุ -->
+                                    <div
+                                        class="bg-yellow-50 border-l-4 border-yellow-400 p-3 rounded"
+                                    >
+                                        <p
+                                            class="font-semibold text-yellow-700"
+                                        >
+                                            หมายเหตุ :
+                                        </p>
+                                        <p class="text-yellow-800 mt-1">
+                                            เมื่อผู้สมัครได้ทำการยืนยันการเข้ารับการอบรมแล้ว
+                                            จะไม่สามารถขอคืนเงินได้ในทุกกรณี
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-gray-50 px-4 py-2 sm:flex sm:flex-row-reverse sm:px-6"
+                        >
+                            <button
+                                type="button"
+                                class="inline-flex w-full justify-center rounded-lg bg-red-300 px-3 py-1.5 text-sm text-white shadow-xs hover:bg-red-400 sm:ml-3 sm:w-auto"
+                                @click="close()"
+                            >
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </transition>
 </template>
 
 <script>
@@ -285,10 +429,14 @@ export default {
                 price: "",
                 postage: "",
             },
+            modalPolicy: false,
         };
     },
     methods: {
         getSection() {
+            if (this.$route.params.id == 2) {
+                this.modalPolicy = true;
+            }
             axios
                 .get("/api/section/" + this.$route.params.id)
                 .then((response) => {
@@ -313,7 +461,7 @@ export default {
         },
         chkCourse(id, code, title, start, end) {
             this.data.section_id = id;
-            (this.data.title = title), (this.data.start = start);
+            ((this.data.title = title), (this.data.start = start));
             this.data.end = end;
 
             if (code == null) {
@@ -334,6 +482,7 @@ export default {
         },
         close() {
             this.modalCourse = false;
+            this.modalPolicy = false;
         },
         sendData(res, code, course) {
             Swal.fire({

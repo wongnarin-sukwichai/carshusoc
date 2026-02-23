@@ -99,6 +99,17 @@ class SectionController extends Controller
         return response()->json($data);
     }
 
+    public function sectionEnd(string $id)
+    {
+        $data = Section::find($id);
+        $data->mode = 1;
+        $data->save();
+
+        return response()->json([
+            'message' => 'Success!!'
+        ]);
+    }
+
     /**
      * Update the specified resource in storage.
      */

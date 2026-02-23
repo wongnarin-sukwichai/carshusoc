@@ -298,10 +298,11 @@
                     name="info-circle"
                     color="oklch(80.8% 0.114 19.571)"
                     class="items-center justify-center mx-1 cursor-pointer hover:scale-115"
+                    animation="tada"
                 ></box-icon>
                 <span class="items-center justify-center mt-0.5">
-                    กรุณาตอบแบบประเมินความพึงพอใจ
-                    เพื่อให้ครบตามเงื่อนไขการรับใบประกาศฯ :
+                    กรอกแบบประเมินความพึงพอใจ
+                    ตามเงื่อนไขการรับใบประกาศฯ :
 
                     <a
                         href="https://forms.gle/zpW7kBbaLPM1hRpS9"
@@ -372,6 +373,65 @@
             </div>
         </div>
     </transition>
+
+    <!-- Modal Add Course -->
+    <transition name="fade" mode="out-in">
+        <div class="relative z-10" v-show="this.modalPolicy">
+            <div
+                class="fixed inset-0 bg-gray-500/50 bg-opacity-90 transition-opacity"
+            ></div>
+            <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+                <div
+                    class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
+                >
+                    <div
+                        class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"
+                    >
+                        <div class="bg-white p-4 rounded-2xl mt-4">
+                            <div class="text-xl text-gray-400 mb-2">
+                                <div
+                                    class="space-y-3 text-gray-800 text-sm leading-relaxed"
+                                >
+                                    <div
+                                        class="bg-yellow-50 border-l-4 border-yellow-400 p-3 rounded"
+                                    >
+                                        <p
+                                            class="font-semibold text-yellow-700"
+                                        >
+                                            เงื่อนไขการรับใบประกาศนียบัตร :
+                                        </p>
+                                        <p class="text-yellow-800 mt-1">
+                                            กรุณาตอบแบบประเมินความพึงพอใจให้ครบถ้วน
+                                            เพื่อให้เป็นไปตามเงื่อนไขการรับใบประกาศนียบัตร
+                                            <span>
+                                                <a
+                                                    href="https://forms.gle/zpW7kBbaLPM1hRpS9"
+                                                    target="_blank"
+                                                    class="text-sky-500 inline-block transform hover:scale-105 transition"
+                                                    >...Click</a
+                                                ></span
+                                            >
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-gray-50 px-4 py-2 sm:flex sm:flex-row-reverse sm:px-6"
+                        >
+                            <button
+                                type="button"
+                                class="inline-flex w-full justify-center rounded-lg bg-red-300 px-3 py-1.5 text-sm text-white shadow-xs hover:bg-red-400 sm:ml-3 sm:w-auto"
+                                @click="close()"
+                            >
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </transition>
 </template>
 
 <script>
@@ -397,6 +457,7 @@ export default {
             certList: [],
             ////////////////////////////////////////////////////////////////
             moment: moment,
+            modalPolicy: true,
         };
     },
     methods: {
@@ -427,6 +488,7 @@ export default {
         close() {
             this.modalComplete = false;
             this.modalCert = false;
+            this.modalPolicy = false;
         },
         ////////////////////////////////////////////////////////////////
         showCertTrain(id, code) {

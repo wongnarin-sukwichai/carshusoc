@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('owner')->nullable();
             $table->longText('other')->nullable();
             $table->integer('created_by')->nullable();
+            $table->integer('mode')->nullable()->comment('null=เปิด, 1=ปิด');
             $table->timestamps();
         });
     }

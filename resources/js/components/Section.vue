@@ -12,7 +12,9 @@
             </span>
         </div>
 
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        <div
+            class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"
+        >
             <div
                 class="relative border-2 shadow-lg rounded-xl cursor-pointer hover:border-gray-300 flex flex-col items-center justify-center text-center overflow-hidden"
                 v-for="(section, index) in sectionList"
@@ -20,6 +22,21 @@
             >
                 <div class="card-container">
                     <div class="card">
+                        <!-- 🔥 ICON มุมขวาบน -->
+                        <div
+                            class="absolute top-2 right-2 z-10"
+                            v-if="chkExpire(section.examdate) === true"
+                        >
+                            <box-icon
+                                name="cloud-download"
+                                type="solid"
+                                size="md"
+                                color="oklch(80.8% 0.114 19.571)"
+                                class="hover:scale-110 transition"
+                                @click="sectionEnd(section.id)"
+                            ></box-icon>
+                        </div>
+
                         <div
                             class="front-content"
                             :class="{
@@ -48,7 +65,7 @@
                                     <span class="font-semibold"
                                         >วันสอบ/อบรม :</span
                                     >
-                                    {{ section.examdate }}
+                                    {{ setMoment(section.examdate) }}
                                 </p>
                                 <p v-if="section.examtime">
                                     <span class="font-semibold">เวลา : </span
@@ -223,9 +240,7 @@
                         class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"
                     >
                         <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                            <div
-                                class="border-2 rounded-xl p-3.5 mb-2"
-                            >
+                            <div class="border-2 rounded-xl p-3.5 mb-2">
                                 <span class="text-[#85c1e9] text-lg font-bold">
                                     หัวข้อ :
                                 </span>
@@ -234,9 +249,7 @@
                                     this.data.section_title
                                 }}</span>
                             </div>
-                            <div
-                                class="border-2 rounded-xl p-3.5 mb-2"
-                            >
+                            <div class="border-2 rounded-xl p-3.5 mb-2">
                                 <span class="text-[#85c1e9] text-lg font-bold">
                                     : ชื่อเรื่อง
                                 </span>
@@ -259,9 +272,7 @@
                             </div>
                             <div class="grid grid-cols-2 gap-4">
                                 <!-- ค่าบริการ -->
-                                <div
-                                    class="border-2 rounded-xl p-3.5 mb-2"
-                                >
+                                <div class="border-2 rounded-xl p-3.5 mb-2">
                                     <label
                                         class="block text-[#85c1e9] text-lg font-bold mb-1"
                                         for="service"
@@ -277,9 +288,7 @@
                                 </div>
 
                                 <!-- ค่าไปรษณีย์ -->
-                                <div
-                                    class="border-2 rounded-xl p-3.5 mb-2"
-                                >
+                                <div class="border-2 rounded-xl p-3.5 mb-2">
                                     <label
                                         class="block text-[#85c1e9] text-lg font-bold mb-1"
                                         for="postage"
@@ -294,9 +303,7 @@
                                     />
                                 </div>
                             </div>
-                            <div
-                                class="border-2 rounded-xl p-3.5"
-                            >
+                            <div class="border-2 rounded-xl p-3.5">
                                 <span class="text-[#85c1e9] text-lg font-bold">
                                     : อื่นๆ
                                 </span>
@@ -477,6 +484,7 @@ export default {
                 postage: "",
                 other: "",
             },
+            today: moment().format("YYYY-MM-DD"),
         };
     },
     methods: {
@@ -579,7 +587,7 @@ export default {
                                     });
                                     this.showCourse(
                                         this.data.section_id,
-                                        this.data.section_title
+                                        this.data.section_title,
                                     );
                                     this.modalCourse = false;
                                 });
@@ -673,10 +681,60 @@ export default {
                             });
                             this.showCourse(
                                 this.data.section_id,
-                                this.data.section_title
+                                this.data.section_title,
                             );
                             this.modalEditCourse = false;
                         });
+                }
+            });
+        },
+        chkExpire(date) {
+            return moment(date).isBefore(this.today);
+        },
+        sectionEnd(id) {
+            Swal.fire({
+                title: "ต้องการบันทึกชุดข้อมูลหรือไม่?",
+                text: "เป็นการบันทึกและซ่อนชุดข้อมูลเท่านั้น ไม่ใช่การลบข้อมูล โดยสามารถสืบค้นได้ที่เมนู 'ใบประกาศ'",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes",
+                customClass: {
+                    popup: "rounded-xl shadow-lg bg-white font-poppins",
+                    title: "text-2xl font-bold text-gray-800",
+                    htmlContainer: "text-base text-gray-600",
+                    confirmButton:
+                        "bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2",
+                    cancelButton:
+                        "bg-gray-300 hover:bg-gray-400 text-black font-medium px-4 py-2 ml-2",
+                },
+                didOpen: () => {
+                    Swal.getPopup().style.fontFamily = "Anuphan, sans-serif";
+                },
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    axios.get("/api/sectionEnd/" + id).then((response) => {
+                        Swal.fire({
+                            title: response.data.message,
+                            icon: "success",
+                            draggable: true,
+                            customClass: {
+                                popup: "rounded-xl shadow-lg bg-white font-poppins",
+                                title: "text-2xl text-gray-800",
+                                htmlContainer: "text-base text-gray-600",
+                                confirmButton:
+                                    "bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2",
+                                cancelButton:
+                                    "bg-gray-300 hover:bg-gray-400 text-black font-medium px-4 py-2 ml-2",
+                            },
+                            didOpen: () => {
+                                Swal.getPopup().style.fontFamily =
+                                    "Poppins, sans-serif";
+                            },
+                        });
+                    });
+                    this.getSection();
                 }
             });
         },

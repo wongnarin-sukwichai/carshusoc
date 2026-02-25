@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('title');
             $table->date('start')->nullable()->comment('วันเปิดรับสมัคร');
             $table->date('end')->nullable()->comment('วันปิดรับสมัคร');
-            $table->date('examdate')->nullable()->comment('วันสอบ/วันสุดท้ายของการอบรม');
+            $table->date('examdate')->nullable()->comment('วันสุดท้ายของการสอบ/อบรม');
             $table->string('examtime')->nullable()->comment('เวลาสอบ');
             $table->longText('meet')->nullable()->comment('สถานที่สอบ');
             $table->integer('price')->nullable()->comment('ค่าบริการ');

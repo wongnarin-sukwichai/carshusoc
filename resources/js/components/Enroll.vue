@@ -410,7 +410,7 @@
                                                     <td
                                                         class="flex p-4.5 items-center gap-0.5"
                                                     >
-                                                        <box-icon
+                                                        <!-- <box-icon
                                                             name="message-square-detail"
                                                             class="cursor-pointer hover:scale-120"
                                                             color="oklch(82.8% 0.189 84.429)"
@@ -424,7 +424,7 @@
                                                         <box-icon
                                                             name="dots-vertical-rounded"
                                                             color="oklch(86.9% 0.022 252.894)"
-                                                        ></box-icon>
+                                                        ></box-icon> -->
 
                                                         <box-icon
                                                             name="message-square-edit"
@@ -514,7 +514,7 @@
     <!----------------------------------- MODAL ------------------------------------------------------->
 
     <!-- Modal Detail -->
-    <transition name="fade" mode="out-in">
+    <!-- <transition name="fade" mode="out-in">
         <div class="relative z-10" v-show="this.modalDetail">
             <div
                 class="fixed inset-0 bg-gray-500/50 bg-opacity-90 transition-opacity"
@@ -723,7 +723,7 @@
                                                 }}
                                             </span>
                                         </td>
-                                    </tr>
+                                    </tr> -->
                                     <!-- <template v-if="detailList.event_id === 2">
                                         <tr>
                                             <td
@@ -753,7 +753,7 @@
                                             </td>
                                         </tr>
                                     </template> -->
-                                    <template v-if="detailList.event_id === 3">
+                                    <!--<template v-if="detailList.event_id === 3">
                                         <tr>
                                             <td
                                                 class="border border-gray-300 px-2 py-1 text-center"
@@ -963,7 +963,7 @@
                 </div>
             </div>
         </div>
-    </transition>
+    </transition> -->
 
     <!-- Modal Edit -->
     <transition name="fade" mode="out-in">

@@ -24,14 +24,20 @@ class SectionController extends Controller
 
     public function sectionTrain()
     {
-        $data = Section::where('content_id', 2)->get();
+        $data = Section::where('content_id', 2)
+        ->where('mode', 1)
+        ->orderBy('id', 'DESC')
+        ->paginate(3);
 
         return response()->json($data);
     }
 
     public function sectionTest()
     {
-        $data = Section::where('content_id', 1)->get();
+        $data = Section::where('content_id', 1)
+        ->where('mode', 1)
+        ->orderBy('id', 'DESC')
+        ->paginate(3);
 
         return response()->json($data);
     }

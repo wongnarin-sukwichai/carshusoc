@@ -104,9 +104,6 @@
                                     chkCourse(
                                         section.id,
                                         section.course,
-                                        section.title,
-                                        section.start,
-                                        section.end,
                                     )
                                 "
                             >
@@ -123,9 +120,6 @@
                                     chkCourse(
                                         section.id,
                                         section.course,
-                                        section.title,
-                                        section.start,
-                                        section.end,
                                     )
                                 "
                             >
@@ -141,9 +135,6 @@
                                     chkCourse(
                                         section.id,
                                         section.course,
-                                        section.title,
-                                        section.start,
-                                        section.end,
                                     )
                                 "
                             >
@@ -156,9 +147,6 @@
                                     chkCourse(
                                         section.id,
                                         section.course,
-                                        section.title,
-                                        section.start,
-                                        section.end,
                                     )
                                 "
                             >
@@ -423,9 +411,6 @@ export default {
                 content_id: this.$route.params.id,
                 section_id: "",
                 course_id: "",
-                title: "",
-                start: "",
-                end: "",
                 price: "",
                 postage: "",
             },
@@ -453,16 +438,11 @@ export default {
             const res = arr.find((selection) => selection.section_id == id);
             return res ? res.id : null;
         },
-        addSection() {
-            this.$router.push("/addSection/" + this.$route.params.id);
-        },
         setMoment(id) {
             return moment(id).format("L");
         },
-        chkCourse(id, code, title, start, end) {
+        chkCourse(id, code) {
             this.data.section_id = id;
-            ((this.data.title = title), (this.data.start = start));
-            this.data.end = end;
 
             if (code == null) {
                 const arr = Array.from(this.sectionList);

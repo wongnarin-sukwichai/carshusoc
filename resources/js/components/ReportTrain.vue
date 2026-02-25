@@ -15,12 +15,102 @@
         <div
             class="border-2 border-dashed border-gray-200 text-lg p-4 rounded-xl"
         >
-            <div class="flex flex-col">
-                <div class="w-full align-middle">
-                    <!-- Search-->
-                    <div
-                        class="flex gap-4 text-gray-500 focus-within:text-gray-900 pt-4 items-center justify-center"
-                    >
+            <div class="grid grid-cols-2 gap-4">
+                <!-- Table -->
+                <div class="flex flex-col border-r-2">
+                    <div class="flex flex-col">
+                        <div class="overflow-x-auto pb-4">
+                            <div class="min-w-full inline-block align-middle">
+                                <div
+                                    class="overflow-hidden border rounded-lg border-gray-300 mr-4"
+                                >
+                                    <table
+                                        class="table-auto min-w-full rounded-xl"
+                                    >
+                                        <thead>
+                                            <tr class="bg-gray-50">
+                                                <th
+                                                    scope="col"
+                                                    class="p-2 text-left whitespace-nowrap text-sm leading-6 font-semibold text-gray-900 capitalize min-w-[150px]"
+                                                >
+                                                    รายการ
+                                                </th>
+                                                <th
+                                                    scope="col"
+                                                    class="p-2 text-left whitespace-nowrap text-sm leading-6 font-semibold text-gray-900 capitalize"
+                                                >
+                                                    วันที่เริ่ม
+                                                </th>
+                                                <th
+                                                    scope="col"
+                                                    class="p-2 text-left whitespace-nowrap text-sm leading-6 font-semibold text-gray-900 capitalize"
+                                                >
+                                                    วันสิ้นสุด
+                                                </th>
+                                                <th
+                                                    scope="col"
+                                                    class="p-2 text-left whitespace-nowrap text-sm leading-6 font-semibold text-gray-900 capitalize"
+                                                >
+                                                    วันสุดท้ายของการอบรม
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-gray-300">
+                                            <tr
+                                                class="bg-white transition-all duration-500 hover:bg-sky-50 hover:cursor-pointer"
+                                                v-for="(
+                                                    section, index
+                                                ) in sectionList.data"
+                                                :key="index"
+                                                @click="setEvent(section.id)"
+                                            >
+                                                <td class="p-2">
+                                                    <p
+                                                        class="font-bold text-sm text-sky-500"
+                                                    >
+                                                        {{ section.title }}
+                                                    </p>
+                                                </td>
+                                                <td
+                                                    class="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900"
+                                                >
+                                                    {{
+                                                        setMoment(section.start)
+                                                    }}
+                                                </td>
+                                                <td
+                                                    class="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900"
+                                                >
+                                                    {{ setMoment(section.end) }}
+                                                </td>
+                                                <td
+                                                    class="p-2 whitespace-nowrap text-sm leading-6 font-medium text-gray-900"
+                                                >
+                                                    {{
+                                                        setMoment(
+                                                            section.examdate,
+                                                        )
+                                                    }}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="flex justify-end m-5">
+                                    <TailwindPagination
+                                        :data="sectionList"
+                                        @pagination-change-page="getSection"
+                                    >
+                                    </TailwindPagination>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search-->
+                <div class="w-full space-y-6">
+                    <div class="flex flex-wrap gap-4 text-gray-500 focus-within:text-gray-900">
                         <div class="flex flex-col relative w-48">
                             <transition name="fade" mode="out-in">
                                 <span
@@ -47,8 +137,10 @@
                                 class="w-full text-sm"
                             />
                         </div>
-                        <div class="flex flex-col relative w-48">
-                            <div class="relative block w-48 text-left">
+                        <div
+                            class="flex flex-col relative w-full sm:w-64 lg:w-72"
+                        >
+                            <div class="relative block w-full text-left">
                                 <transition name="fade" mode="out-in">
                                     <span
                                         v-if="errors.section_id"
@@ -104,7 +196,7 @@
                                             class="block px-4 py-2 text-sm text-gray-700 hover:bg-sky-100 cursor-pointer"
                                             v-for="(
                                                 section, index
-                                            ) in sectionList"
+                                            ) in sectionList.data"
                                             :key="index"
                                             @click="setEvent(section?.id)"
                                         >
@@ -115,36 +207,34 @@
                             </transition>
                         </div>
                     </div>
+
+                    <!-- Actions -->
+                    <div class="flex flex-col sm:flex-row gap-3 mt-4">
+                        <button
+                            type="button"
+                            class="text-sm inline-flex items-center justify-center gap-2 border-2 border-dashed px-4 py-2 rounded-xl bg-green-200 border-green-400 hover:bg-green-300 transition cursor-pointer"
+                            @click="report()"
+                        >
+                            <box-icon
+                                name="file"
+                                color="oklch(72.3% 0.219 149.579)"
+                            ></box-icon>
+                            Export to Excel
+                        </button>
+
+                        <button
+                            type="button"
+                            class="text-sm inline-flex items-center justify-center gap-2 border-2 border-dashed px-4 py-2 rounded-xl bg-sky-200 border-sky-400 hover:bg-sky-300 transition cursor-pointer"
+                            @click="search()"
+                        >
+                            <box-icon
+                                name="search"
+                                color="oklch(70.7% 0.165 254.624)"
+                            ></box-icon>
+                            ค้นหา
+                        </button>
+                    </div>
                     <!-- End Search-->
-                </div>
-            </div>
-
-            <hr
-                class="mx-auto items-center justify-center my-4 w-2/6 border-2 border-gray-100 border-dashed"
-            />
-
-            <div class="flex items-center justify-center">
-                <div
-                    class="text-sm mr-4 flex items-center justify-center border-2 border-dashed p-2 w-1/8 rounded-xl bg-green-200 border-green-400 hover:bg-green-300 cursor-pointer"
-                    @click="report()"
-                >
-                    <box-icon
-                        name="file"
-                        class="mr-2"
-                        color="oklch(72.3% 0.219 149.579)"
-                    ></box-icon>
-                    Export to Excel
-                </div>
-                <div
-                    class="text-sm flex items-center justify-center border-2 border-dashed p-2 w-1/8 rounded-xl bg-sky-200 border-sky-400 hover:bg-sky-300 cursor-pointer"
-                    @click="search()"
-                >
-                    <box-icon
-                        name="search"
-                        class="mr-2"
-                        color="oklch(70.7% 0.165 254.624)"
-                    ></box-icon>
-                    ค้นหา
                 </div>
             </div>
         </div>
@@ -203,7 +293,8 @@
                     <span
                         >อบรมระหว่างวันที่ :
                         <div class="font-semibold">
-                            {{ moment(data.start).format("LL") }} - {{ moment(data.end).format("LL") }}
+                            {{ moment(data.start).format("LL") }} -
+                            {{ moment(data.end).format("LL") }}
                         </div></span
                     >
                     <span class="text-sm"
@@ -265,6 +356,7 @@
 <script>
 import axios from "axios";
 import Swal from "sweetalert2";
+import { TailwindPagination } from "laravel-vue-pagination";
 import Datepicker from "vuejs3-datepicker";
 import moment from "moment";
 import "moment/dist/locale/th";
@@ -295,14 +387,14 @@ export default {
             errors: {
                 section_id: "",
                 start: "",
-                end: "",          
+                end: "",
                 send: "",
             },
         };
     },
     methods: {
-        getSection() {
-            axios.get("/api/sectionTrain").then((response) => {
+        getSection(page = 1) {
+            axios.get("/api/sectionTrain?page=" + page).then((response) => {
                 this.sectionList = response.data;
             });
         },
@@ -313,10 +405,10 @@ export default {
             this.data.section_id = id;
 
             if (id != null) {
-                const arr = Array.from(this.sectionList); // หรือ this.nationList.slice()
+                const arr = Array.from(this.sectionList.data); // หรือ this.nationList.slice()
                 const res = arr.find((selection) => selection.id == id);
-                //this.data.start = res.start;
-                //this.data.end = res.end;
+                this.data.start = res.start;
+                this.data.end = res.end;
                 this.examdate = res.examdate;
                 return res ? res.title : null;
             }
@@ -652,9 +744,13 @@ export default {
                 }
             }
         },
+        setMoment(id) {
+            return moment(id).format("ll");
+        },
     },
     components: {
         Datepicker,
+        TailwindPagination,
     },
 };
 </script>

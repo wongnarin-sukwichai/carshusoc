@@ -80,13 +80,6 @@ class EnrollController extends Controller
         if (!empty($request['course_id'])) {
             $data->course_id = $request['course_id'];
         }
-        $data->title = $request['title'];
-        if (!empty($request['start'])) {
-            $data->start = $request['start'];
-        }
-        if (!empty($request['end'])) {
-            $data->end = $request['end'];
-        }
         $data->pay = $request['price'];
         $data->tag = $request['postage'];
         $data->user_id = Auth::user()->id;

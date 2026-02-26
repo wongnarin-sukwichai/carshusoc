@@ -83,10 +83,14 @@ class CertController extends Controller
         $data = DB::table('enrolls')
             ->where('enrolls.id', $id)
             ->join('users', 'enrolls.user_id', 'users.id')
+            ->join('sections', 'enrolls.section_id', 'sections.id')
             ->select(
                 'enrolls.*',
                 'users.name',
-                'users.surname'
+                'users.surname',
+                'sections.title',
+                'sections.start',
+                'sections.end'
             )
             ->first();
 
@@ -112,7 +116,7 @@ class CertController extends Controller
 
         // หลักสูตร
         if ($data->canva_id == 3) {
-            $image->text('"' . $data->title . '"', 750, 835, function ($font) {
+            $image->text('"' . $data->title . '"', 500, 835, function ($font) {
                 $font->file(public_path('fonts/FCIconicRegular.ttf'));
                 $font->size(45);
                 $font->color('#D0872E');
@@ -161,10 +165,14 @@ class CertController extends Controller
         $data = DB::table('enrolls')
             ->where('enrolls.id', $id)
             ->join('users', 'enrolls.user_id', 'users.id')
+            ->join('sections', 'enrolls.section_id', 'sections.id')
             ->select(
                 'enrolls.*',
                 'users.name',
-                'users.surname'
+                'users.surname',
+                'sections.title',
+                'sections.start',
+                'sections.examdate'
             )
             ->first();
 
@@ -200,7 +208,7 @@ class CertController extends Controller
         });
 
         // วันที่สอบ
-        $image->text(Carbon::parse($data->enddate)->format('j F Y'), 250, 655, function ($font) {
+        $image->text(Carbon::parse($data->examdate)->format('j F Y'), 250, 655, function ($font) {
             $font->file(public_path('fonts/FCIconicRegular.ttf'));
             $font->size(40);
             $font->color('#000000');

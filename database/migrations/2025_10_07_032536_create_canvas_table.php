@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('canvas', function (Blueprint $table) {
             $table->id();
-            $table->integer('section_id');
+            $table->integer('content_id');
             $table->string('pic');
             $table->timestamps();
         });

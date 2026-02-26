@@ -71,14 +71,13 @@ class ReportController extends Controller
     {
 
         $data = Carbon::parse($request['send'])->format('Y-m-d');
-        $res = Canva::where('section_id', $request['section_id'])
+        $res = Canva::where('content_id', $request['content_id'])
                 ->orderBy('id', 'DESC')
                 ->first()->id;
 
         foreach ($request['enrolls'] as $r) {
             Enroll::where('id', $r['id'])
                 ->update([
-                    'enddate' => $request['examdate'],
                     'send' => $data,
                     'certTrain' => $r['certTrain'],
                     'canva_id' => $res
@@ -116,9 +115,8 @@ class ReportController extends Controller
 
     public function reportTest(Request $request)
     {
-
         $data = Carbon::parse($request['send'])->format('Y-m-d');
-        $res = Canva::where('section_id', $request['section_id'])
+        $res = Canva::where('content_id', $request['content_id'])
                 ->orderBy('id', 'DESC')
                 ->first()->id;
         $result = Score::orderBy('id', 'DESC')->first()->setscore;
@@ -126,7 +124,6 @@ class ReportController extends Controller
         foreach ($request['enrolls'] as $r) {
             Enroll::where('id', $r['id'])
                 ->update([
-                    'enddate' => $request['examdate'],
                     'send' => $data,
                     'certTest' => 1,
                     'listen' => $r['listen'],

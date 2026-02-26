@@ -297,19 +297,7 @@
                             {{ moment(data.end).format("LL") }}
                         </div></span
                     >
-                    <span
-                        >ห้องสอบ :
-                        <transition name="fade" mode="out-in">
-                            <span
-                                v-if="errors.meet"
-                                class="text-rose-300 text-sm ml-2"
-                                >{{ meet }}</span
-                            ></transition
-                        >
-                        <div class="font-semibold">
-                            {{ meet }}
-                        </div></span
-                    >
+                
                     <span class="text-sm"
                         >สอบวันที่ :
                         <Datepicker class="ml-2" v-model="this.send" />
@@ -520,8 +508,8 @@ export default {
             ////////////////////////////////////////////////////////////////
             examdate: "",
             send: "",
-            meet: "",
             data: {
+                content_id: "",
                 section_id: "",
                 start: "",
                 end: "",
@@ -530,7 +518,6 @@ export default {
                 section_id: "",
                 start: "",
                 end: "",
-                meet: "",
                 send: "",
             },
             fileData: null,
@@ -556,10 +543,10 @@ export default {
             if (id != null) {
                 const arr = Array.from(this.sectionList.data); // หรือ this.nationList.slice()
                 const res = arr.find((selection) => selection.id == id);
+                this.data.content_id = res.content_id;
                 this.data.start = res.start;
                 this.data.end = res.end;
                 this.examdate = res.examdate;
-                this.meet = res.meet;
                 return res ? res.title : null;
             }
 
@@ -598,7 +585,7 @@ export default {
         validateChk() {
             let isValid = true;
 
-            const req = ["examdate", "meet", "send"];
+            const req = ["examdate", "send"];
 
             for (let key of req) {
                 const value = this[key];
@@ -847,10 +834,8 @@ export default {
                     });
 
                     await axios.post("/api/reportTest", {
-                        section_id: this.data.section_id,
-                        examdate: this.examdate,
+                        content_id: this.data.content_id,
                         send: this.send,
-
                         enrolls: this.enrollList,
                     });
 

@@ -380,6 +380,7 @@ export default {
             examdate: "",
             send: "",
             data: {
+                content_id: "",
                 section_id: "",
                 start: "",
                 end: "",
@@ -407,6 +408,7 @@ export default {
             if (id != null) {
                 const arr = Array.from(this.sectionList.data); // หรือ this.nationList.slice()
                 const res = arr.find((selection) => selection.id == id);
+                this.data.content_id = res.content_id;
                 this.data.start = res.start;
                 this.data.end = res.end;
                 this.examdate = res.examdate;
@@ -700,8 +702,7 @@ export default {
                     });
 
                     await axios.post("/api/reportTrain", {
-                        section_id: this.data.section_id,
-                        examdate: this.examdate,
+                        content_id: this.data.content_id,
                         send: this.send,
                         enrolls: this.enrollList,
                     });
